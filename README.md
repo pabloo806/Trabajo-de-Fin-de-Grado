@@ -1,20 +1,297 @@
-# Trabajo-de-Fin-de-Grado
-Sistema automatizado que genera setlists para DJs analizando bibliotecas de audio locales. Extrae BPM y tonalidad mediante Python, creando sesiones armónicas basadas en la Camelot Wheel. Exporta los resultados directamente a Rekordbox. TFG de Ingeniería en Sistemas de Información (UAH).
+# 🎧 Generador Inteligente de Setlists para DJs
 
-# 🎛️ AutoSetlist Generator para DJs (TFG)
+<div align="center">
 
-Este repositorio contiene el código fuente del Trabajo Fin de Grado (TFG) en Ingeniería en Sistemas de Información por la Universidad de Alcalá.
+![Status](https://img.shields.io/badge/Estado-Análisis%20de%20Requisitos-blue)
+s://img.shields.ioProyecto-TFG-success
+![Backend](https://img.shields.io/badge/hon%20%7C%20FastAPI-green
+![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20TypeScriptbase](https://img.shields.io/badge/Database-SQLite-orange)
 
-## 📖 Sobre el proyecto
-Preparar un setlist adecuado exige horas de revisión manual para encajar tempos (BPM) y tonalidades. Este sistema automatiza la fase de planificación del DJ: partiendo de una carpeta local de audio en bruto (MP3, WAV, FLAC, AIFF), el sistema analiza cada pista, estima sus descriptores musicales y genera un setlist ordenado que respeta las reglas del *harmonic mixing* (Camelot Wheel). El resultado se exporta directamente a formatos compatibles con **Rekordbox** (.xml / .m3u8).
+ de Grado en Ingeniería en Sistemas de Información**
 
-## ✨ Características principales
-- **Extracción de Metadatos:** Lectura de etiquetas ID3 y catalogación de la biblioteca local.
-- **Análisis de Audio (MIR):** Estimación precisa de BPM y tonalidad usando librerías de Python.
-- **Generación Inteligente:** Creación de listas basadas en progresión de BPM y reglas de la rueda Camelot.
-- **Integración con Rekordbox:** Exportación directa al ecosistema de Pioneer DJ.
+</div>
 
-## 🛠️ Stack Tecnológico (Propuesto)
-- **Lenguaje:** Python
-- **Análisis de Audio:** `librosa` / `Essentia` / `Music.py` (En evaluación)
-- **Base de Datos:** SQLite / PostgreSQL
+---
+
+# 📖 Descripción
+
+Este proyecto tiene como objetivo el desarrollo de una aplicación capaz de analizar automáticamente una biblioteca musical local y generar setlists optimizados para DJs mediante técnicas de análisis musical, compatibilidad armónica y selección inteligente de canciones.
+
+La herramienta busca reducir el tiempo necesario para preparar sesiones musicales, facilitando la creación de sets coherentes y compatibles para su posterior uso en software profesional como Rekordbox.
+
+---
+
+# 🎯 Objetivos
+
+## Objetivo General
+
+Desarrollar una aplicación capaz de generar automáticamente setlists para DJs a partir de una biblioteca musical local.
+
+## Objetivos Específicos
+
+- ✅ Importar bibliotecas musicales.
+- ✅ Extraer metadatos automáticamente.
+- ✅ Detectar BPM.
+- ✅ Detectar tonalidad musical.
+- ✅ Almacenar información musical estructurada.
+- ✅ Aplicar criterios de mezcla armónica.
+- ✅ Generar setlists automáticamente.
+- ✅ Exportar resultados compatibles con Rekordbox.
+
+---
+
+# 🏗️ Arquitectura General
+
+```text
+┌─────────────┐
+│   React UI  │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│ FastAPI API │
+└──────┬──────┘
+       │
+ ┌─────┼─────────────────────┐
+ │     │                     │
+ ▼     ▼                     ▼
+
+Music   Setlist          Database
+Analysis Generator       SQLite
+
+(BPM)   (AI Logic)
+(Key)
+```
+
+---
+
+# 🛠️ Stack Tecnológico
+
+## Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- Librosa
+- NumPy
+
+## Frontend
+
+- React
+- TypeScript
+- Vite
+- Material UI
+
+## Base de Datos
+
+- SQLite
+
+## Testing
+
+- Pytest
+
+## Control de Versiones
+
+- Git
+- GitHub
+
+## Gestión
+
+- GitHub Projects
+- Microsoft Teams
+
+## Entorno de Desarrollo
+
+- Visual Studio Code
+- Claude Sonnet
+
+---
+
+# 📁 Estructura del Proyecto
+
+```text
+.
+│
+├── backend/
+│
+├── frontend/
+│
+├── database/
+│
+├── tests/
+│
+├── scripts/
+│
+├── docs/
+│   │
+│   ├── project-management/
+│   ├── requirements/
+│   ├── architecture/
+│   ├── testing/
+│   └── memory/
+│
+├── README.md
+│
+└── .gitignore
+```
+
+---
+
+# 📚 Documentación
+
+La documentación del proyecto se organiza en las siguientes áreas:
+
+## Gestión de Proyecto
+
+- Project Roadmap
+- Registro de Decisiones
+- Registro de Reuniones
+- Objetivos del TFG
+- Stack Tecnológico
+
+## Análisis
+
+- Requisitos Funcionales
+- Requisitos No Funcionales
+- Actores
+- Casos de Uso
+- Matriz de Trazabilidad
+
+## Diseño
+
+- Arquitectura Software
+- Modelo de Datos
+- Diseño de API
+- ADRs (Architecture Decision Records)
+
+## Validación
+
+- Plan de Pruebas
+- Casos de Prueba
+- Validación Experimental
+
+## Memoria
+
+- Documentación progresiva para la memoria del TFG.
+
+---
+
+# 📋 Roadmap
+
+## Fase 0 · Preparación
+
+- [x] Configuración GitHub
+- [x] Configuración Teams
+- [x] Configuración Claude
+- [x] Estructura documental
+- [x] Kanban del proyecto
+
+## Fase 1 · Análisis
+
+- [ ] Requisitos funcionales
+- [ ] Requisitos no funcionales
+- [ ] Actores
+- [ ] Casos de uso
+
+## Fase 2 · Diseño
+
+- [ ] Arquitectura software
+- [ ] Modelo de datos
+- [ ] Diseño de API
+
+## Fase 3 · Infraestructura
+
+- [ ] Backend
+- [ ] Frontend
+- [ ] Base de datos
+
+## Fase 4 · Desarrollo Core
+
+- [ ] Importación musical
+- [ ] Extracción de metadatos
+- [ ] Detección BPM
+- [ ] Detección de tonalidad
+- [ ] Generación de setlists
+
+## Fase 5 · Interfaz de Usuario
+
+- [ ] Gestión de biblioteca
+- [ ] Generador de sesiones
+
+## Fase 6 · Validación
+
+- [ ] Plan de pruebas
+- [ ] Validación experimental
+
+## Fase 7 · Memoria y Defensa
+
+- [ ] Memoria final
+- [ ] Presentación
+- [ ] Defensa
+
+---
+
+# 📈 Estado Actual
+
+| Área | Estado |
+|--------|--------|
+| Gestión del Proyecto | ✅ Completada |
+| Análisis | 🔄 En progreso |
+| Diseño | ⏳ Pendiente |
+| Backend | ⏳ Pendiente |
+| Frontend | ⏳ Pendiente |
+| Testing | ⏳ Pendiente |
+| Memoria | 🔄 En preparación |
+
+---
+
+# 👨‍💻 Metodología
+
+El proyecto sigue un enfoque iterativo basado en buenas prácticas de Ingeniería del Software:
+
+- Clean Architecture
+- Clean Code
+- SOLID
+- DRY
+- KISS
+- Git Flow
+- Desarrollo incremental
+- Documentación continua
+
+---
+
+# 🎓 Información Académica
+
+**Alumno:** Pablo Hernández Borregón
+
+**Titulación:** Ingeniería en Sistemas de Información
+
+**Trabajo:** Trabajo Fin de Grado
+
+**Curso:** 2026/2027
+
+---
+
+# 🤝 Herramientas de Colaboración
+
+- GitHub → Desarrollo y control de versiones.
+- GitHub Projects → Gestión de tareas.
+- Microsoft Teams → Coordinación y seguimiento.
+- Claude Sonnet → Asistencia técnica y metodológica.
+
+---
+
+# 🚀 Estado del Proyecto
+
+```text
+Preparación del entorno ✅
+Análisis de requisitos 🔄
+```
+
+Actualmente el proyecto se encuentra en la fase de análisis y definición de requisitos.
+
+---
+
+# 📄 Licencia
+
+Proyecto desarrollado con fines exclusivamente académicos como Trabajo Fin de Grado.
