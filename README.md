@@ -43,32 +43,25 @@ Desarrollar una aplicación capaz de generar automáticamente setlists para DJs 
 
 # 🏗️ Arquitectura General
 
-```text
-┌──────────┐
-│ React UI │
-└────┬─────┘
-     │
-     ▼
-┌─────────────┐
-│ FastAPI API │
-└─────┬───────┘
-      │
-      ▼
+```mermaid
+flowchart TD
 
- ┌─────────────────────┐
- │  Servicios Backend  │
- ├─────────────────────┤
- │ • Music Analysis    │
- │ • Setlist Engine    │
- │ • Export Service    │
- └─────────┬───────────┘
-           │
-           ▼
+    UI[React UI]
+    API[FastAPI API]
 
-    ┌─────────────┐
-    │ PostgreSQL  │
-    └─────────────┘
+    ANALYSIS[Music Analysis<br/>BPM Detection<br/>Key Detection]
+    GENERATOR[Setlist Generator]
+    DB[(PostgreSQL)]
+
+    UI --> API
+
+    API --> ANALYSIS
+    API --> GENERATOR
+
+    ANALYSIS --> DB
+    GENERATOR --> DB
 ```
+
 ---
 
 # 🛠️ Stack Tecnológico
