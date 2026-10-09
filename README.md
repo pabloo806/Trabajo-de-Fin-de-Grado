@@ -2,11 +2,6 @@
 
 # 🎧 Generador Inteligente de Setlists para DJs
 
-https://img.shields.io/badge/Fase-Análisis%20de%20Requisitos-blue
-https://img.shields.io/badge/Proyecto-TFG-success
-https://img.shields.io/badge/Python-3.12-green
-![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009](https://img.shields.io/badge/React-TypeScript-61DAFBjo Fin de Grado · Ingeniería en Sistemas de Información**
-
 </div>
 
 ---
