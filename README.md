@@ -4,6 +4,8 @@
 
 </div>
 
+---
+
 # 📖 Descripción
 
 Este proyecto tiene como objetivo el desarrollo de una aplicación capaz de analizar automáticamente una biblioteca musical local y generar setlists optimizados para DJs mediante técnicas de análisis musical, compatibilidad armónica y selección inteligente de canciones.
