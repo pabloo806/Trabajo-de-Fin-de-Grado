@@ -153,4 +153,182 @@ DJ
 2. El sistema recupera las pistas disponibles.
 3. Evalúa compatibilidad BPM.
 4. Evalúa compatibilidad armónica.
-5. Calcula
+5. Calcula las mejores transiciones.
+6. Construye la lista ordenada.
+7. Presenta el resultado.
+
+## Flujos Alternativos
+
+### A1: No existen suficientes canciones compatibles
+
+1. El sistema identifica incompatibilidades.
+2. Genera una propuesta parcial.
+3. Notifica la incidencia.
+
+## Postcondiciones
+
+- Se genera un nuevo setlist.
+
+---
+
+# CU-05 Gestionar Canciones Ancla
+
+## Objetivo
+
+Permitir al DJ fijar canciones obligatorias en posiciones concretas.
+
+## Actor Principal
+
+DJ
+
+## Precondiciones
+
+- Existen canciones analizadas.
+
+## Flujo Principal
+
+1. El DJ selecciona una canción.
+2. Indica una posición dentro del setlist.
+3. El sistema registra la restricción.
+4. La canción queda marcada como ancla.
+
+## Flujos Alternativos
+
+### A1: Posición no válida
+
+1. La posición introducida es incorrecta.
+2. El sistema muestra un aviso.
+
+## Postcondiciones
+
+- Las canciones ancla se utilizarán durante la generación.
+
+---
+
+# CU-06 Consultar Estadísticas
+
+## Objetivo
+
+Visualizar estadísticas de la biblioteca musical.
+
+## Actor Principal
+
+DJ
+
+## Precondiciones
+
+- Existe información analizada.
+
+## Flujo Principal
+
+1. El DJ accede al panel de estadísticas.
+2. El sistema consulta la base de datos.
+3. Se generan gráficos y métricas.
+4. Se muestran los resultados.
+
+## Información Disponible
+
+- Distribución de BPM.
+- Distribución de tonalidades.
+- Distribución de géneros.
+- Canciones más utilizadas.
+
+## Postcondiciones
+
+- El usuario obtiene información sobre su biblioteca.
+
+---
+
+# CU-07 Exportar Setlist
+
+## Objetivo
+
+Exportar el setlist generado para su uso externo.
+
+## Actor Principal
+
+DJ
+
+## Actores Secundarios
+
+- Rekordbox
+
+## Precondiciones
+
+- Existe un setlist generado.
+
+## Flujo Principal
+
+1. El DJ selecciona la opción Exportar.
+2. Elige el formato.
+3. El sistema genera el archivo.
+4. El sistema guarda el resultado.
+5. El usuario recibe confirmación.
+
+## Formatos Disponibles
+
+- Rekordbox
+- CSV
+- TXT
+- M3U
+
+## Flujos Alternativos
+
+### A1: Error de escritura
+
+1. El sistema no puede guardar el archivo.
+2. Se muestra un mensaje de error.
+
+## Postcondiciones
+
+- El setlist queda exportado.
+
+---
+
+# CU-08 Consultar Histórico
+
+## Objetivo
+
+Permitir la consulta de sesiones generadas anteriormente.
+
+## Actor Principal
+
+DJ
+
+## Precondiciones
+
+- Existen sesiones almacenadas.
+
+## Flujo Principal
+
+1. El DJ accede al histórico.
+2. El sistema recupera los registros.
+3. Se muestran las sesiones disponibles.
+4. El usuario selecciona una sesión.
+5. El sistema muestra el detalle.
+
+## Flujos Alternativos
+
+### A1: Histórico vacío
+
+1. No existen registros previos.
+2. El sistema informa al usuario.
+
+## Postcondiciones
+
+- El usuario puede revisar sesiones anteriores.
+
+---
+
+# Resumen de Casos de Uso
+
+| Código | Caso de Uso |
+|----------|------------|
+| CU-01 | Importar Biblioteca Musical |
+| CU-02 | Analizar Biblioteca Musical |
+| CU-03 | Configurar Sesión |
+| CU-04 | Generar Setlist |
+| CU-05 | Gestionar Canciones Ancla |
+| CU-06 | Consultar Estadísticas |
+| CU-07 | Exportar Setlist |
+| CU-08 | Consultar Histórico |
