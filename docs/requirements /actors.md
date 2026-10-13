@@ -87,24 +87,31 @@ Componente software encargado del análisis automático de las pistas importadas
 - Devuelve resultados de análisis al sistema.
 
 ---
-
 # Diagrama Conceptual de Actores
 
-DJ
-│
-├── Importa música
-├── Configura sesión
-├── Genera setlists
-├── Consulta estadísticas
-└── Exporta resultados
-      │
-      ├── Rekordbox
-      ├── CSV
-      ├── TXT
-      └── M3U
+```mermaid
+graph TD
 
-Sistema de Archivos
-      │
-      └── Motor de Análisis Musical
-                 │
-                 └── Base de Datos
+    DJ[DJ]
+
+    SAF[Sistema de Archivos Local]
+    MAM[Motor de Análisis Musical]
+    BD[(Base de Datos)]
+
+    REK[Rekordbox]
+    CSV[Exportación CSV]
+    TXT[Exportación TXT]
+    M3U[Exportación M3U]
+
+    DJ -->|Importa música| SAF
+    DJ -->|Configura sesión| MAM
+    DJ -->|Genera setlists| MAM
+    DJ -->|Consulta estadísticas| BD
+
+    MAM -->|Analiza pistas| BD
+
+    DJ -->|Exporta resultados| REK
+    DJ -->|Exporta resultados| CSV
+    DJ -->|Exporta resultados| TXT
+    DJ -->|Exporta resultados| M3U
+```
