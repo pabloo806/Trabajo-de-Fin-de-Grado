@@ -10,7 +10,7 @@ Esta documentación servirá como base para el diseño, implementación y valida
 
 ## 📂 Documentos
 
-### 📋 Functional_Requirements.md
+### 📋 Requirements.md
 
 Listado de requisitos funcionales.
 
@@ -21,10 +21,6 @@ Ejemplos:
 - Detectar tonalidad.
 - Generar setlists.
 
----
-
-### ⚙️ Non_Functional_Requirements.md
-
 Requisitos de calidad.
 
 Ejemplos:
@@ -33,10 +29,6 @@ Ejemplos:
 - Mantenibilidad.
 - Usabilidad.
 - Escalabilidad.
-
----
-
-### 👤 Actors.md
 
 Actores que interactúan con el sistema.
 
@@ -55,6 +47,10 @@ Matriz de trazabilidad entre:
 - Objetivos.
 - Requisitos.
 - Casos de uso.
+
+---
+
+### Glosario.md
 
 ---
 
