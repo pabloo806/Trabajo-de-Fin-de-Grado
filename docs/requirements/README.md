@@ -1,65 +1,13 @@
-# 📑 Análisis de Requisitos
+# Análisis de Requisitos
 
-## 🎯 Objetivo
+La documentación detallada se encuentra en la rama `develop`.
 
-Recopilar y documentar todos los requisitos funcionales y no funcionales del sistema.
+## Documentos
 
-Esta documentación servirá como base para el diseño, implementación y validación del proyecto.
+- Actores
+- Requisitos funcionales
+- Requisitos no funcionales
+- Casos de uso
+- Matriz de trazabilidad
 
----
-
-## 📂 Documentos
-
-### 📋 Functional_Requirements.md
-
-Listado de requisitos funcionales.
-
-Ejemplos:
-
-- Importar canciones.
-- Detectar BPM.
-- Detectar tonalidad.
-- Generar setlists.
-
----
-
-### ⚙️ Non_Functional_Requirements.md
-
-Requisitos de calidad.
-
-Ejemplos:
-
-- Rendimiento.
-- Mantenibilidad.
-- Usabilidad.
-- Escalabilidad.
-
----
-
-### 👤 Actors.md
-
-Actores que interactúan con el sistema.
-
----
-
-### 🔄 Use_Cases.md
-
-Catálogo de casos de uso.
-
----
-
-### 🔗 Requirements_Traceability.md
-
-Matriz de trazabilidad entre:
-
-- Objetivos.
-- Requisitos.
-- Casos de uso.
-
----
-
-## ✅ Estado
-
-🟡 En preparación
-
-Actualmente se encuentra en la fase inicial de análisis.
+> Esta rama contiene únicamente la documentación estable del proyecto.
