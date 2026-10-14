@@ -26,11 +26,6 @@ Representa al usuario que utiliza la aplicación para gestionar su biblioteca mu
 ## Casos de uso asociados
 
 - CU-01 Importar biblioteca musical.
-- CU-02 Analizar biblioteca.
-- CU-03 Configurar sesión.
-- CU-04 Generar setlist.
-- CU-05 Consultar estadísticas.
-- CU-06 Exportar setlist.
 
 ---
 # Diagrama Conceptual de Actores
