@@ -39,6 +39,43 @@ El sistema se integra en el flujo de trabajo del DJ, no lo sustituye. Analiza un
 | Rekordbox | Sistema externo | Entorno de importación del setlist y fuente de valores de referencia para la evaluación |
 | Sistema de archivos local | Sistema externo | Origen del audio y destino de las exportaciones |
 
+### 2.2.1 Diagrama de actores
+
+```mermaid
+flowchart LR
+
+    DJ[DJ]
+
+    FS[Sistema de Archivos Local]
+    RB[Rekordbox]
+
+    DJ -->|Selecciona biblioteca| FS
+
+    FS -->|Audio MP3 WAV FLAC AIFF| IMPORT
+
+    IMPORT[Importación Musical]
+    ANALYSIS[Motor de Análisis]
+    DB[(Base de Datos)]
+    SETLIST[Generador de Setlists]
+    EXPORT[Exportador]
+    PANEL[Panel y Estadísticas]
+
+    IMPORT --> ANALYSIS
+    ANALYSIS --> DB
+    DB --> SETLIST
+    DB --> PANEL
+    SETLIST --> EXPORT
+
+    DJ -->|Configura sesión| SETLIST
+    DJ -->|Consulta estadísticas| PANEL
+
+    EXPORT -->|XML / M3U| RB
+
+    RB -->|Valores de referencia BPM y Key| EVAL[Evaluación]
+    DB --> EVAL
+    EVAL --> DJ
+```
+
 ### 2.3 Restricciones
 - El audio y los datos se procesan en local.
 - La implementación del análisis se propone en Python (anteproyecto, sección 3); la librería concreta se decide en ADR-002.
@@ -113,6 +150,54 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 |---|---|---|---|---|---|
 | RF-29 | El sistema permitirá contrastar los descriptores estimados con valores de referencia de Rekordbox para las mismas pistas y producirá un informe de discrepancias | O7 | Should | A/I | El informe incluye las métricas de RNF-05 a RNF-09 |
 
+### 3.8 Mapa de requisitos funcionales
+
+```mermaid
+mindmap
+  root((SRS))
+    O1 Importación
+      RF-01 Recorrer biblioteca
+      RF-02 Validar formatos
+      RF-03 Extraer metadatos
+
+    O2 Analisis Musical
+      RF-04 BPM
+      RF-05 Tonalidad
+      RF-06 Camelot
+      RF-07 Trazabilidad
+
+    O3 Base de Datos
+      RF-08 Persistencia
+      RF-09 Evitar reanalisis
+      RF-10 Historico setlists
+      RF-11 Busquedas
+
+    O4 Generador
+      RF-12 Duracion
+      RF-13 BPM
+      RF-14 Compatibilidad armonica
+      RF-15 Generos
+      RF-16 Pistas ancladas
+      RF-17 Orden automatico
+      RF-18 Sin duplicados
+      RF-19 Gestion conflictos
+      RF-20 Revision
+
+    O5 Exportacion
+      RF-21 Formato Rekordbox
+      RF-22 Resolucion rutas
+      RF-23 Importacion correcta
+
+    O6 Panel
+      RF-24 Historico
+      RF-25 Top canciones
+      RF-26 Distribuciones
+      RF-27 Evolucion estilo
+      RF-28 Exportacion datos
+
+    O7 Evaluacion
+      RF-29 Comparacion Rekordbox
+```
 ---
 
 ## 4. Requisitos no funcionales
@@ -180,6 +265,55 @@ Referencia: valores de Rekordbox sobre las mismas pistas. Las métricas se repor
 | RNF-26 | Procesamiento local | Ningún fichero de audio ni dato de la biblioteca sale del equipo del DJ | Revisión de diseño | Must |
 | RNF-27 | Licencias | Inventario de licencias de las dependencias; compatibilidad con la licencia del repositorio | ADR-007 | Must |
 
+### 4.9 Mapa de requisitos no funcionales
+
+```mermaid
+mindmap
+  root((RNF))
+
+    Rendimiento
+      RNF-01
+      RNF-02
+      RNF-03
+      RNF-04
+
+    Precision
+      RNF-05
+      RNF-06
+      RNF-07
+      RNF-08
+      RNF-09
+
+    Correccion
+      RNF-10
+      RNF-11
+      RNF-12
+
+    Usabilidad
+      RNF-13
+      RNF-14
+      RNF-15
+
+    Robustez
+      RNF-16
+      RNF-17
+      RNF-18
+      RNF-19
+
+    Portabilidad
+      RNF-20
+      RNF-21
+      RNF-22
+
+    Arquitectura
+      RNF-23
+      RNF-24
+      RNF-25
+
+    Privacidad
+      RNF-26
+      RNF-27
+```
 ---
 
 ## 5. Trazabilidad
@@ -209,7 +343,96 @@ RF-15 (progresión de géneros) es el primer candidato a pasar a Must si la cali
 - **Presentación:** interfaz de usuario y API, sujetas a ADR-001.
 - Los RNF-23 y 24 hacen exigible esta separación.
 
+### 7.1 Resumen integral de la especificación
+
+```mermaid
+flowchart TB
+
+    DJ[DJ]
+
+    FS[(Biblioteca Musical Local)]
+    RB[Rekordbox]
+
+    subgraph O1[O1 Importación]
+        RF1[RF-01 RF-02 RF-03]
+    end
+
+    subgraph O2[O2 Analisis Musical]
+        RF2[RF-04 RF-05 RF-06 RF-07]
+    end
+
+    subgraph O3[O3 Base de Datos]
+        RF3[RF-08 RF-09 RF-10 RF-11]
+    end
+
+    subgraph O4[O4 Generador Setlists]
+        RF4[RF-12 al RF-20]
+    end
+
+    subgraph O5[O5 Exportacion]
+        RF5[RF-21 RF-22 RF-23]
+    end
+
+    subgraph O6[O6 Estadisticas]
+        RF6[RF-24 al RF-28]
+    end
+
+    subgraph O7[O7 Evaluacion]
+        RF7[RF-29]
+    end
+
+    DJ --> O1
+    DJ --> O4
+    DJ --> O6
+
+    FS --> O1
+
+    O1 --> O2
+    O2 --> O3
+
+    O3 --> O4
+    O3 --> O6
+
+    O4 --> O5
+    O5 --> RB
+
+    RB --> O7
+    O3 --> O7
+
+    subgraph CA[Clean Architecture]
+
+        D[Dominio]
+        A[Aplicacion]
+        I[Infraestructura]
+        P[Presentacion]
+
+        P --> A
+        A --> D
+        I --> A
+    end
+
+    O1 -.-> I
+    O2 -.-> I
+    O3 -.-> I
+    O4 -.-> D
+    O4 -.-> A
+    O5 -.-> I
+    O6 -.-> A
+    O7 -.-> A
+
+    RNF[RNF 01-27]
+
+    RNF --> O1
+    RNF --> O2
+    RNF --> O3
+    RNF --> O4
+    RNF --> O5
+    RNF --> O6
+    RNF --> O7
+```
+
 ## 8. Control de cambios
 | Versión | Fecha | Cambio | Autor |
 |---|---|---|---|
 | 1.0 | 2026-10-09 | Versión inicial propuesta | P. Hernández |
+| 2.0 | 2026-10-15 | Versión corregida de los requisitos propuesta | P. Hernández |
