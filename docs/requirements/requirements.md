@@ -117,6 +117,7 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 | RF-18 | El sistema no repetirá una pista dentro de un mismo setlist | O4 | Must | D | Ninguna pista aparece dos veces |
 | RF-19 | Cuando las restricciones definidas por el usuario no puedan satisfacerse simultáneamente, el sistema informará de la imposibilidad de generar el setlist e identificará las restricciones en conflicto | O4 | Must | A | Si no existe una combinación de pistas que satisfaga todas las restricciones establecidas, el sistema muestra un mensaje identificando las restricciones incompatibles y no genera ni almacena un setlist inválido |
 | RF-20 | El sistema mostrará el setlist generado con el orden, los descriptores de cada pista y la evaluación de cada transición | O4 | Must | P | El DJ puede revisar el resultado antes de exportarlo |
+| RF-20b | El sistema permitira editar el setlist generado cambiando parámetros y reordenando de forma manual | O4 | Could | P | El DJ puede editar el resultado tras exportarlo |
 
 ### 3.5 Exportación a Rekordbox (O5)
 | ID | Requisito | Obj. | MoSCoW | Capa | Criterio de aceptación |
