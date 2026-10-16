@@ -386,13 +386,37 @@ RF-15 (progresión de géneros) constituye el principal candidato a ser promovid
 RNF-12 (valoración por DJs) y RNF-13 (eficiencia de uso) están condicionados a la disponibilidad de participantes para la realización de pruebas con usuarios durante la fase de evaluación.
 
 ## 7. Implicaciones arquitectónicas (Clean Architecture)
-- **Dominio:** Pista, Descriptor, Biblioteca, Setlist, Parámetros de generación, Transición, Notación Camelot y reglas de compatibilidad (RF-06, 17, 18).
-- **Aplicación:** casos de uso y puertos (`LibraryScanner`, `MetadataReader`, `AudioAnalyzer`, `TrackRepository`, `SetlistRepository`, `SetlistExporter`).
-- **Infraestructura:** adaptadores de lectura de etiquetas, análisis de audio, persistencia y exportación.
-- **Presentación:** interfaz de usuario y API, sujetas a ADR-001.
-- Los RNF-23 y 24 hacen exigible esta separación.
 
-### 7.1 Resumen integral de la especificación
+- **Dominio:** Pista, Descriptor, Biblioteca, Setlist, Parámetros de generación, Transición, Notación Camelot y reglas de negocio asociadas a la compatibilidad armónica, restricciones de generación y validación de setlists (RF-06, RF-14, RF-17 y RF-18).
+
+- **Aplicación:** Casos de uso, orquestación y definición de puertos:
+  - `LibraryScanner`
+  - `MetadataReader`
+  - `AudioAnalyzer`
+  - `TrackRepository`
+  - `SetlistRepository`
+  - `StatisticsRepository`
+  - `SetlistExporter`
+  - `ReferenceDataProvider`
+
+- **Infraestructura:** Adaptadores de lectura de etiquetas, análisis de audio, persistencia, exportación XML e integración con sistemas externos.
+
+- **Presentación:** Interfaz gráfica responsable de la interacción con el DJ, visualización de resultados, estadísticas, evaluación y gestión de setlists.
+
+- La separación entre capas viene impuesta principalmente por los requisitos **RNF-22 (Regla de dependencia)** y **RNF-23 (Sustituibilidad)**.
+
+- La calidad interna de la implementación deberá verificarse mediante **RNF-24 (Calidad de código)**.
+
+### 7.1 Correspondencia entre requisitos y capas
+
+| Capa | Requisitos principales |
+|---|---|
+| Dominio | RF-06, RF-14, RF-17, RF-18, RNF-10, RNF-11 |
+| Aplicación | RF-01, RF-04, RF-05, RF-09, RF-09b, RF-10, RF-11, RF-11b, RF-12, RF-13, RF-15, RF-16, RF-19, RF-24, RF-25, RF-26, RF-27, RF-29 |
+| Infraestructura | RF-02, RF-03, RF-08, RF-21, RF-22, RF-23, RF-28, RNF-01, RNF-02, RNF-04, RNF-15, RNF-16, RNF-17, RNF-19, RNF-20, RNF-21 |
+| Presentación | RF-20, RF-20b, RF-24, RF-25, RF-26, RF-27, RNF-13, RNF-14 |
+
+### 7.2 Mapa de Clean Architecture
 
 ```mermaid
 flowchart TB
@@ -402,32 +426,32 @@ flowchart TB
     FS[(Biblioteca Musical Local)]
     RB[Rekordbox]
 
-    subgraph O1[O1 Importación]
-        RF1[RF-01 RF-02 RF-03]
+    subgraph O1["O1 - Importación"]
+        RF1["RF-01 · RF-02 · RF-03"]
     end
 
-    subgraph O2[O2 Analisis Musical]
-        RF2[RF-04 RF-05 RF-06 RF-07]
+    subgraph O2["O2 - Análisis Musical"]
+        RF2["RF-04 · RF-05 · RF-06 · RF-07"]
     end
 
-    subgraph O3[O3 Base de Datos]
-        RF3[RF-08 RF-09 RF-10 RF-11]
+    subgraph O3["O3 - Base de Datos"]
+        RF3["RF-08 · RF-09 · RF-09b · RF-10 · RF-11 · RF-11b"]
     end
 
-    subgraph O4[O4 Generador Setlists]
-        RF4[RF-12 al RF-20]
+    subgraph O4["O4 - Generador de Setlists"]
+        RF4["RF-12 · RF-13 · RF-14 · RF-15 · RF-16 · RF-17 · RF-18 · RF-19 · RF-20 · RF-20b"]
     end
 
-    subgraph O5[O5 Exportacion]
-        RF5[RF-21 RF-22 RF-23]
+    subgraph O5["O5 - Exportación"]
+        RF5["RF-21 · RF-22 · RF-23"]
     end
 
-    subgraph O6[O6 Estadisticas]
-        RF6[RF-24 al RF-28]
+    subgraph O6["O6 - Panel y Estadísticas"]
+        RF6["RF-24 · RF-25 · RF-26 · RF-27 · RF-28"]
     end
 
-    subgraph O7[O7 Evaluacion]
-        RF7[RF-29]
+    subgraph O7["O7 - Evaluación"]
+        RF7["RF-29"]
     end
 
     DJ --> O1
@@ -448,28 +472,44 @@ flowchart TB
     RB --> O7
     O3 --> O7
 
-    subgraph CA[Clean Architecture]
+    subgraph CA["Clean Architecture"]
 
-        D[Dominio]
-        A[Aplicacion]
-        I[Infraestructura]
-        P[Presentacion]
+        P["Presentación"]
+
+        A["Aplicación
+        Casos de Uso
+        Puertos"]
+
+        D["Dominio
+        Reglas de negocio
+        Camelot
+        Generación"]
+
+        I["Infraestructura
+        Audio
+        BBDD
+        XML"]
 
         P --> A
         A --> D
         I --> A
+
     end
 
     O1 -.-> I
     O2 -.-> I
     O3 -.-> I
+
     O4 -.-> D
     O4 -.-> A
+
     O5 -.-> I
+
     O6 -.-> A
+
     O7 -.-> A
 
-    RNF[RNF 01-27]
+    RNF["RNF-01 a RNF-26"]
 
     RNF --> O1
     RNF --> O2
@@ -478,6 +518,16 @@ flowchart TB
     RNF --> O5
     RNF --> O6
     RNF --> O7
+
+    style O1 fill:#FFF3B0,stroke:#D4AC0D,stroke-width:2px
+    style O2 fill:#D5F5E3,stroke:#27AE60,stroke-width:2px
+    style O3 fill:#D6EAF8,stroke:#3498DB,stroke-width:2px
+    style O4 fill:#F5C6F7,stroke:#9B59B6,stroke-width:2px
+    style O5 fill:#FFD6A5,stroke:#E67E22,stroke-width:2px
+    style O6 fill:#FADBD8,stroke:#E74C3C,stroke-width:2px
+    style O7 fill:#E5E7E9,stroke:#616A6B,stroke-width:2px
+
+    style CA fill:#F4F6F7,stroke:#2C3E50,stroke-width:2px
 ```
 
 ## 8. Control de cambios
