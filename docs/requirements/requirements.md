@@ -42,7 +42,7 @@ El sistema se integra en el flujo de trabajo del DJ, no lo sustituye. Analiza un
 ### 2.2.1 Diagrama de actores
 
 ```mermaid
-flowchart LR
+flowchart TB
 
     DJ[DJ]
 
@@ -53,14 +53,14 @@ flowchart LR
     FS[Sistema de<br/>Archivos Local]
     RB[Rekordbox]
 
-    DJ -->|Configura generacion| SG
-    DJ -->|Consulta resultados| SG
+    DJ -->|Configura<br/>generacion| SG
+    DJ -->|Consulta<br/>resultados| SG
 
-    FS -->|Biblioteca musical| SG
-    SG -->|Setlists exportados| FS
+    FS -->|Biblioteca<br/>musical| SG
+    SG -->|Setlists<br/>exportados| FS
 
-    SG -->|XML generado| RB
-    RB -->|Datos de referencia| SG
+    SG -->|XML<br/>generado| RB
+    RB -->|Datos de<br/>referencia| SG
 ```
 
 ### 2.3 Restricciones
