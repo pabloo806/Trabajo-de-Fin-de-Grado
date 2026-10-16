@@ -41,40 +41,26 @@ El sistema se integra en el flujo de trabajo del DJ, no lo sustituye. Analiza un
 
 ### 2.2.1 Diagrama de actores
 
-```mermaid
-flowchart LR
+flowchart TB
 
     DJ[DJ]
+
+    subgraph Sistema
+        SG[SetlistGen]
+    end
 
     FS[Sistema de Archivos Local]
     RB[Rekordbox]
 
-    DJ -->|Selecciona biblioteca| FS
+    DJ -->|Configura generacion| SG
+    DJ -->|Consulta resultados| SG
 
-    FS -->|Audio MP3 WAV FLAC AIFF| IMPORT
+    FS -->|Biblioteca musical| SG
+    SG -->|Setlists exportados| FS
 
-    IMPORT[Importación Musical]
-    ANALYSIS[Motor de Análisis]
-    DB[(Base de Datos)]
-    SETLIST[Generador de Setlists]
-    EXPORT[Exportador]
-    PANEL[Panel y Estadísticas]
-
-    IMPORT --> ANALYSIS
-    ANALYSIS --> DB
-    DB --> SETLIST
-    DB --> PANEL
-    SETLIST --> EXPORT
-
-    DJ -->|Configura sesión| SETLIST
-    DJ -->|Consulta estadísticas| PANEL
-
-    EXPORT -->|XML / M3U| RB
-
-    RB -->|Valores de referencia BPM y Key| EVAL[Evaluación]
-    DB --> EVAL
-    EVAL --> DJ
-```
+    SG -->|XML generado| RB
+    RB -->|Datos de referencia| SG
+    
 
 ### 2.3 Restricciones
 - El audio y los datos se procesan en local.
