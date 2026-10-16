@@ -141,60 +141,61 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 | RF-29 | El sistema permitirá contrastar los descriptores estimados con valores de referencia de Rekordbox para las mismas pistas y producirá un informe de discrepancias | O7 | Should | A/I | El informe incluye las métricas de RNF-05 a RNF-09 |
 
 ### 3.8 Mapa de requisitos funcionales
+
 ```mermaid
 flowchart LR
 
-    subgraph O1["O1 Importación"]
-        RF01((01))
-        RF02((02))
-        RF03((03))
+    subgraph O1["O1 - Importación"]
+        RF01(("RF-01<br/>Recorrer<br/>biblioteca"))
+        RF02(("RF-02<br/>Validar<br/>formatos"))
+        RF03(("RF-03<br/>Extraer<br/>metadatos"))
     end
 
-    subgraph O2["O2 Análisis"]
-        RF04((04))
-        RF05((05))
-        RF06((06))
-        RF07((07))
+    subgraph O2["O2 - Análisis Musical"]
+        RF04(("RF-04<br/>Estimar<br/>BPM"))
+        RF05(("RF-05<br/>Estimar<br/>tonalidad"))
+        RF06(("RF-06<br/>Conversión<br/>Camelot"))
+        RF07(("RF-07<br/>Trazabilidad<br/>análisis"))
     end
 
-    subgraph O3["O3 BBDD"]
-        RF08((08))
-        RF09((09))
-        RF09B((09b))
-        RF10((10))
-        RF11((11))
-        RF11B((11b))
+    subgraph O3["O3 - Base de Datos"]
+        RF08(("RF-08<br/>Persistencia<br/>pistas"))
+        RF09(("RF-09<br/>Evitar<br/>reanálisis"))
+        RF09B(("RF-09b<br/>Nuevas<br/>pistas"))
+        RF10(("RF-10<br/>Histórico<br/>setlists"))
+        RF11(("RF-11<br/>Consultas<br/>filtradas"))
+        RF11B(("RF-11b<br/>Ordenación<br/>consultas"))
     end
 
-    subgraph O4["O4 Generador"]
-        RF12((12))
-        RF13((13))
-        RF14((14))
-        RF15((15))
-        RF16((16))
-        RF17((17))
-        RF18((18))
-        RF19((19))
-        RF20((20))
-        RF20B((20b))
+    subgraph O4["O4 - Generador"]
+        RF12(("RF-12<br/>Duración<br/>objetivo"))
+        RF13(("RF-13<br/>Rango<br/>BPM"))
+        RF14(("RF-14<br/>Compatibilidad<br/>armónica"))
+        RF15(("RF-15<br/>Progresión<br/>géneros"))
+        RF16(("RF-16<br/>Pistas<br/>ancladas"))
+        RF17(("RF-17<br/>Generación<br/>automática"))
+        RF18(("RF-18<br/>Sin<br/>duplicados"))
+        RF19(("RF-19<br/>Gestión<br/>conflictos"))
+        RF20(("RF-20<br/>Revisión<br/>resultado"))
+        RF20B(("RF-20b<br/>Edición<br/>manual"))
     end
 
-    subgraph O5["O5 Exportación"]
-        RF21((21))
-        RF22((22))
-        RF23((23))
+    subgraph O5["O5 - Exportación"]
+        RF21(("RF-21<br/>Exportación<br/>XML"))
+        RF22(("RF-22<br/>Resolución<br/>rutas"))
+        RF23(("RF-23<br/>Validación<br/>Rekordbox"))
     end
 
-    subgraph O6["O6 Estadísticas"]
-        RF24((24))
-        RF25((25))
-        RF26((26))
-        RF27((27))
-        RF28((28))
+    subgraph O6["O6 - Estadísticas"]
+        RF24(("RF-24<br/>Historial<br/>setlists"))
+        RF25(("RF-25<br/>Ranking<br/>pistas"))
+        RF26(("RF-26<br/>Distribuciones<br/>musicales"))
+        RF27(("RF-27<br/>Evolución<br/>temporal"))
+        RF28(("RF-28<br/>Exportación<br/>datos"))
     end
 
-    subgraph O7["O7 Evaluación"]
-        RF29((29))
+    subgraph O7["O7 - Evaluación"]
+        RF29(("RF-29<br/>Comparación<br/>Rekordbox"))
     end
 ```
 ---
