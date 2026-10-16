@@ -144,14 +144,6 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 
 ```mermaid
 flowchart TB
-    style O1x fill:transparent,stroke:transparent
-    style O2x fill:transparent,stroke:transparent
-    style O3x fill:transparent,stroke:transparent
-    style O4x fill:transparent,stroke:transparent
-    style O5x fill:transparent,stroke:transparent
-    style O6x fill:transparent,stroke:transparent
-    style O7x fill:transparent,stroke:transparent
-
     subgraph O1["O1 - Importación"]
         direction LR
         RF01(("RF-01<br/>Biblioteca"))
