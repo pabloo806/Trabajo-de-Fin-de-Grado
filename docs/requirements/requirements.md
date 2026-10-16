@@ -531,7 +531,9 @@ flowchart TB
 ```
 
 ## 8. Control de cambios
+
 | Versión | Fecha | Cambio | Autor |
 |---|---|---|---|
-| 1.0 | 2026-10-09 | Versión inicial propuesta | P. Hernández |
-| 2.0 | 2026-10-15 | Versión corregida de los requisitos propuesta | P. Hernández |
+| 1.0 | 2026-10-09 | Versión inicial de la especificación de requisitos | P. Hernández |
+| 2.0 | 2026-10-15 | Consolidación de la especificación de requisitos previa al diseño arquitectónico. Revisión y ampliación de requisitos funcionales y no funcionales, actualización de trazabilidad, diagramas, priorización MoSCoW e implicaciones arquitectónicas. | P. Hernández |
+| 3.0 | 2026-10-16 | Revisión final de la especificación. Corrección y renumeración de requisitos no funcionales, actualización de la trazabilidad entre objetivos, RF y RNF, ajuste del resumen MoSCoW, refinamiento de las implicaciones arquitectónicas basadas en Clean Architecture y actualización de los mapas de requisitos funcionales y no funcionales. | P. Hernández |
