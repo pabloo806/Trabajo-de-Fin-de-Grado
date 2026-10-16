@@ -141,56 +141,61 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 | RF-29 | El sistema permitirá contrastar los descriptores estimados con valores de referencia de Rekordbox para las mismas pistas y producirá un informe de discrepancias | O7 | Should | A/I | El informe incluye las métricas de RNF-05 a RNF-09 |
 
 ### 3.8 Mapa de requisitos funcionales
-
 ```mermaid
-mindmap
-  root((SRS))
+flowchart LR
 
-    O1 Importacion
-      RF-01 Biblioteca recursiva
-      RF-02 Validacion formatos
-      RF-03 Extraccion metadatos
+    subgraph O1["O1 Importación"]
+        RF01((01))
+        RF02((02))
+        RF03((03))
+    end
 
-    O2 Analisis Musical
-      RF-04 Estimacion BPM
-      RF-05 Estimacion tonalidad
-      RF-06 Conversion Camelot
-      RF-07 Trazabilidad analisis
+    subgraph O2["O2 Análisis"]
+        RF04((04))
+        RF05((05))
+        RF06((06))
+        RF07((07))
+    end
 
-    O3 Base de Datos
-      RF-08 Persistencia pistas
-      RF-09 Evitar reanalisis
-      RF-09b Deteccion nuevas pistas
-      RF-10 Historico setlists
-      RF-11 Consultas filtradas
-      RF-11b Ordenacion consultas
+    subgraph O3["O3 BBDD"]
+        RF08((08))
+        RF09((09))
+        RF09B((09b))
+        RF10((10))
+        RF11((11))
+        RF11B((11b))
+    end
 
-    O4 Generador Setlists
-      RF-12 Duracion objetivo
-      RF-13 Rango BPM
-      RF-14 Compatibilidad armonica
-      RF-15 Progresion generos
-      RF-16 Pistas ancladas
-      RF-17 Generacion automatica
-      RF-18 Sin duplicados
-      RF-19 Gestion conflictos
-      RF-20 Revision resultado
-      RF-20b Edicion manual
+    subgraph O4["O4 Generador"]
+        RF12((12))
+        RF13((13))
+        RF14((14))
+        RF15((15))
+        RF16((16))
+        RF17((17))
+        RF18((18))
+        RF19((19))
+        RF20((20))
+        RF20B((20b))
+    end
 
-    O5 Exportacion
-      RF-21 Exportacion XML
-      RF-22 Resolucion rutas
-      RF-23 Validacion Rekordbox
+    subgraph O5["O5 Exportación"]
+        RF21((21))
+        RF22((22))
+        RF23((23))
+    end
 
-    O6 Panel Estadisticas
-      RF-24 Historial setlists
-      RF-25 Ranking pistas
-      RF-26 Distribuciones musicales
-      RF-27 Evolucion temporal
-      RF-28 Exportacion estadisticas
+    subgraph O6["O6 Estadísticas"]
+        RF24((24))
+        RF25((25))
+        RF26((26))
+        RF27((27))
+        RF28((28))
+    end
 
-    O7 Evaluacion
-      RF-29 Comparacion Rekordbox
+    subgraph O7["O7 Evaluación"]
+        RF29((29))
+    end
 ```
 ---
 
