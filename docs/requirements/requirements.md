@@ -249,35 +249,35 @@ Referencia: valores de Rekordbox sobre las mismas pistas. Las métricas se repor
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
 | RNF-13 | Eficiencia de uso | Un DJ nuevo genera y exporta su primer setlist en ≤ 10 min con la biblioteca ya analizada (P) | Prueba con usuarios | Should |
-| RNF-15 | Retroalimentación | Progreso en operaciones de más de 5 s; mensajes de error con causa y acción sugerida | Revisión y pruebas funcionales | Must |
+| RNF-14 | Retroalimentación | Progreso en operaciones de más de 5 s; mensajes de error con causa y acción sugerida | Revisión y pruebas funcionales | Must |
 
 ### 4.5 Robustez
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
-| RNF-16 | Aislamiento de fallos | El fallo en una pista no interrumpe el lote; el 100 % de los fallos queda registrado con su causa | Test con ficheros corruptos | Must |
-| RNF-17 | Rutas y nombres | Funciona con espacios, tildes, caracteres Unicode y rutas largas en ambos sistemas | Tests en CI y pruebas manuales | Must |
-| RNF-18 | Integridad de datos | Una interrupción no deja la BD inconsistente; las operaciones se confirman de forma atómica | Test de interrupción | Must |
-| RNF-19 | Escala | El sistema mantendrá un crecimiento aproximadamente lineal del tiempo de generación al aumentar el tamaño de la biblioteca | Benchmark | Should |
+| RNF-15 | Aislamiento de fallos | El fallo en una pista no interrumpe el lote; el 100 % de los fallos queda registrado con su causa | Test con ficheros corruptos | Must |
+| RNF-16 | Rutas y nombres | Funciona con espacios, tildes, caracteres Unicode y rutas largas en ambos sistemas | Tests en CI y pruebas manuales | Must |
+| RNF-17 | Integridad de datos | Una interrupción no deja la BD inconsistente; las operaciones se confirman de forma atómica | Test de interrupción | Must |
+| RNF-18 | Escala | El sistema mantendrá un crecimiento aproximadamente lineal del tiempo de generación al aumentar el tamaño de la biblioteca | Benchmark | Should |
 
 ### 4.6 Portabilidad
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
-| RNF-20 | Sistemas soportados | Windows 10/11 y macOS vigente, con los mismos resultados funcionales | CI en ambos sistemas y pruebas manuales | Must |
-| RNF-21 | Instalación reproducible | Entorno completo desde cero en ≤ 30 min siguiendo el manual, con dependencias fijadas | Prueba de instalación limpia | Must |
-| RNF-22 | Independencia de rutas | La lógica de dominio no depende del formato de rutas del sistema operativo; la adaptación se hace en infraestructura | Revisión de diseño y tests | Must |
+| RNF-19 | Sistemas soportados | Windows 10/11 y macOS vigente, con los mismos resultados funcionales | CI en ambos sistemas y pruebas manuales | Must |
+| RNF-20 | Instalación reproducible | Entorno completo desde cero en ≤ 30 min siguiendo el manual, con dependencias fijadas | Prueba de instalación limpia | Must |
+| RNF-21 | Independencia de rutas | La lógica de dominio no depende del formato de rutas del sistema operativo; la adaptación se hace en infraestructura | Revisión de diseño y tests | Must |
 
 ### 4.7 Mantenibilidad y arquitectura
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
-| RNF-23 | Regla de dependencia | Dominio y aplicación no importan frameworks, librerías de audio, de base de datos ni de interfaz | Comprobación automática en CI | Must |
-| RNF-24 | Sustituibilidad | El analizador, el repositorio y el exportador se acceden mediante puertos; cambiar su implementación no modifica dominio ni aplicación | Tests con dobles y con una segunda implementación | Must |
-| RNF-25 | Calidad de código | Cobertura ≥ 80 % en dominio y aplicación; tipado estático sin errores; análisis estático sin incidencias bloqueantes | CI | Must |
+| RNF-22 | Regla de dependencia | Dominio y aplicación no importan frameworks, librerías de audio, de base de datos ni de interfaz | Comprobación automática en CI | Must |
+| RNF-23 | Sustituibilidad | El analizador, el repositorio y el exportador se acceden mediante puertos; cambiar su implementación no modifica dominio ni aplicación | Tests con dobles y con una segunda implementación | Must |
+| RNF-24 | Calidad de código | Cobertura ≥ 80 % en dominio y aplicación; tipado estático sin errores; análisis estático sin incidencias bloqueantes | CI | Must |
 
 ### 4.8 Privacidad y cumplimiento
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
-| RNF-26 | Procesamiento local | Ningún fichero de audio ni dato de la biblioteca sale del equipo del DJ | Revisión de diseño | Must |
-| RNF-27 | Licencias | Inventario de licencias de las dependencias; compatibilidad con la licencia del repositorio | ADR-007 | Must |
+| RNF-25 | Procesamiento local | Ningún fichero de audio ni dato de la biblioteca sale del equipo del DJ | Revisión de diseño | Must |
+| RNF-26 | Licencias | Inventario de licencias de las dependencias; compatibilidad con la licencia del repositorio | ADR-007 | Must |
 
 ### 4.9 Mapa de requisitos no funcionales
 
@@ -311,35 +311,35 @@ flowchart TB
     subgraph USAB["4.4 Usabilidad"]
         direction LR
         RNF13(("RNF-13<br/>Eficiencia<br/>uso"))
-        RNF15(("RNF-15<br/>Retroalimentacion"))
+        RNF15(("RNF-14<br/>Retroalimentacion"))
     end
 
     subgraph ROB["4.5 Robustez"]
         direction LR
-        RNF16(("RNF-16<br/>Aislamiento<br/>fallos"))
-        RNF17(("RNF-17<br/>Rutas y<br/>nombres"))
-        RNF18(("RNF-18<br/>Integridad<br/>datos"))
-        RNF19(("RNF-19<br/>Escala"))
+        RNF16(("RNF-15<br/>Aislamiento<br/>fallos"))
+        RNF17(("RNF-16<br/>Rutas y<br/>nombres"))
+        RNF18(("RNF-17<br/>Integridad<br/>datos"))
+        RNF19(("RNF-18<br/>Escala"))
     end
 
     subgraph PORT["4.6 Portabilidad"]
         direction LR
-        RNF20(("RNF-20<br/>Sistemas<br/>soportados"))
-        RNF21(("RNF-21<br/>Instalacion<br/>reproducible"))
-        RNF22(("RNF-22<br/>Independencia<br/>rutas"))
+        RNF20(("RNF-19<br/>Sistemas<br/>soportados"))
+        RNF21(("RNF-20<br/>Instalacion<br/>reproducible"))
+        RNF22(("RNF-21<br/>Independencia<br/>rutas"))
     end
 
     subgraph ARQ["4.7 Mantenibilidad y Arquitectura"]
         direction LR
-        RNF23(("RNF-23<br/>Regla de<br/>dependencia"))
-        RNF24(("RNF-24<br/>Sustituibilidad"))
-        RNF25(("RNF-25<br/>Calidad<br/>codigo"))
+        RNF23(("RNF-22<br/>Regla de<br/>dependencia"))
+        RNF24(("RNF-23<br/>Sustituibilidad"))
+        RNF25(("RNF-24<br/>Calidad<br/>codigo"))
     end
 
     subgraph PRIV["4.8 Privacidad y Cumplimiento"]
         direction LR
-        RNF26(("RNF-26<br/>Procesamiento<br/>local"))
-        RNF27(("RNF-27<br/>Licencias"))
+        RNF26(("RNF-25<br/>Procesamiento<br/>local"))
+        RNF27(("RNF-26<br/>Licencias"))
     end
 
     style REND fill:#FFF3B0,stroke:#D4AC0D,stroke-width:2px
@@ -355,23 +355,35 @@ flowchart TB
 
 ## 5. Trazabilidad
 
-| Objetivo del anteproyecto | RF | RNF principales |
+| Objetivo del anteproyecto | Requisitos funcionales asociados | Requisitos no funcionales principales |
 |---|---|---|
-| O1 Importación | RF-01, 02, 03 | RNF-16, 17 |
-| O2 Motor de análisis | RF-04, 05, 06, 07 | RNF-01, 02, 05-09 |
-| O3 Base de datos | RF-08, 09, 10, 11 | RNF-04, 18, 19 |
-| O4 Generador | RF-12 a 20 | RNF-03, 10, 11, 12 |
-| O5 Exportación | RF-21, 22, 23 | RNF-17, 22 |
-| O6 Panel | RF-24 a 28 | — |
-| O7 Evaluación | RF-29 | RNF-05 a 09, 12 |
+| O1 Importación de fuentes musicales | RF-01, RF-02, RF-03 | RNF-15, RNF-16 |
+| O2 Motor de análisis musical | RF-04, RF-05, RF-06, RF-07 | RNF-01, RNF-02, RNF-05, RNF-06, RNF-07, RNF-08, RNF-09 |
+| O3 Base de datos local | RF-08, RF-09, RF-09b, RF-10, RF-11, RF-11b | RNF-04, RNF-17, RNF-18 |
+| O4 Generador de setlists | RF-11, RF-11b, RF-12, RF-13, RF-14, RF-15, RF-16, RF-17, RF-18, RF-19, RF-20, RF-20b | RNF-03, RNF-10, RNF-11, RNF-12, RNF-13, RNF-14 |
+| O5 Exportación a Rekordbox | RF-21, RF-22, RF-23 | RNF-16, RNF-21 |
+| O6 Panel de gestión y estadísticas | RF-24, RF-25, RF-26, RF-27, RF-28 | RNF-13, RNF-14 |
+| O7 Evaluación | RF-29 | RNF-05, RNF-06, RNF-07, RNF-08, RNF-09, RNF-12 |
 
 ## 6. Resumen MoSCoW
-- Must: 20 RF y 21 RNF.
-- Should: 4 RF (RF-07, 15, 16, 29) y 6 RNF.
-- Could: 5 RF (panel, RF-24 a 28).
+
+### Requisitos funcionales
+
+- Must: 22 RF.
+- Should: 4 RF (RF-07, RF-15, RF-16 y RF-29).
+- Could: 6 RF (RF-20b y RF-24 a RF-28).
 - Won't: ver sección 2.5.
 
-RF-15 (progresión de géneros) es el primer candidato a pasar a Must si la calidad de las etiquetas del dataset lo permite.
+### Requisitos no funcionales
+
+- Must: 22 RNF.
+- Should: 4 RNF (RNF-02, RNF-12, RNF-13 y RNF-18).
+- Could: 0 RNF.
+- Won't: ver sección 2.5.
+
+RF-15 (progresión de géneros) constituye el principal candidato a ser promovido a Must si la calidad y completitud de las etiquetas de género disponibles en el dataset resultan suficientes durante la implementación y validación experimental.
+
+RNF-12 (valoración por DJs) y RNF-13 (eficiencia de uso) están condicionados a la disponibilidad de participantes para la realización de pruebas con usuarios durante la fase de evaluación.
 
 ## 7. Implicaciones arquitectónicas (Clean Architecture)
 - **Dominio:** Pista, Descriptor, Biblioteca, Setlist, Parámetros de generación, Transición, Notación Camelot y reglas de compatibilidad (RF-06, 17, 18).
