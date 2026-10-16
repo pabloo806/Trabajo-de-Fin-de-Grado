@@ -115,7 +115,7 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 | RF-16 | El DJ podrá anclar pistas en posiciones concretas del setlist | O4 | Should | A/D | Cada pista anclada ocupa su posición en el resultado |
 | RF-17 | El sistema propondrá un orden de reproducción que respete las restricciones, con saltos de tempo moderados y tonalidades compatibles según la Rueda Camelot | O4 | Must | D | Se cumple RNF-10 |
 | RF-18 | El sistema no repetirá una pista dentro de un mismo setlist | O4 | Must | D | Ninguna pista aparece dos veces |
-| RF-19 | Cuando las restricciones no puedan satisfacerse, el sistema lo indicará e identificará las restricciones en conflicto | O4 | Must | A | No se genera ni persiste un setlist que incumpla restricciones sin avisar |
+| RF-19 | Cuando las restricciones definidas por el usuario no puedan satisfacerse simultáneamente, el sistema informará de la imposibilidad de generar el setlist e identificará las restricciones en conflicto | O4 | Must | A | Si no existe una combinación de pistas que satisfaga todas las restricciones establecidas, el sistema muestra un mensaje identificando las restricciones incompatibles y no genera ni almacena un setlist inválido |
 | RF-20 | El sistema mostrará el setlist generado con el orden, los descriptores de cada pista y la evaluación de cada transición | O4 | Must | P | El DJ puede revisar el resultado antes de exportarlo |
 
 ### 3.5 Exportación a Rekordbox (O5)
