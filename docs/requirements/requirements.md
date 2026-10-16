@@ -144,17 +144,6 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 
 ```mermaid
 flowchart TB
-
-    O1x((O1))
-    O2x((O2))
-    O3x((O3))
-    O4x((O4))
-    O5x((O5))
-    O6x((O6))
-    O7x((O7))
-
-    O1x ---> O2x ---> O3x ---> O4x ---> O5x ---> O6x ---> O7x
-
     style O1x fill:transparent,stroke:transparent
     style O2x fill:transparent,stroke:transparent
     style O3x fill:transparent,stroke:transparent
