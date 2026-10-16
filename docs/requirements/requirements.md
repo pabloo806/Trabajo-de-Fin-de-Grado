@@ -60,7 +60,6 @@ flowchart TB
 
     SG -->|XML generado| RB
     RB -->|Datos de referencia| SG
-    
 
 ### 2.3 Restricciones
 - El audio y los datos se procesan en local.
