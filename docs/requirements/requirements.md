@@ -146,12 +146,14 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 flowchart LR
 
     subgraph O1["O1 - Importación"]
+        direction TB
         RF01(("RF-01<br/>Recorrer<br/>biblioteca"))
         RF02(("RF-02<br/>Validar<br/>formatos"))
         RF03(("RF-03<br/>Extraer<br/>metadatos"))
     end
 
     subgraph O2["O2 - Análisis Musical"]
+        direction TB
         RF04(("RF-04<br/>Estimar<br/>BPM"))
         RF05(("RF-05<br/>Estimar<br/>tonalidad"))
         RF06(("RF-06<br/>Conversión<br/>Camelot"))
@@ -159,6 +161,7 @@ flowchart LR
     end
 
     subgraph O3["O3 - Base de Datos"]
+        direction TB
         RF08(("RF-08<br/>Persistencia<br/>pistas"))
         RF09(("RF-09<br/>Evitar<br/>reanálisis"))
         RF09B(("RF-09b<br/>Nuevas<br/>pistas"))
@@ -168,6 +171,7 @@ flowchart LR
     end
 
     subgraph O4["O4 - Generador"]
+        direction TB
         RF12(("RF-12<br/>Duración<br/>objetivo"))
         RF13(("RF-13<br/>Rango<br/>BPM"))
         RF14(("RF-14<br/>Compatibilidad<br/>armónica"))
@@ -181,12 +185,14 @@ flowchart LR
     end
 
     subgraph O5["O5 - Exportación"]
+        direction TB
         RF21(("RF-21<br/>Exportación<br/>XML"))
         RF22(("RF-22<br/>Resolución<br/>rutas"))
         RF23(("RF-23<br/>Validación<br/>Rekordbox"))
     end
 
     subgraph O6["O6 - Estadísticas"]
+        direction TB
         RF24(("RF-24<br/>Historial<br/>setlists"))
         RF25(("RF-25<br/>Ranking<br/>pistas"))
         RF26(("RF-26<br/>Distribuciones<br/>musicales"))
@@ -195,9 +201,11 @@ flowchart LR
     end
 
     subgraph O7["O7 - Evaluación"]
+        direction TB
         RF29(("RF-29<br/>Comparación<br/>Rekordbox"))
     end
 ```
+
 ---
 
 ## 4. Requisitos no funcionales
