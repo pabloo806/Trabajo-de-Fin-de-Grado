@@ -122,7 +122,7 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 ### 3.5 Exportación a Rekordbox (O5)
 | ID | Requisito | Obj. | MoSCoW | Capa | Criterio de aceptación |
 |---|---|---|---|---|---|
-| RF-21 | El sistema exportará el setlist en al menos un formato importable por Rekordbox (XML o M3U/M3U8, según ADR-005) | O5 | Must | I (puerto en A) | El fichero es válido según la especificación del formato |
+| RF-21 | El sistema exportará los setlists en formato XML compatible con Rekordbox | O5 | Must | I (puerto en A) | El fichero es válido según la especificación del formato |
 | RF-22 | El sistema incluirá en la exportación las rutas de las pistas resueltas, de modo que Rekordbox las localice | O5 | Must | I | Ninguna pista queda con ruta no resuelta, salvo aviso explícito |
 | RF-23 | La lista exportada se cargará correctamente en Rekordbox con sus pistas resueltas | O5 | Must | — | Verificado manualmente en Rekordbox sobre un conjunto de setlists de prueba, con registro del resultado |
 
