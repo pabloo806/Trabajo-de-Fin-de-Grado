@@ -65,7 +65,7 @@ flowchart TB
 
 ### 2.3 Restricciones
 - El audio y los datos se procesan en local.
-- La implementación del análisis se propone en Python (anteproyecto, sección 3); la librería concreta se decide en ADR-002.
+- La implementación del análisis se propone en Python y la librería concreta se decide en ADR-002.
 - Base de datos ligera local, a concretar en ADR-004.
 - El formato de distribución (aplicación de escritorio, web local o complemento) queda abierto hasta ADR-001.
 
