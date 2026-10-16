@@ -215,8 +215,8 @@ Los valores marcados con (P) son provisionales hasta H2.
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
 | RNF-01 | Tiempo de análisis por pista | Media ≤ 10 % de la duración de la pista por núcleo (P) | Medición sobre el dataset en el equipo de referencia | Must |
-| RNF-02 | Análisis de lote | 500 pistas en ≤ 90 min con ≥ 4 núcleos (P) | Medición | Should |
-| RNF-03 | Generación de setlist | Setlist de 2 h sobre 5 000 pistas en ≤ 30 s, percentil 95 (P) | Benchmark automatizado | Must |
+| RNF-02 | Análisis de lote | El sistema deberá analizar un lote de 500 pistas en un tiempo compatible con RNF-01 | Medición | Should |
+| RNF-03 | Generación de setlist | Setlist de 2 h sobre 5 000 pistas en ≤ 60 s, percentil 95 (P) | Benchmark automatizado | Must |
 | RNF-04 | Reanálisis nulo | 0 pistas reanalizadas en una segunda importación; detección en ≤ 2 min para 5 000 pistas (P) | Test de integración | Must |
 
 ### 4.2 Precisión de las estimaciones
@@ -241,7 +241,6 @@ Referencia: valores de Rekordbox sobre las mismas pistas. Las métricas se repor
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
 |---|---|---|---|---|
 | RNF-13 | Eficiencia de uso | Un DJ nuevo genera y exporta su primer setlist en ≤ 10 min con la biblioteca ya analizada (P) | Prueba con usuarios | Should |
-| RNF-14 | Satisfacción | Puntuación SUS ≥ 68 (P) | Cuestionario SUS | Should |
 | RNF-15 | Retroalimentación | Progreso en operaciones de más de 5 s; mensajes de error con causa y acción sugerida | Revisión y pruebas funcionales | Must |
 
 ### 4.5 Robustez
@@ -250,7 +249,7 @@ Referencia: valores de Rekordbox sobre las mismas pistas. Las métricas se repor
 | RNF-16 | Aislamiento de fallos | El fallo en una pista no interrumpe el lote; el 100 % de los fallos queda registrado con su causa | Test con ficheros corruptos | Must |
 | RNF-17 | Rutas y nombres | Funciona con espacios, tildes, caracteres Unicode y rutas largas en ambos sistemas | Tests en CI y pruebas manuales | Must |
 | RNF-18 | Integridad de datos | Una interrupción no deja la BD inconsistente; las operaciones se confirman de forma atómica | Test de interrupción | Must |
-| RNF-19 | Escala | Sin degradación del cumplimiento de RNF-03 hasta 10 000 pistas (P) | Benchmark | Should |
+| RNF-19 | Escala | El sistema mantendrá un crecimiento aproximadamente lineal del tiempo de generación al aumentar el tamaño de la biblioteca | Benchmark | Should |
 
 ### 4.6 Portabilidad
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW |
@@ -275,51 +274,74 @@ Referencia: valores de Rekordbox sobre las mismas pistas. Las métricas se repor
 ### 4.9 Mapa de requisitos no funcionales
 
 ```mermaid
-mindmap
-  root((RNF))
+flowchart TB
 
-    Rendimiento
-      RNF-01
-      RNF-02
-      RNF-03
-      RNF-04
+    subgraph REND["4.1 Rendimiento"]
+        direction LR
+        RNF01(("RNF-01<br/>Analisis<br/>por pista"))
+        RNF02(("RNF-02<br/>Analisis<br/>de lote"))
+        RNF03(("RNF-03<br/>Generacion<br/>setlist"))
+        RNF04(("RNF-04<br/>Reanalisis<br/>nulo"))
+    end
 
-    Precision
-      RNF-05
-      RNF-06
-      RNF-07
-      RNF-08
-      RNF-09
+    subgraph PREC["4.2 Precision"]
+        direction LR
+        RNF05(("RNF-05<br/>BPM<br/>estricto"))
+        RNF06(("RNF-06<br/>BPM<br/>octavas"))
+        RNF07(("RNF-07<br/>Tonalidad<br/>exacta"))
+        RNF08(("RNF-08<br/>Compatibilidad<br/>Camelot"))
+        RNF09(("RNF-09<br/>Transparencia<br/>errores"))
+    end
 
-    Correccion
-      RNF-10
-      RNF-11
-      RNF-12
+    subgraph CORR["4.3 Correccion"]
+        direction LR
+        RNF10(("RNF-10<br/>Cumplimiento<br/>restricciones"))
+        RNF11(("RNF-11<br/>Determinismo"))
+        RNF12(("RNF-12<br/>Valoracion<br/>DJs"))
+    end
 
-    Usabilidad
-      RNF-13
-      RNF-14
-      RNF-15
+    subgraph USAB["4.4 Usabilidad"]
+        direction LR
+        RNF13(("RNF-13<br/>Eficiencia<br/>uso"))
+        RNF15(("RNF-15<br/>Retroalimentacion"))
+    end
 
-    Robustez
-      RNF-16
-      RNF-17
-      RNF-18
-      RNF-19
+    subgraph ROB["4.5 Robustez"]
+        direction LR
+        RNF16(("RNF-16<br/>Aislamiento<br/>fallos"))
+        RNF17(("RNF-17<br/>Rutas y<br/>nombres"))
+        RNF18(("RNF-18<br/>Integridad<br/>datos"))
+        RNF19(("RNF-19<br/>Escala"))
+    end
 
-    Portabilidad
-      RNF-20
-      RNF-21
-      RNF-22
+    subgraph PORT["4.6 Portabilidad"]
+        direction LR
+        RNF20(("RNF-20<br/>Sistemas<br/>soportados"))
+        RNF21(("RNF-21<br/>Instalacion<br/>reproducible"))
+        RNF22(("RNF-22<br/>Independencia<br/>rutas"))
+    end
 
-    Arquitectura
-      RNF-23
-      RNF-24
-      RNF-25
+    subgraph ARQ["4.7 Mantenibilidad y Arquitectura"]
+        direction LR
+        RNF23(("RNF-23<br/>Regla de<br/>dependencia"))
+        RNF24(("RNF-24<br/>Sustituibilidad"))
+        RNF25(("RNF-25<br/>Calidad<br/>codigo"))
+    end
 
-    Privacidad
-      RNF-26
-      RNF-27
+    subgraph PRIV["4.8 Privacidad y Cumplimiento"]
+        direction LR
+        RNF26(("RNF-26<br/>Procesamiento<br/>local"))
+        RNF27(("RNF-27<br/>Licencias"))
+    end
+
+    style REND fill:#FFF3B0,stroke:#D4AC0D,stroke-width:2px
+    style PREC fill:#D5F5E3,stroke:#27AE60,stroke-width:2px
+    style CORR fill:#D6EAF8,stroke:#3498DB,stroke-width:2px
+    style USAB fill:#FADBD8,stroke:#E74C3C,stroke-width:2px
+    style ROB fill:#F5C6F7,stroke:#9B59B6,stroke-width:2px
+    style PORT fill:#FFD6A5,stroke:#E67E22,stroke-width:2px
+    style ARQ fill:#D4E6F1,stroke:#5DADE2,stroke-width:2px
+    style PRIV fill:#E8DAEF,stroke:#8E44AD,stroke-width:2px
 ```
 ---
 
