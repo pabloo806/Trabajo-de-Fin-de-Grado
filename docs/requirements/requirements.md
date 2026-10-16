@@ -203,6 +203,14 @@ flowchart TB
         direction LR
         RF29(("RF-29<br/>Comparación"))
     end
+
+style O1 fill:#FFF3B0,stroke:#D4AC0D,stroke-width:2px
+style O2 fill:#D5F5E3,stroke:#27AE60,stroke-width:2px
+style O3 fill:#D6EAF8,stroke:#3498DB,stroke-width:2px
+style O4 fill:#F5C6F7,stroke:#9B59B6,stroke-width:2px
+style O5 fill:#FFD6A5,stroke:#E67E22,stroke-width:2px
+style O6 fill:#FADBD8,stroke:#E74C3C,stroke-width:2px
+style O7 fill:#E5E7E9,stroke:#616A6B,stroke-width:2px
 ```
 
 ---
