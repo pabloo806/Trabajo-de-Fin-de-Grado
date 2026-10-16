@@ -1,0 +1,110 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EDUAH/12 - Inclusión de tercer director/a de tesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,a4paper,oneside]{article}
+\input{../Config/preamble.tex}
+\input{../Config/myconfig.tex}
+\InputIfFileExists{../Config/myconfig-phd.tex}{}{}
+\input{../Config/postamble.tex}
+\input{phd-form-layout.tex}
+
+\providecommand{\myThirdThesisDirectorFullName}{}
+\providecommand{\myThirdThesisDirectorDNI}{}
+\providecommand{\myThirdThesisDirectorEmail}{}
+\providecommand{\myThirdThesisDirectorDoctorate}{}
+\providecommand{\myThirdThesisDirectorInstitution}{}
+\providecommand{\myThirdThesisDirectorBelongsToProgram}{}
+\providecommand{\myThirdThesisDirectorHasSexenio}{}
+\providecommand{\myThirdThesisDirectorEquivalentMerits}{}
+\providecommand{\myThirdThesisDirectorJustification}{}
+\providecommand{\myThirdThesisDirectorWorkDistribution}{}
+\providecommand{\myAcademicCommissionDecision}{}
+\providecommand{\myAcademicCommissionReasons}{}
+\providecommand{\myAcademicCommissionCoordinator}{}
+
+\begin{document}
+\fontsize{7.7}{9.3}\selectfont
+\PhDModernHeader{INCLUSIÓN TERCER DIRECTOR/A DE TESIS. RD 99/2011}
+
+\PhDSectionBar{\textbf{DOCTORANDO/A}}
+\begin{tabularx}{\linewidth}{|p{3.0cm}|X|p{2.7cm}|X|p{2.5cm}|p{3.1cm}|}
+\hline \textbf{Apellidos:} & \myAuthorSurname & \textbf{Nombre:} & \myAuthorName & \textbf{DNI/pasaporte:} & \myAuthorDNI\\\hline
+\multicolumn{2}{|l|}{\textbf{Teléfono/s:} \myAuthorTelephone} & \multicolumn{4}{l|}{\textbf{Correo electrónico:} \myAuthorEmail}\\\hline
+\multicolumn{6}{|l|}{\textbf{Programa:} \myPhDProgram}\\\hline
+\end{tabularx}
+
+\PhDSectionBar{\textbf{SOLICITA:}}
+\PhDCheckedBox\ Inclusión de tercer Director/a de Tesis
+
+\vspace{0.14cm}\textbf{Nuevo Director/a}\par
+\begin{tabularx}{\linewidth}{|>{\bfseries}p{5.3cm}|X|}
+\hline Apellidos y nombre: & \myThirdThesisDirectorFullName\\\hline
+DNI/Pasaporte: & \myThirdThesisDirectorDNI\\\hline
+Correo electrónico: & \myThirdThesisDirectorEmail\\\hline
+Doctor/a en: & \myThirdThesisDirectorDoctorate\\\hline
+Universidad/Organismo/Institución: & \myThirdThesisDirectorInstitution\\\hline
+Pertenece al plantel de profesores del programa: & \PhDYesNo{\myThirdThesisDirectorBelongsToProgram}\\\hline
+Perfil investigador afín y al menos un sexenio: & \PhDYesNo{\myThirdThesisDirectorHasSexenio}\\\hline
+Méritos equiparables a los señalados: & \PhDYesNo{\myThirdThesisDirectorEquivalentMerits}\\\hline
+\end{tabularx}
+
+\PhDSectionBar{\textbf{Términos del compromiso documental y de buenas prácticas}}
+Con carácter general, los firmantes declaran que conocen la normativa general vigente reguladora de los estudios de doctorado y la específica de la Universidad de Alcalá, así como las recomendaciones recogidas en el Código de Buenas Prácticas de la EDUAH, aceptando todas sus disposiciones. Con carácter específico, suscriben el compromiso en los siguientes términos:
+\begin{itemize}[leftmargin=0.45cm,itemsep=0pt,topsep=0.05cm,parsep=0pt]
+\item \textbf{Para el doctorando:} cumplir la normativa referente a la propiedad intelectual e industrial, llevar a cabo el documento de actividades y el plan de investigación aprobados, seguir las indicaciones del Tutor y del Director/a, respetar el código de ética o buenas prácticas y seguir el procedimiento establecido en caso de conflicto.
+\item \textbf{Para el Tutor:} diseñar y seguir las actividades del doctorando, orientarle en su formación, elaborar el informe anual sobre el documento de actividades y comparecer ante la Comisión Académica si fuera requerido.
+\item \textbf{Para el Director/a de la tesis:} respetar la normativa de propiedad intelectual e industrial, supervisar el plan de investigación y la elaboración de la tesis mediante reuniones periódicas, elaborar el informe anual y comparecer ante la Comisión Académica si fuera requerido.
+\item \textbf{Para la Universidad:} proporcionar al doctorando los recursos que consten en el plan de investigación para realizar los trabajos que lleven a la elaboración de la tesis doctoral.
+\end{itemize}
+
+\vspace{0.15cm}
+\begin{center}Alcalá de Henares, \PhDUnderline{5.0cm}{\myPaperworkDate}\end{center}
+\begin{center}
+\PhDSignatureLine{Firma del nuevo Director/a}\hfill
+\PhDSignatureLine{Firma del doctorando/a}\hfill
+\PhDSignatureLine{Vº Bº de los otros Directores/as}
+\end{center}
+\textbf{COMISIÓN ACADÉMICA DEL PROGRAMA DE DOCTORADO EN}\par
+\PhDUnderline{\linewidth}{\myPhDProgram}
+\enlargethispage{1.8cm}
+\PhDPrivacyFooter{14/06/2023}{EDUAH/12}
+
+\newpage
+\fontsize{8.6}{10.4}\selectfont
+\PhDModernHeader{}
+\PhDSectionBar{\textbf{JUSTIFICACIÓN}}
+\PhDCheckedBox\ Justificación razonada de la necesidad de tercer Director de Tesis\textsuperscript{1}\\[0.15cm]
+\PhDResponseBox{8.0cm}{\myThirdThesisDirectorJustification}
+
+\vspace{0.35cm}
+\PhDSectionBar{\textbf{Descripción de la labor de dirección que desempeñará cada uno de los tres Directores/as}\textsuperscript{1}}
+\PhDResponseBox{7.0cm}{\myThirdThesisDirectorWorkDistribution}
+
+\vfill
+{\scriptsize\textsuperscript{1} Al menos uno de los tres directores/as debe pertenecer a una institución diferente a la Universidad de Alcalá. Excepcionalmente, la Escuela de Doctorado podrá autorizar tres directores/as de la Universidad de Alcalá si se justifica razonadamente el papel diferenciador de cada uno de ellos.}
+\vspace{0.2cm}
+
+\textbf{COMISIÓN ACADÉMICA DEL PROGRAMA DE DOCTORADO EN}\par
+\PhDUnderline{\linewidth}{\myPhDProgram}
+\enlargethispage{1.8cm}
+\PhDPrivacyFooter{14/06/2023}{EDUAH/12}
+
+\newpage
+\fontsize{9}{10.8}\selectfont
+\PhDModernHeader{}
+\PhDSectionBar{\textbf{INFORME DE LA COMISIÓN ACADÉMICA}}
+La Comisión Académica del programa en\\[0.08cm]
+\PhDUnderline{\linewidth}{\myPhDProgram}\\[0.45cm]
+A la vista de la solicitud y de la documentación presentada, acuerda:\\[0.35cm]
+\PhDChoice{\myAcademicCommissionDecision}{Favorable}{Informar favorablemente, dado que considera la solicitud debidamente justificada.}\\[0.45cm]
+\PhDChoice{\myAcademicCommissionDecision}{Desfavorable}{Informar desfavorablemente. Motivos:}\\[0.12cm]
+\PhDResponseBox{5.3cm}{\myAcademicCommissionReasons}
+
+\vfill
+\begin{flushright}
+Alcalá de Henares, \PhDUnderline{5.5cm}{\myPaperworkDate}\\[0.35cm]
+El/la Coordinador/a del Programa\\[1.25cm]
+Fdo.: \PhDUnderline{6.5cm}{\myAcademicCommissionCoordinator}
+\end{flushright}
+\PhDPrivacyFooter{14/06/2023}{EDUAH/12}
+\end{document}

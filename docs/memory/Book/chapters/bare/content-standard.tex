@@ -1,0 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: organización mínima de los documentos estándar.
+%
+% Uso: copia esta organización mínima a Book/content-standard.tex.
+% Modifica la copia para organizar el contenido de tu trabajo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{chapters/introduccion.tex}
+\input{chapters/estudioTeorico.tex}
+\input{chapters/desarrollo.tex}
+\input{chapters/resultados.tex}
+\input{chapters/conclusiones.tex}
+
+\input{biblio/bibliography.tex}
+
+\begin{appendices}
+  \input{appendix/manual.tex}
+  \input{appendix/herramientas.tex}
+  % Apéndice de la plantilla ETSIT-UPM; se omite para los demás centros.
+  \ifthenelse{\equal{\myUniversityAcronym}{UPM}\AND\equal{\mySchool}{Escuela Técnica Superior de Ingenieros de Telecomunicación}}
+    {\input{appendix/aspectos-eticos.tex}}
+    {}
+\end{appendices}
+
+%%% Local Variables:
+%%% TeX-master: "book"
+%%% End:

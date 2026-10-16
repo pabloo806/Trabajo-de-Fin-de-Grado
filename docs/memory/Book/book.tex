@@ -1,0 +1,218 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plantilla genérica para TFG/TFM/Tesis.
+%
+% Función: documento principal.
+%
+% Uso: compila este fichero. Normalmente no necesitas modificarlo:
+% configura Config/myconfig.tex y organiza los capítulos y apéndices en
+% content-standard.tex o content-compendium.tex.
+%
+% Autores: Javier Macías-Guarasa (UAH), Roberto Barra-Chicote (UPM, Amazon).
+%
+% Basada en fuentes de Roberto Barra, Manuel Ocaña, Jesús Nuevo,
+% Pedro Revenga, Fernando Herránz y Noelia Hernández.
+% Adaptación original para la URJC: Rubén Nieto Capuchino.
+% Otros colaboradores: Book/additionalContributors.txt.
+%
+% Tus mejoras y sugerencias son bienvenidas:
+% javier.maciasguarasa@uah.es
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The document language is selected from myconfig.tex and loaded through
+% Babel in Config/postamble.tex. Do not hard-code a language at class level.
+\documentclass[openright]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN Preamble and configuration section
+%
+\input{../Config/preamble.tex}    % DO NOT TOUCH THIS LINE. Most users do
+                               % not need to edit this infrastructure file
+
+\input{../Config/myconfig.tex}    % DO NOT TOUCH THIS LINE, but EDIT THIS FILE
+                               % to set your specific settings (related
+                               % to the document language, your degree,
+                               % document details (such as title, author
+                               % (you), your email, name of the tribunal
+                               % members, document year, keyword and
+                               % palabras clave) and link colors), and
+                               % define your commonly used commands
+                               % (some examples are provided).
+
+\input{../Config/glossaries.tex} % EDIT THIS FILE to include your glossaries
+
+\input{../Config/postamble.tex}  % DO NOT TOUCH THIS LINE. Yes, I know,
+                                 % "postamble" is not a valid word... :-)
+
+% Book-only visual layer (standard preserves the original appearance).
+\input{../Config/typesetting/typesetting.tex} % DO NOT TOUCH THIS LINE.
+
+% path to directories containing images
+\graphicspath{{./logos/}{./figures/}{./diagrams/}} % Edit this to your
+                                % needs. Only logos is really required
+                                % when you generate your own content.
+%
+% END Preamble and configuration section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Let's start with the real stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now start text and numbering for frontmatter (toc, list of
+% tables/figures,...)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter                                  % DO NOT TOUCH THIS LINE
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN within-document configuration, frontpage and cover pages generation
+%
+
+% Set Language dependent issues that must be set after \begin{document}
+\input{../Config/setlanguagedependentissues.tex} % DO NOT TOUCH THIS LINE
+                                              % NOR THE FILE
+
+% This will include front page (if needed), and cover pages. Selection
+% of the adequate one is done automagically depending on values set by
+% the user in config/myconfig.tex
+\ThesisInstitutionalPage{cover/cover.tex}     % DO NOT TOUCH THIS
+                                              % LINE/FILE. You can edit
+                                              % the file in case you
+                                              % need it (there may be
+                                              % problems with vertical
+                                              % spacing if the title is
+                                              % too long...)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In some cases you may need to include pdf files (for example in the
+% PhD. Thesis at UAH you need to include the permission letter by the
+% advisors... It is also required for the MUSEA TFMs). You can do this
+%
+%\includepdf[frame=true,pages=3-4]{letters/sampleLetter-pages.pdf} % include pages
+%                                                       % 3-4 of pdf file
+%\clearemptydoublepage % You need to include this after including each pdf
+
+% Optional opening PDF, disabled by default in Config/myconfig.tex.
+\ifthenelse{\equal{\myIncludeSampleLetter}{true}}
+{
+  \includepdf[pages=-]{letters/sampleLetter.pdf}
+  \clearemptydoublepage
+}
+{}
+%\includepdf[pages=-]{letters/sampleLetter-pages.pdf}   % include all pages of
+%                                                 % pdf file
+
+%\includepdf[pages=-]{papeleo/vistoBuenoTutorTFM-MUSEA.pdf}   % for TFMs
+%\clearemptydoublepage % You need to add this after including each pdf
+
+% Dedication+acknowledgements (dedicatorias+agradecimientos)
+% The dedication has no chapter heading, so start it explicitly on a recto page.
+% Other preliminary sections use openright chapter headings or their own breaks.
+\ifthenelse{\equal{\myIncludeDedication}{true}}
+  {\clearemptydoublepage\input{dedication/dedicatoria.tex}}
+  {}
+\ifthenelse{\equal{\myIncludeAcknowledgements}{true}}
+  {\input{acknowledgements/agradecimientos.tex}}
+  {}
+
+% If this is the case, include definitions of acronyms (it's
+% included before resumen.tex and abstract.tex in case you want
+% to use them here
+\input{acronyms/defacronymsgl.tex}            % EDIT this file to define
+                                              % the acronyms you use
+
+% If this is the case, include definitions of acronyms (it's
+% included before resumen.tex and abstract.tex in case you want
+% to use them there
+\input{symbols/defsymbolsgl.tex}              % EDIT this file to define
+                                              % the symbols you use
+
+% Now include resumen and abstract
+\input{abstract/resumen.tex}                  % EDIT this file
+\input{abstract/abstract.tex}                 % EDIT this file
+
+% Just for TFGs/PFCs at UAH, I do nothing and leave to the author the
+% inclusion of the file
+%\input{abstract/resumen-extendido.tex}       % EDIT this file
+
+% The table of contents is always included. The remaining generated lists
+% are selected independently in Config/myconfig.tex.
+\input{cover/table-of-contents.tex}
+
+\ifthenelse{\equal{\myIncludeListOfFigures}{true}}
+  {\input{cover/list-of-figures.tex}}
+  {}
+
+\ifthenelse{\equal{\myIncludeListOfTables}{true}}
+  {\input{cover/list-of-tables.tex}}
+  {}
+
+\ifthenelse{\equal{\myIncludeListOfCode}{true}}
+  {\input{cover/list-of-code.tex}}
+  {}
+
+\ifthenelse{\equal{\myIncludeListOfAlgorithms}{true}}
+  {\input{cover/list-of-algorithms.tex}}
+  {}
+
+\ifthenelse{\equal{\myIncludeListOfVideos}{true}}
+  {\input{cover/list-of-videos.tex}}
+  {}
+
+% Now include list of acronyms and options (if this is the case)
+\ifthenelse{\equal{\myIncludeListOfAcronyms}{true}}
+  {\input{acronyms/acronymsgl.tex}}
+  {}
+
+% Now include symbols of symbols and options (if this is the case)
+\ifthenelse{\equal{\myIncludeListOfSymbols}{true}}
+  {\input{symbols/symbolsgl.tex}}
+  {}
+
+%
+% END within-document configuration, frontpage and cover pages generation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now start text and numbering for mainmatter (chapter+appendices)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter                                       % DO NOT TOUCH THIS LINE!
+%\deactivatetilden                                % I removed this as it
+                                                  % breaks compilation with
+                                                  % TeXLive 2025 (still
+                                                  % don't know why)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Select the body configured in Config/myconfig.tex.
+\ifstandarddocument
+  % This is the structure used by almost every document.
+  \input{content-standard.tex}
+\else
+  % Specialized structure for a PhD thesis by compendium of publications.
+  \input{content-compendium.tex}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now start text and numbering for backmatter (just backpage in our
+% case)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter                                       % DO NOT TOUCH THIS LINE!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Just for TFGs at UAH right now, but kept here JIC anybody else wants
+% to use it
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ThesisInstitutionalPage{cover/backpage.tex}  % EDIT this file if
+                                              % required, or comment it out
+
+\end{document}

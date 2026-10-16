@@ -1,0 +1,397 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plantilla genérica para TFG/TFM/Tesis.
+%
+% Función: configuración del documento y comandos personalizados.
+%
+% Uso: debes modificar este fichero para adaptarlo a tu trabajo.
+% Define la titulación, el título, tus datos, los tutores, el idioma,
+% la estructura y las opciones que quieras utilizar.
+% Consulta los valores admitidos en los comentarios de cada variable.
+% Al final puedes añadir tus propios comandos.
+%
+% Estos datos se reutilizan en el documento, las páginas institucionales
+% y los formularios, para evitar que tengas que introducirlos varias veces.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% INICIO Configuración de las variantes del documento
+
+% Selecciona el tipo de documento (TFM, TFG, tesis, etc.).
+% La titulación puede tomar los siguientes valores:
+% Los identificadores ajenos a la UAH usan <degree>-<university>; conserva el guion.
+% Grados de la UAH:
+%  En la Escuela Politécnica Superior:
+%   GITT   - Grado en Ingeniería en Tecnologías de la Telecomunicación
+%   GIEC   - Grado en Ingeniería Electrónica de Comunicaciones
+%   GIT    - Grado en Ingeniería Telemática
+%   GIST   - Grado en Ingeniería en Sistemas de Telecomunicación
+%   GIC    - Grado en Ingeniería de Computadores
+%   GII    - Grado en Ingeniería Informática
+%   GMC    - Grado en Matemáticas y Computación
+%   GSI    - Grado en Sistemas de Información
+%   GISI   - Grado en Ingeniería en Sistemas de Información
+%   GIEAI  - Grado en Ingeniería en Electrónica y Automática Industrial
+%   GITI   - Grado en Ingeniería en Tecnologías Industriales
+%  En la Facultad de Ciencias:
+%   GFIE   - Grado en Física e Instrumentación Espacial
+%   GBS    - Grado en Biología Sanitaria
+%   GB     - Grado en Biología
+%   GCA    - Grado en Ciencias Ambientales
+%   GQ     - Grado en Química
+%   GCCTF  - Grado en Criminalística: Ciencias y Tecnologías Forenses
+%
+% Másteres de la UAH:
+%  En la Escuela Politécnica Superior:
+%   MUSEA  - Máster Universitario en Sistemas Electrónicos Avanzados. Sistemas Inteligentes
+%   MUIT   - Máster Universitario en Ingeniería de Telecomunicación
+%   MUII   - Máster Universitario en Ingeniería Industrial
+%   MUIE   - Máster Universitario en Ingeniería Electrónica
+%   MUCTE  - Máster Universitario en Ciencia y Tecnología desde el Espacio
+%   MUC    - Máster Universitario en Ciberseguridad
+%   MUANBD - Máster Universitario en Analítica de Negocio y Big Data
+%
+% Programas de doctorado:
+%  PHDUAH  - Doctorado UAH
+%  PHD-ETSIT-UPM - Doctorado de la ETSIT-UPM
+%
+% Titulaciones de la URJC:
+%  ITI-URJC - Grado en Ingeniería en Tecnologías Industriales (ESCET-URJC)
+%
+% Titulaciones de la ETSIT-UPM:
+%  GISTS-UPM  - Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación
+%  GIB-UPM    - Grado en Ingeniería Biomédica
+%  GISD-UPM   - Grado en Ingeniería y Sistemas de Datos
+%  MUIT-UPM   - Máster Universitario en Ingeniería de Telecomunicación
+%  MUCS-UPM   - Máster Universitario en Ciberseguridad
+%  MUESFV-UPM - Máster Universitario en Energía Solar Fotovoltaica
+%  MUIB-UPM   - Máster Universitario en Ingeniería Biomédica
+%  MUIRST-UPM - Máster Universitario en Ingeniería de Redes y Servicios Telemáticos
+%  MUISE-UPM  - Máster Universitario en Ingeniería de Sistemas Electrónicos
+%  MUTSC-UPM  - Máster Universitario en Teoría de la Señal y Comunicaciones
+%  MUNE-UPM   - Máster Universitario en Neurotecnología (páginas en español o inglés)
+%
+% Otros documentos:
+%  GEINTRARR - Geintra Research Report (soporte preliminar)
+%
+% Especifica aquí tu titulación, de entre las listadas arriba.
+\newcommand{\myDegree}{GISI}
+
+\newcommand{\mySpecialty}{} % Grados de la UAH y perfil/especialidad en la hoja de control del anteproyecto de TFM EPS-UAH.
+
+% Selecciona el idioma del documento y sus ajustes específicos.
+% Los valores admitidos son english o spanish.
+\newcommand{\myLanguage}{spanish}
+
+% Selecciona la estructura del documento:
+%  standard   - estructura habitual para TFG, TFM, tesis convencionales y
+%               los demás documentos compatibles con la plantilla.
+%               Organiza su contenido en Book/content-standard.tex.
+%  compendium - estructura específica para tesis doctorales presentadas
+%               como compendio de publicaciones. Organiza su contenido en
+%               Book/content-compendium.tex.
+\newcommand{\myDocumentStructure}{standard}
+
+% Estilo visual del documento principal; no afecta al papeleo:
+% standard  - aspecto original de la plantilla (opción predeterminada recomendada)
+% editorial - diseño con serifas y un separador vertical discreto en los capítulos
+% modern    - títulos sin serifas, color para resaltar elementos y números de capítulo grandes
+% framed    - títulos de capítulo enmarcados, al estilo Lenny
+% shaded    - títulos de capítulo sombreados, al estilo Bjornstrup
+% mimosis   - diseño basado en Garamond e inspirado en la plantilla Mimosis
+\newcommand{\myTypesettingStyle}{standard}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Información general del documento
+\newcommand{\myBookTitleSpanish}{Sistema de Generación Automática de Setlists para DJs a partir del Análisis Musical de una Biblioteca de Audio}
+\newcommand{\myBookTitleEnglish}{Automatic DJ Setlist Generation System Based on Musical Analysis of an Audio Library}
+\newcommand{\myThesisKeywords}{Sistema de recomendación, mezcla armónica, Rekordbox, DJ, automatización} % (máximo de cinco)
+\newcommand{\myThesisKeywordsEnglish}{Recommendation system, harmonic mixing, Rekordbox, DJ, automation} % (máximo de cinco)
+\newcommand{\myConfidentialContent}{No} % Puede ser Yes o No; se utiliza
+% en el papeleo del MUII desde julio de 2021.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Datos del autor
+\newcommand{\myAuthorName}{Pablo}
+\newcommand{\myAuthorSurname}{Hernández Borregón}
+\newcommand{\myAuthorFullName}{\myAuthorName{} \myAuthorSurname{}}
+\newcommand{\myAuthorGender}{male} 
+\newcommand{\myAuthorEmail}{pablo.hernandezb@edu.uah.es}
+\newcommand{\myAuthorDNI}{09823707Q}
+% Datos personales para la solicitud de anteproyecto; no siempre son necesarios.
+\newcommand{\myAuthorStreet}{C/: Senda de la Cultura}
+\newcommand{\myAuthorCity}{Alcalá de Henares}
+\newcommand{\myAuthorPostalCode}{28806}
+\newcommand{\myAuthorProvince}{Madrid}
+\newcommand{\myAuthorTelephone}{637689756}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Datos del tutor
+% GISD-UPM: el tutor definido en myAcademicTutorFullName se muestra como
+% supervisor técnico, no como supervisor académico.
+\newcommand{\myAcademicTutorFullName}{Óscar Gutiérrez} 
+\newcommand{\myAcademicTutorGender}{male}
+\newcommand{\myAcademicTutorDNI}{}
+% Departamento e institución son campos separados; deja vacío lo que no proceda.
+\newcommand{\myAcademicTutorDepartment}{Ciencias de la Computación}
+\newcommand{\myAcademicTutorDepartmentEnglish}{Computer Science}
+\newcommand{\myAcademicTutorInstitution}{Universidad de Alcalá}
+\newcommand{\myAcademicTutorInstitutionEnglish}{University of Alcalá}
+\newcommand{\myAcademicTutorPosition}{T.U. de CC. de Computación e Int. Art.}
+\newcommand{\myAcademicTutorPositionEnglish}{Professor of Computer Science and Artificial Intelligence} % Sólo para titulaciones UPM: créditos de tesis en inglés.
+\newcommand{\myAcademicTutorEmail}{oscar.gutierrez@uah.es}
+\newcommand{\myAcademicTutorForeignUniversity}{}
+\newcommand{\myAcademicTutorForeignCity}{}
+\newcommand{\myAcademicTutorIsPhD}{true} % true o false, según la normativa de TFM de la EPS-UAH.
+
+% Sólo para titulaciones UPM: Ponente ETSIT-UPM (GISTS/GIB y másteres con su
+% mismo modelo): papel distinto del tutor y del cotutor. Déjalo vacío si todavía
+% no está asignado; la hoja del tribunal deja el valor vacío.
+\newcommand{\myPonenteFullName}{}
+% Modelo GISTS/GIB y másteres asociados: si hay ponente, se muestra su
+% departamento; si no, el del tutor.
+\newcommand{\myPonenteDepartment}{}
+
+% Sólo para titulaciones UPM: Supervisión técnica del MUNE-UPM, distinta de la
+% supervisión académica (myAcademicTutorFullName). Puede ser la misma persona;
+% indica ambos nombres. Si todavía no está asignada, déjalo vacío para mostrar
+% una línea en blanco.
+\newcommand{\myUPMTechnicalSupervisorFullName}{}
+% GISD-UPM no utiliza myUPMTechnicalSupervisorFullName: usa el tutor y cotutor.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Datos del cotutor
+% GISD-UPM: el cotutor definido en myCoTutorFullName se muestra como supervisor
+% académico; completa este campo y myAcademicCotutorDepartment.
+\newcommand{\myCoTutorFullName}{Ángel Álvarez} % Déjalo vacío si no hay cotutor.
+\newcommand{\myCoTutorGender}{male}
+\newcommand{\myCoTutorDNI}{}
+\newcommand{\myAcademicCotutorDepartment}{Servicio de Aplicaciones}
+\newcommand{\myAcademicCotutorDepartmentEnglish}{Application Services}
+\newcommand{\myAcademicCotutorInstitution}{Universidad de Alcalá}
+\newcommand{\myAcademicCotutorInstitutionEnglish}{University of Alcalá}
+\newcommand{\myCoTutorPosition}{Técnico/a Informático/a - Gestión Administrativa}
+\newcommand{\myCoTutorPositionEnglish}{IT Technician - Administrative Management} % Sólo para titulaciones UPM: créditos de tesis en inglés.
+\newcommand{\myCoTutorEmail}{a.alvarez@uah.es}
+\newcommand{\myCoTutorIsPhD}{true} % true o false, según la normativa de TFM de la EPS-UAH.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Datos institucionales
+% La universidad, su acrónimo y el centro se seleccionan automáticamente en
+% Config/degrees.tex y Config/institutions.tex según \myDegree.
+
+% El departamento del documento se obtiene del tutor o, si está vacío, del
+% cotutor. Configúralo en sus campos Department/DepartmentEnglish anteriores.
+
+\newcommand{\myPhDProgram}{}
+\newcommand{\myPhDProgramEnglish}{}
+
+% Sólo para titulaciones UPM: Tesis PHD-ETSIT-UPM: utiliza el nombre oficial
+% completo del programa en los campos anteriores (Doctorado en ... / Doctoral
+% Degree in ...), sin abreviarlo. Titulación previa de acceso al doctorado, no
+% el título de doctor que solicitas.
+\newcommand{\myUPMdegree}{}
+\newcommand{\myUPMdegreeEnglish}{}
+% Año de solicitud del depósito; puede ser distinto del año de defensa.
+\newcommand{\myThesisDepositYear}{\myThesisDefenseYear}
+% Texto completo de financiación competitiva para los créditos PHD-ETSIT-UPM.
+% Déjalo vacío si no procede; admite texto LaTeX y no aparece en otras titulaciones.
+\newcommand{\myThesisFundingStatement}{}
+\newcommand{\myThesisFundingStatementEnglish}{}
+
+\newcommand{\myResearchGroup}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Miembros del tribunal y personal del departamento
+\newcommand{\myTribunalPresident}{}
+\newcommand{\myTribunalPresidentGender}{male}
+\newcommand{\myTribunalPresidentDNI}{} % Necesario para el compromiso de confidencialidad.
+% ETSIT-UPM: el primer vocal (FirstSpokesperson) se muestra como Vocal.
+\newcommand{\myTribunalFirstSpokesperson}{}
+\newcommand{\myTribunalFirstSpokespersonGender}{male}
+\newcommand{\myTribunalFirstSpokespersonDNI}{} % Necesario para el compromiso de confidencialidad.
+\newcommand{\myTribunalSecondSpokesperson}{}
+\newcommand{\myTribunalSecondSpokespersonGender}{female}
+\newcommand{\myTribunalSecondSpokespersonDNI}{} % Necesario para el compromiso de confidencialidad.
+\newcommand{\myTribunalAlternateMember}{}
+\newcommand{\myTribunalAlternateMemberGender}{male}
+\newcommand{\myTribunalAlternateMemberDNI}{} % Necesario para el compromiso de confidencialidad.
+\newcommand{\myTribunalSecretary}{}
+\newcommand{\myTribunalSecretaryGender}{male} % male o female; independiente de la secretaría del departamento
+\newcommand{\myDepartmentSecretary}{} % Para el papeleo de TFG y TFM, incluido MUSEA.
+\newcommand{\myDepartmentSecretaryGender}{female}                  % Para el papeleo de TFG y TFM, incluido MUSEA.
+\newcommand{\myTFMComisionPresident}{} % Nombre utilizado en el papeleo del MUIE.
+\newcommand{\myTFMComisionPresidentGender}{male} % male o female; cargo en la hoja de control del anteproyecto de TFM EPS-UAH, independiente del tribunal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sólo para titulaciones UPM: Tribunal ampliado y revisores externos para tesis
+% PHD-ETSIT-UPM. Completa los nombres asignados; deja vacíos los campos que no
+% procedan.
+\newcommand{\myTribunalThirdSpokesperson}{}
+\newcommand{\myTribunalSecondAlternateMember}{}
+\newcommand{\myFirstExternalReviewerFullName}{}
+\newcommand{\myFirstExternalReviewerInstitution}{}
+\newcommand{\myFirstExternalReviewerInstitutionEnglish}{}
+\newcommand{\mySecondExternalReviewerFullName}{}
+\newcommand{\mySecondExternalReviewerInstitution}{}
+\newcommand{\mySecondExternalReviewerInstitutionEnglish}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calificaciones. Si las defines, la nota final se calcula automágicamente
+% en el documento de acta y rúbrica.
+\newcommand{\myAcademicTutorGrade}{}
+\newcommand{\myTribunalGrade}{}
+\newcommand{\myTribunalMHProposal}{NO} % Los valores admitidos son YES o NO.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fechas
+\newcommand{\myThesisProposalDate}{} % Fecha del anteproyecto.
+
+\newcommand{\myThesisDepositDate}{}
+\newcommand{\myThesisDepositDateEnglish}{}
+
+% En los RR, myThesisDefenseDate es la fecha que aparece en la portada.
+\newcommand{\myThesisAcademicYear}{2026/2027}
+\newcommand{\myThesisDefenseYear}{2027}
+\newcommand{\myThesisDefenseDate}{}
+\newcommand{\myThesisdefenseDateEnglish}{}
+% Si prefieres el formato británico para la fecha en inglés, usa este ejemplo:
+% \newcommand{\myThesisdefenseDateEnglish}{6\textsuperscript{th} of January, 2018}
+
+\newcommand{\myPaperworkDate}{\myThesisDepositDate}
+\newcommand{\myPaperworkDateEnglish}{\myThesisDepositDateEnglish}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Datos para la publicación en abierto
+\newcommand{\myAuthorizationOpenPublishing}{Yes}
+\newcommand{\myAuthorizationOpenPublishingEmbargoMonths}{0} % Puede ser
+%  0,  6, 12,
+% 18, 24
+
+\newcommand{\myResearchVicerrector}{Excmo. Sr. Francisco J. de la Mata de la Mata}
+\newcommand{\myResearchVicerrectorGender}{male}
+
+% Derechos de autor
+\newcommand{\myCopyrightStatement}{\myAuthorFullName{}. Some rights reserved. This document is under terms of Creative Commons license Attribution - Non Commercial - Non Derivatives.}
+\newcommand{\myLicenseURL}{http://creativecommons.org/licenses/by-nc-nd/3.0/es/}
+
+\newcommand{\myResearchReportID}{RR-2027-01}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Elementos opcionales del documento. Cada valor debe ser exactamente true o false.
+% Desactivar una lista no desactiva la función LaTeX correspondiente.
+\newcommand{\myIncludeSampleLetter}{false}
+\newcommand{\myIncludeDedication}{false}
+\newcommand{\myIncludeAcknowledgements}{true}
+\newcommand{\myIncludeListOfFigures}{true}
+\newcommand{\myIncludeListOfTables}{true}
+\newcommand{\myIncludeListOfAcronyms}{true}
+\newcommand{\myIncludeListOfSymbols}{false}
+\newcommand{\myIncludeListOfCode}{false}
+\newcommand{\myIncludeListOfAlgorithms}{false}
+\newcommand{\myIncludeListOfVideos}{false}
+
+\newcommand{\myFlagSplittedAdvisors}{true} % Si es false, muestra
+% "Tutores/Advisors" en las portadas.
+% Si es true, separa Tutor/Cotutor
+% o Advisor/Co-advisor. En MUIT y MUII
+% se ignora y se fija en true.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Colores de los enlaces
+% Enlaces de los índices general, de tablas y de figuras.
+%\newcommand{\mytoclinkcolor}{blue}
+\newcommand{\mytoclinkcolor}{black}
+%\newcommand{\myloflinkcolor}{red}
+\newcommand{\myloflinkcolor}{black}
+%\newcommand{\mylotlinkcolor}{green}
+\newcommand{\mylotlinkcolor}{black}
+
+% Enlaces de las listas de código, algoritmos y vídeos.
+%\newcommand{\myothertoclinkcolor}{magenta}
+\newcommand{\myothertoclinkcolor}{black}
+
+% Otros enlaces internos del documento.
+\newcommand{\mylinkcolor}{blue}
+%\newcommand{\mylinkcolor}{black}
+
+% Enlaces a URL y citas bibliográficas.
+\newcommand{\myurlcolor}{blue}
+%\newcommand{\myurlcolor}{black}
+%\newcommand{\mycitecolor}{green}
+\newcommand{\mycitecolor}{blue}
+%\newcommand{\mycitecolor}{black}
+
+% FIN Configuración de las variantes del documento
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% INICIO Comandos personalizados
+% Define aquí tus propios comandos.
+
+% Este comando define el formato del texto en inglés dentro de un documento
+% en español.
+\DeclareRobustCommand{\texten}[1]{\textit{#1}}
+
+\def\ci{\perp\!\!\!\perp}
+
+% Ejemplos de comandos de uso frecuente.
+\newcommand{\circulo}{\large $\circ$}
+\newcommand{\asterisco}{$\ast$}
+\newcommand{\cuadrado}{\tiny $\square$}
+\newcommand{\triangulo}{\scriptsize $\vartriangle$}
+\newcommand{\triangv}{\scriptsize $\triangledown$}
+\newcommand{\diamante}{\large $\diamond$}
+
+\newcommand{\new}[1]{\textcolor{magenta}{#1 }}
+\newcommand{\argmax}[1]{\underset{#1}{\operatorname{argmax}}}
+
+% Estos comandos se utilizan en los capítulos de ejemplo.
+\newcommand{\verticalSpacingSRPMaps}{-0.3cm}
+
+\newcommand{\CAVDB}{\texttt{CAV3D}}
+\newcommand{\AVThreeTVLoc}{\texttt{AV3T-VLoc}}
+\newcommand{\LandPoseVLoc}{\texttt{LandPose-VLoc}}
+\newcommand{\DeltaPoseAVT}{$\Delta_{\AVThreeTVLoc}^{\LandPoseVLoc}$}
+\newcommand{\mae}{\epsilon{}}
+\newcommand{\maeThreeD}{\mae_{3D}}
+\newcommand{\maeThreeDfine}{\maeThreeD'}
+\newcommand{\maeTwoD}{\mae_{2D}}
+\newcommand{\maeTwoDfine}{\maeTwoD'}
+
+\newcommand{\NumDataFrames}{N_F}
+
+
+% Anotaciones de revisión
+\newcommand{\todojmg}{\todo[author=JMG, inline, color=green!20, caption={}]}
+\newcommand{\todorbc}{\todo[author=RBC, inline, color=red!20,   caption={}]}
+\newcommand{\todomig}{\todo[author=MIG, inline, color=blue!20,  caption={}]}
+% \newcommand{\todospc}{\todo[author=SPC, inline, color=green!60,  caption={}]}
+% \newcommand{\todolbm}{\todo[author=LBM, inline, color=green!40, caption={}]}
+% \newcommand{\todojmb}{\todo[author=JMB, inline, color=red!40,   caption={}]}
+% \newcommand{\todoapt}{\todo[author=APT, inline, color=blue!40,  caption={}]}
+
+% FIN Comandos personalizados
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INICIO Definiciones obsoletas o de menor utilidad; consérvalas por compatibilidad.
+\newcommand{\myFirstAdvisorFullName}{\myAcademicTutorFullName} % Obsoleta: toma el nombre del tutor.
+\newcommand{\mySecondAdvisorFullName}{\myCoTutorFullName} % Obsoleta: toma el nombre del cotutor.
+\newcommand{\myFirstAdvisorDNI}{\myAcademicTutorDNI} % Obsoleta: toma el DNI del tutor.
+\newcommand{\mySecondAdvisorDNI}{\myCoTutorDNI} % Obsoleta: toma el DNI del cotutor.
+\newcommand{\mybookFigure}{alumno} % Obsoleta: indicaba en los TFG
+% la condición del autor que firmaba
+% el convenio (normalmente "alumno").
+
+% FIN Definiciones obsoletas o de menor utilidad
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:

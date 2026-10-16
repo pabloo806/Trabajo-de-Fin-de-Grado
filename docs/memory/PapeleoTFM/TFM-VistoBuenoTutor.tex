@@ -1,0 +1,117 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: visto bueno de la dirección para la defensa del TFM.
+%
+% Normativa de TFM:
+% EPS-UAH: anexo X; aprobada el 31/10/2025 y el 30/01/2026.
+% MUIE-UAH: anexo VI; aprobada el 15/06/2026.
+%
+% Uso: configura Config/myconfig.tex y compila este fichero por separado.
+% Normalmente no necesitas modificarlo, salvo para completar datos
+% específicos del formulario.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt,a4paper,oneside]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN Preamble and configuration section
+%
+\input{../Config/preamble.tex}    % DO NOT TOUCH THIS LINE. You can edit
+                                  % the file to modify some default settings
+                                   
+\input{../Config/myconfig.tex}    % DO NOT TOUCH THIS LINE, but EDIT THIS FILE
+                                  % to set your specific settings (related
+                                  % to the document language, your degree,
+                                  % document details (such as title, author
+                                  % (you), your email, name of the tribunal
+                                  % members, document year, keyword and
+                                  % palabras clave) and link colors), and
+                                  % define your commonly used commands
+                                  % (some examples are provided).
+
+\input{../Config/postamble.tex}   % DO NOT TOUCH THIS LINE. Yes, I know,
+                                  % "postamble" is not a valid word... :-)
+\usepackage{soul}
+%
+% END Preamble and configuration section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{VISTO BUENO \MakeUppercase{\wordDelOrDeLos{}
+    \wordTutorOrTutores} PARA EL DEPÓSITO DEL TRABAJO FIN DE MÁSTER} 
+                                                   % DO NOT TOUCH THIS LINE
+\date{}                                            % DO NOT TOUCH THIS LINE
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Let's start with the real stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}                                   % DO NOT TOUCH THIS LINE
+
+{\Large
+\maketitle 
+
+\thispagestyle{empty}
+
+% \vspace{1cm}
+
+\myAdvisorsWithDonOrDona, \wordTutorOrTutores{} del Trabajo Fin de Máster
+``\myBookTitle'' realizado por \wordDonOrDonaAutor{} \myAuthorFullName, por la
+presente \wordDaOrDan{} su conformidad para que el citado trabajo sea
+presentado para su defensa.
+
+\vspace{0.5cm}
+$\XBox$ Sí
+
+\ifthenelse{\equal{\myDegree}{MUIE}}
+{
+  \ifthenelse{\equal{\myConfidentialContent}{No}}
+  {
+    ~~~~$\XBox$ NO sujeto a confidencialidad
+
+%    \vspace{0.5cm}
+
+    ~~~~$\Box$ SÍ sujeto a confidencialidad
+
+  }
+  {
+    ~~~~$\Box$ NO sujeto a confidencialidad
+
+    \vspace{0.5cm}
+
+    ~~~~$\XBox$ SÍ sujeto a confidencialidad
+
+  }
+}
+{
+}
+% \vspace{0.5cm}
+
+$\Box$ No
+
+%\vspace{0.5cm}
+
+
+
+\ifthenelse{
+  \equal{\myDegree}{MUIT}
+  \OR
+  \equal{\myDegree}{MUII}
+}{
+  \vspace{0.5cm}
+  El trabajo autorizado ha sido analizado por la plataforma TURNITIN, arrojando un porcentaje de plagio del \hl{...}\%.
+
+  Justificación de la autorización (obligatorio en caso de que el porcentaje supere el 24\%):
+
+  \vspace{2cm}
+}
+{
+}
+
+
+\vspace{1cm}
+
+\flushright{Alcalá de Henares, \myPaperworkDate}
+\vspace{2cm}
+\flushright{Fdo.: \myAdvisors}
+}
+\end{document}
+

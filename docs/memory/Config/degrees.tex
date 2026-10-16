@@ -1,0 +1,603 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: registro de titulaciones y sus propiedades.
+%
+% Uso: mantenimiento de la plantilla; normalmente no debes modificarlo.
+% Selecciona tu titulación en Config/myconfig.tex.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fuera de la UAH, los identificadores usan <titulación>-<universidad>.
+% El guion forma parte del identificador y es válido en las comparaciones TeX.
+
+% Legacy pre-Bologna degrees.
+\DeclareDegree{IT}{
+  status = legacy,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Ingeniería de Telecomunicación},
+  work-type = TFC,
+  work-type-full-spanish = {Trabajo Fin de Carrera},
+  work-type-full-english = {Trabajo Fin de Carrera},
+  layout-profile = uah-tfc
+}
+
+\DeclareDegree{IE}{
+  status = legacy,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Ingeniería Electrónica},
+  work-type = TFC,
+  work-type-full-spanish = {Trabajo Fin de Carrera},
+  work-type-full-english = {Trabajo Fin de Carrera},
+  layout-profile = uah-tfc
+}
+
+\DeclareDegree{ITTSE}{
+  status = legacy,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Ingeniería Técnica de Telecomunicación, especialidad en Sistemas Electrónicos},
+  work-type = TFC,
+  work-type-full-spanish = {Trabajo Fin de Carrera},
+  work-type-full-english = {Trabajo Fin de Carrera},
+  layout-profile = uah-tfc
+}
+
+\DeclareDegree{ITTST}{
+  status = legacy,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Ingeniería Técnica de Telecomunicación, especialidad en Sistemas de Telecomunicación},
+  work-type = TFC,
+  work-type-full-spanish = {Trabajo Fin de Carrera},
+  work-type-full-english = {Trabajo Fin de Carrera},
+  layout-profile = uah-tfc
+}
+
+\DeclareDegree{ITI}{
+  status = legacy,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Ingeniería Técnica Industrial, especialidad en Electrónica Industrial},
+  work-type = TFC,
+  work-type-full-spanish = {Trabajo Fin de Carrera},
+  work-type-full-english = {Trabajo Fin de Carrera},
+  layout-profile = uah-tfc
+}
+
+% Bachelor's degrees sharing the current UAH TFG layouts.
+\DeclareDegree{GITT}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería en Tecnologías de Telecomunicación},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GIEC}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería Electrónica de Comunicaciones},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GIT}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería Telemática},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GIST}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería en Sistemas de Telecomunicación},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GIC}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería de Computadores},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GII}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería Informática},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GMC}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Matemáticas y Computación},
+  degree-name-wrapped = {Grado en Matemáticas y Computación},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Grado en Matemáticas y Computación}},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GIS}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Sistemas de Información},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GSI}{
+  status = legacy,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Sistemas de Información},
+  degree-name-english = {Degree in Information Systems},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GISI}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería en Sistemas de Información},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GIEAI}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería en Electrónica y Automática Industrial},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GITI}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Grado en Ingeniería en Tecnologías Industriales},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GFIE}{
+  status = active,
+  institution = UAH,
+  school = {Facultad de Ciencias},
+  school-english = {School of Science},
+  degree-name = {Grado en Física e Instrumentación Espacial},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GBS}{
+  status = active,
+  institution = UAH,
+  school = {Facultad de Ciencias},
+  school-english = {School of Science},
+  degree-name = {Grado en Biología Sanitaria},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GB}{
+  status = active,
+  institution = UAH,
+  school = {Facultad de Ciencias},
+  school-english = {School of Science},
+  degree-name = {Grado en Biología},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GQ}{
+  status = active,
+  institution = UAH,
+  school = {Facultad de Ciencias},
+  school-english = {School of Science},
+  degree-name = {Grado en Química},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GCA}{
+  status = active,
+  institution = UAH,
+  school = {Facultad de Ciencias},
+  school-english = {School of Science},
+  degree-name = {Grado en Ciencias Ambientales},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{GCCTF}{
+  status = active,
+  institution = UAH,
+  school = {Facultad de Ciencias},
+  school-english = {School of Science},
+  degree-name = {Grado en Criminalística: Ciencias y Tecnologías Forenses},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo de Fin de Grado},
+  work-type-full-english = {Trabajo de Fin de Grado},
+  layout-profile = uah-tfg-2024
+}
+
+\DeclareDegree{ITI-URJC}{
+  status = active,
+  institution = URJC,
+  school = {Escuela Superior de Ciencias Experimentales y Tecnología},
+  school-english = {School of Experimental Sciences and Technology},
+  degree-name = {Grado en Ingeniería en Tecnologías Industriales},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo Fin de Grado},
+  work-type-full-english = {Bachelor's Thesis},
+  layout-profile = urjc-iti-tfg
+}
+
+% Bachelor's degrees at ETSIT-UPM.
+\DeclareDegree{GISTS-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Grado en Ingeniería de Tecnologías y Servicios de Telecomunicación},
+  degree-name-wrapped = {Grado en Ingeniería de Tecnologías\\y Servicios de Telecomunicación},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Grado en Ingeniería de Tecnologías}\\\MakeUppercase{y Servicios de Telecomunicación}},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo Fin de Grado},
+  work-type-full-english = {Trabajo Fin de Grado},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{GIB-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Grado en Ingeniería Biomédica},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo Fin de Grado},
+  work-type-full-english = {Trabajo Fin de Grado},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{GISD-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Grado en Ingeniería y Sistemas de Datos},
+  work-type = TFG,
+  work-type-full-spanish = {Trabajo Fin de Grado},
+  work-type-full-english = {Trabajo Fin de Grado},
+  layout-profile = upm-etsit-gisd-tfg
+}
+
+% Master's degrees.
+\DeclareDegree{MUSEA}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Sistemas Electrónicos Avanzados. Sistemas Inteligentes},
+  degree-name-english = {Master's Degree in Advanced Electronic Systems. Intelligent Systems},
+  degree-name-wrapped = {Máster Universitario en Sistemas Electrónicos Avanzados\\Sistemas Inteligentes},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en Sistemas Electrónicos Avanzados}\\\MakeUppercase{Sistemas Inteligentes}},
+  degree-name-wrapped-english = {Master's Degree in Advanced Electronic Systems\\Intelligent Systems},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in Advanced Electronic Systems}\\\MakeUppercase{Intelligent Systems}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-tfm-eps
+}
+
+\DeclareDegree{MUIT}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Ingeniería de Telecomunicación},
+  degree-name-english = {Master's Degree in Telecommunication Engineering},
+  degree-name-wrapped = {Máster Universitario en Ingeniería de Telecomunicación},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en}\\\MakeUppercase{Ingeniería de Telecomunicación}},
+  degree-name-wrapped-english = {Master's Degree in\\Telecommunication Engineering},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in}\\\MakeUppercase{Telecommunication Engineering}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-tfm-eps
+}
+
+\DeclareDegree{MUII}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Ingeniería Industrial},
+  degree-name-english = {Master's Degree in Industrial Engineering},
+  degree-name-wrapped = {Máster Universitario en Ingeniería Industrial},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en}\\\MakeUppercase{Ingeniería Industrial}},
+  degree-name-wrapped-english = {Master's Degree in\\Industrial Engineering},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in}\\\MakeUppercase{Industrial Engineering}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-tfm-eps
+}
+
+\DeclareDegree{MUIE}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Ingeniería Electrónica},
+  degree-name-english = {Master's Degree in Electronic Engineering},
+  degree-name-wrapped = {Máster Universitario en Ingeniería Electrónica},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en}\\\MakeUppercase{Ingeniería Electrónica}},
+  degree-name-wrapped-english = {Master's Degree in\\Electronic Engineering},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in}\\\MakeUppercase{Electronic Engineering}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-muie
+}
+
+\DeclareDegree{MUCTE}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Ciencia y Tecnología desde el Espacio},
+  degree-name-english = {Master's Degree in Science and Technology from Space},
+  degree-name-wrapped = {Máster Universitario en\\Ciencia y Tecnología desde el Espacio},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en}\\\MakeUppercase{Ciencia y Tecnología desde el Espacio}},
+  degree-name-wrapped-english = {Master's Degree in\\Science and Technology from Space},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in}\\\MakeUppercase{Science and Technology from Space}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-mucte
+}
+
+\DeclareDegree{MUANBD}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Analítica de Negocio y Big Data},
+  degree-name-english = {Master's Degree in Business Analytics and Big Data},
+  degree-name-wrapped = {Máster Universitario en Analítica de Negocio y Big Data},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en Analítica de Negocio y Big Data}},
+  degree-name-wrapped-english = {Master's Degree in\\Business Analytics and Big Data},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in}\\\MakeUppercase{Business Analytics and Big Data}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-muanbd
+}
+
+\DeclareDegree{MUC}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Máster Universitario en Ciberseguridad},
+  degree-name-english = {Master's Degree in Cybersecurity},
+  degree-name-wrapped = {Máster Universitario en Ciberseguridad},
+  degree-name-wrapped-uppercase = {\MakeUppercase{Máster Universitario en Ciberseguridad}},
+  degree-name-wrapped-english = {Master's Degree in Cybersecurity},
+  degree-name-wrapped-uppercase-english = {\MakeUppercase{Master's Degree in Cybersecurity}},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = uah-muc-2026
+}
+
+% Master's degrees sharing the GISTS/GIB ETSIT-UPM opening-page model.
+\DeclareDegree{MUIT-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Ingeniería de Telecomunicación},
+  degree-name-english = {Master's Degree in Telecommunication Engineering},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUCS-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Ciberseguridad},
+  degree-name-english = {Master's Degree in Cybersecurity},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUESFV-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Energía Solar Fotovoltaica},
+  degree-name-english = {Master's Degree in Photovoltaic Solar Energy},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUIB-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Ingeniería Biomédica},
+  degree-name-english = {Master's Degree in Biomedical Engineering},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUIRST-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Ingeniería de Redes y Servicios Telemáticos},
+  degree-name-english = {Master's Degree in Telematic Networks and Services Engineering},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUISE-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Ingeniería de Sistemas Electrónicos},
+  degree-name-english = {Master's Degree in Electronic Systems Engineering},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUTSC-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Teoría de la Señal y Comunicaciones},
+  degree-name-english = {Master's Degree in Signal Theory and Communications},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-tft
+}
+
+\DeclareDegree{MUNE-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Máster Universitario en Neurotecnología},
+  degree-name-english = {Master of Science in Neurotechnology},
+  work-type = TFM,
+  work-type-full-spanish = {Trabajo Fin de Máster},
+  work-type-full-english = {Master's Thesis},
+  layout-profile = upm-etsit-mune-tfm
+}
+
+% Doctoral degrees and research reports.
+\DeclareDegree{PHDUAH}{
+  status = active,
+  institution = UAH,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {Estudios de Doctorado},
+  work-type = PhD,
+  work-type-full-spanish = {Tesis Doctoral},
+  work-type-full-english = {Doctoral Thesis},
+  layout-profile = uah-phd
+}
+
+\DeclareDegree{PHD-ETSIT-UPM}{
+  status = active,
+  institution = UPM,
+  school = {Escuela Técnica Superior de Ingenieros de Telecomunicación},
+  school-english = {School of Telecommunication Engineering},
+  degree-name = {Doctor Ingeniero de Telecomunicación},
+  work-type = PhD,
+  work-type-full-spanish = {Tesis Doctoral},
+  work-type-full-english = {Doctoral Thesis},
+  layout-profile = upm-phd
+}
+
+\DeclareDegree{GEINTRARR}{
+  status = experimental,
+  institution = GEINTRA,
+  school = {Escuela Politécnica Superior},
+  school-english = {Polytechnic School},
+  degree-name = {GEINTRA Research Report},
+  work-type = RR,
+  work-type-full-spanish = {Informe técnico del Grupo de investigación \myResearchGroup{}},
+  work-type-full-english = {\myResearchGroup{} Research Report},
+  layout-profile = geintra-report
+}

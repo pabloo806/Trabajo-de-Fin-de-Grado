@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: capítulo mínimo de introducción.
+%
+% Uso: copia este fichero a la estructura activa y modifica la copia
+% para desarrollar el contenido de tu trabajo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introducción}
+\label{cha:introduction}
+
+\begin{FraseCelebre}
+  \begin{Frase}
+    Desocupado lector, sin juramento me podrás creer que quisiera que este
+    libro [...] fuera el más hermoso, el más gallardo y más discreto que
+    pudiera imaginarse\footnote{Tomado de ejemplos del proyecto \texis{}.}.
+  \end{Frase}
+  \begin{Fuente}
+    Miguel de Cervantes, Don Quijote de la Mancha
+  \end{Fuente}
+\end{FraseCelebre}
+
+
+\section{Presentación}
+\label{sec:intro-presentacion}
+
+Este capítulo contiene algunos ejemplos básicos de los elementos que pueden
+utilizarse en la elaboración de la memoria.
+
+La figura~\ref{fig:intro-figura} muestra un ejemplo de inclusión de una figura.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.55\textwidth]{Figure1}
+  \caption{Ejemplo de figura convencional.}
+  \label{fig:intro-figura}
+\end{figure}
+
+La tabla~\ref{tab:intro-tabla} muestra un ejemplo de una tabla convencional.
+
+\begin{table}
+  \renewcommand{\arraystretch}{1.3}
+  \caption{Comparativa.}
+  \label{tab:intro-tabla}
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      Method & Training Time & Man-Work (\%)\\
+      \hline
+      Propagation model & $<$ 30 sec & 5\\
+      \hline
+      Manual & 9 h 30 min & 24\\
+      \hline
+      Automatic & 2 h & 10\\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+También pueden incluirse expresiones matemáticas numeradas, como la
+ecuación~\ref{eq:intro-ejemplo}:
+
+\begin{equation}
+  \label{eq:intro-ejemplo}
+  p[q_t=\sigma_t\mid q_{t-1}=\sigma_{t-1}]
+\end{equation}
+
+Finalmente, la plantilla permite gestionar automáticamente acrónimos. Por
+ejemplo, \ac{ETTS} está definido en el fichero de acrónimos de la plantilla y aparece la primera vez en su versión expandida seguida del acrónimo entre paréntesis, y cuando lo utilizas una segunda vez (como aquí \ac{ETTS}), sólo verás el acrónimo.
+
+
+\section{Organización de la memoria}
+\label{sec:intro-organizacion-memoria}
+
+Esta memoria se organiza en \ldots grandes capítulos. El primero \ldots
+
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:

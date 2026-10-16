@@ -1,0 +1,84 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: formato de los títulos y entradas de los índices y listados.
+%
+% Uso: mantenimiento de la plantilla; normalmente no debes modificarlo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Every generated list uses the same unnumbered title typography and spacing.
+% Auxiliary-list entries reuse the TOC section-entry renderer so their fonts,
+% spacing, number columns, page numbers and leaders follow the selected style.
+\newcommand{\thesis@makelisttitle}[1]{%
+  \vspace*{\thesis@chapterbefore}%
+  {\parindent\z@\raggedright\normalfont\interlinepenalty\@M
+    \thesis@chapterfont #1\par\nobreak\vskip\thesis@chapterafter}}
+\newenvironment{thesislisttitlestyle}
+  {\begingroup\let\@makeschapterhead\thesis@makelisttitle}
+  {\endgroup}
+\newcommand{\thesis@configuretoclofttitle}[1]{%
+  \@namedef{cft#1titlefont}{\thesis@chapterfont}%
+  \setlength{\@nameuse{cftbefore#1titleskip}}{\thesis@chapterbefore}%
+  \setlength{\@nameuse{cftafter#1titleskip}}{\thesis@chapterafter}}
+\thesis@configuretoclofttitle{toc}
+\thesis@configuretoclofttitle{lof}
+\thesis@configuretoclofttitle{lot}
+\thesis@configuretoclofttitle{vdo}
+\setlength{\cftbeforechapskip}{\thesis@tocchaptergap}
+\setlength{\cftbeforesecskip}{\thesis@tocentrygap}
+\setlength{\cftbeforesubsecskip}{\thesis@tocentrygap}
+\setlength{\cftbeforesubsubsecskip}{\thesis@tocentrygap}
+\renewcommand{\cftchapfont}{\thesis@tocchapterfont}
+\renewcommand{\cftchappagefont}{\thesis@tocchapterpagefont}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsubsecfont}{\normalfont}
+\renewcommand{\cftsubsubsecfont}{\normalfont}
+\renewcommand{\cftchapdotsep}{\thesis@tocchapterdotsep}
+\setlength{\cftchapnumwidth}{\thesis@tocchapnumwidth}
+\setlength{\cftsecindent}{\thesis@tocsecindent}
+\setlength{\cftsecnumwidth}{\thesis@tocsecnumwidth}
+\setlength{\cftsubsecindent}{\thesis@tocsubsecindent}
+\setlength{\cftsubsecnumwidth}{\thesis@tocsubsecnumwidth}
+\setlength{\cftsubsubsecindent}{\thesis@tocsubsubsecindent}
+\setlength{\cftsubsubsecnumwidth}{\thesis@tocsubsubsecnumwidth}
+\ifthenelse{\equal{\thesis@toclayout}{modern}}{%
+  \renewcommand{\cftchapleader}{\hfill}%
+  \let\thesis@originalnumberline\numberline
+  \newcommand{\thesis@tocnumberline}[1]{%
+    \thesis@originalnumberline{\textcolor{ThesisAccent}{\thesis@displaynumber{#1}}}}%
+  \renewcommand{\cftchapfont}{\sffamily\bfseries\let\numberline\thesis@tocnumberline}%
+}{}
+\ifthenelse{\equal{\thesis@toclayout}{framed}}{%
+  \renewcommand{\cftchapleader}{\hfill}%
+  \renewcommand{\cftsecleader}{\hfill}%
+  \renewcommand{\cftsubsecleader}{\hfill}%
+  \renewcommand{\cftsubsubsecleader}{\hfill}%
+  \renewcommand{\cftparaleader}{\hfill}%
+  \renewcommand{\cftsubparaleader}{\hfill}%
+}{}
+
+\ifthenelse{\equal{\thesis@toclayout}{mimosis}}{%
+  \renewcommand{\cftchapfont}{\normalfont\rmfamily\bfseries}%
+  \renewcommand{\cftchappagefont}{\normalfont\rmfamily\bfseries}%
+  \renewcommand{\cftchapleader}{\hfill}%
+}{}
+
+% Preserve the fully configured section renderer before assigning the shared
+% auxiliary-list entry. Force a visible entry locally even if a user chooses a
+% TOC depth that hides sections; that choice must not empty the other lists.
+\let\thesis@tocsectionentry\l@section
+\newcommand{\thesis@auxlistentry}[2]{%
+  \begingroup
+  \c@tocdepth=\@ne
+  \thesis@tocsectionentry{#1}{#2}%
+  \endgroup}
+\let\l@figure\thesis@auxlistentry
+\let\l@table\thesis@auxlistentry
+\let\l@videos\thesis@auxlistentry
+\let\l@algocf\thesis@auxlistentry
+
+% float.sty recreates the entry command whenever \listof is invoked. Replace
+% that package-local dotted renderer with the same shared renderer used above.
+\patchcmd{\listof}
+  {\@namedef{l@#1}{\@dottedtocline{1}{1.5em}{2.3em}}}
+  {\expandafter\let\csname l@#1\endcsname\thesis@auxlistentry}
+  {}%
+  {\PackageWarning{thesis-typesetting}{Could not apply the shared entry style to float lists}}

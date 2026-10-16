@@ -1,0 +1,99 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EDUAH/11 - Cambio de director/a o tutor/a de tesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,a4paper,oneside]{article}
+\input{../Config/preamble.tex}
+\input{../Config/myconfig.tex}
+\InputIfFileExists{../Config/myconfig-phd.tex}{}{}
+\input{../Config/postamble.tex}
+\input{phd-form-layout.tex}
+
+\providecommand{\myPhDChangeRole}{Director/a}
+\providecommand{\myPhDIncomingPersonFullName}{}
+\providecommand{\myPhDIncomingPersonDNI}{}
+\providecommand{\myPhDIncomingPersonEmail}{}
+\providecommand{\myPhDIncomingPersonDoctorate}{}
+\providecommand{\myPhDIncomingPersonDepartment}{}
+\providecommand{\myPhDIncomingPersonInstitution}{}
+\providecommand{\myPhDOutgoingPersonFullName}{}
+\providecommand{\myPhDIncomingBelongsToProgram}{}
+\providecommand{\myPhDIncomingHasSexenio}{}
+\providecommand{\myPhDChangeJustification}{}
+\providecommand{\myAcademicCommissionDecision}{}
+\providecommand{\myAcademicCommissionReasons}{}
+\providecommand{\myAcademicCommissionCoordinator}{}
+\newcommand{\RoleValue}[2]{\ifthenelse{\equal{\myPhDChangeRole}{#1}}{#2}{}}
+\newcommand{\RoleYesNo}[2]{\ifthenelse{\equal{\myPhDChangeRole}{#1}}{\PhDYesNo{#2}}{\PhDYesNo{}}}
+
+\begin{document}
+\fontsize{7.4}{8.9}\selectfont
+\PhDModernHeader{CAMBIO DE DIRECTOR/A O TUTOR/A DE TESIS. RD 99/2011}
+
+\PhDSectionBar{\textbf{DOCTORANDO/A}}
+\begin{tabularx}{\linewidth}{|p{3.0cm}|X|p{2.7cm}|X|p{2.5cm}|p{3.1cm}|}
+\hline \textbf{Apellidos:} & \myAuthorSurname & \textbf{Nombre:} & \myAuthorName & \textbf{DNI/pasaporte:} & \myAuthorDNI\\\hline
+\multicolumn{2}{|l|}{\textbf{Teléfono/s:} \myAuthorTelephone} & \multicolumn{4}{l|}{\textbf{Correo electrónico:} \myAuthorEmail}\\\hline
+\multicolumn{6}{|l|}{\textbf{Programa:} \myPhDProgram}\\\hline
+\end{tabularx}
+
+\PhDSectionBar{\textbf{SOLICITA:}}
+\begin{tabularx}{\linewidth}{|p{4.2cm}|X|}
+\hline
+\textbf{EN REFERENCIA A TUTOR/A}\\
+\PhDChoice{\myPhDChangeRole}{Tutor/a}{Cambio/inclusión} &
+\textbf{En su caso, sustituye a:} \RoleValue{Tutor/a}{\myPhDOutgoingPersonFullName}\\\hline
+\multicolumn{2}{|l|}{\textbf{Apellidos y nombre:} \RoleValue{Tutor/a}{\myPhDIncomingPersonFullName}\hfill \textbf{DNI/Pasaporte:} \RoleValue{Tutor/a}{\myPhDIncomingPersonDNI}}\\
+\multicolumn{2}{|l|}{\textbf{Correo electrónico:} \RoleValue{Tutor/a}{\myPhDIncomingPersonEmail}\hfill \textbf{Doctor/a en:} \RoleValue{Tutor/a}{\myPhDIncomingPersonDoctorate}}\\
+\multicolumn{2}{|l|}{\textbf{Departamento:} \RoleValue{Tutor/a}{\myPhDIncomingPersonDepartment}}\\\hline
+\textbf{EN REFERENCIA A DIRECTOR/A O CO-DIRECTOR/A}\\
+\PhDChoice{\myPhDChangeRole}{Director/a}{Cambio/inclusión} &
+\textbf{En su caso, sustituye a:} \RoleValue{Director/a}{\myPhDOutgoingPersonFullName}\\\hline
+\multicolumn{2}{|l|}{\textbf{Apellidos y nombre:} \RoleValue{Director/a}{\myPhDIncomingPersonFullName}\hfill \textbf{DNI/Pasaporte:} \RoleValue{Director/a}{\myPhDIncomingPersonDNI}}\\
+\multicolumn{2}{|l|}{\textbf{Correo electrónico:} \RoleValue{Director/a}{\myPhDIncomingPersonEmail}\hfill \textbf{Doctor/a en:} \RoleValue{Director/a}{\myPhDIncomingPersonDoctorate}}\\
+\multicolumn{2}{|l|}{\textbf{Departamento:} \RoleValue{Director/a}{\myPhDIncomingPersonDepartment}}\\
+\multicolumn{2}{|l|}{\textbf{Universidad/Organismo/Institución:} \RoleValue{Director/a}{\myPhDIncomingPersonInstitution}}\\
+\multicolumn{2}{|l|}{\textbf{Pertenece al plantel de profesores del programa:} \RoleYesNo{Director/a}{\myPhDIncomingBelongsToProgram}}\\
+\multicolumn{2}{|l|}{\textbf{Perfil investigador afín y al menos un sexenio:} \RoleYesNo{Director/a}{\myPhDIncomingHasSexenio}}\\\hline
+\end{tabularx}
+
+\PhDSectionBar{\textbf{JUSTIFICACIÓN DEL CAMBIO O INCLUSIÓN}}
+\PhDResponseBox{1.25cm}{\myPhDChangeJustification}
+
+\PhDSectionBar{\textbf{Términos del compromiso documental y de buenas prácticas}}
+Con carácter general, los firmantes declaran que conocen la normativa vigente reguladora de los estudios de doctorado, la específica de la Universidad de Alcalá y el Código de Buenas Prácticas de la EDUAH. Suscriben, en particular, los siguientes compromisos:
+\begin{itemize}[leftmargin=0.45cm,itemsep=0pt,topsep=0.03cm,parsep=0pt]
+\item \textbf{Doctorando/a:} cumplir la normativa de propiedad intelectual e industrial, llevar a cabo el documento de actividades y el plan de investigación, seguir las indicaciones del Tutor y del Director y el procedimiento previsto en caso de conflicto.
+\item \textbf{Tutor/a:} diseñar y seguir las actividades, orientar la formación, elaborar el informe anual y comparecer ante la Comisión Académica si fuera requerido. Declara que no concurre una situación de abstención por parentesco de las recogidas en el artículo 23 de la Ley 40/2015.
+\item \textbf{Director/a:} respetar la normativa de propiedad intelectual e industrial, supervisar el plan de investigación y la tesis mediante reuniones periódicas, elaborar el informe anual y comparecer ante la Comisión Académica si fuera requerido. Declara que no concurre una situación de abstención por parentesco de las recogidas en el artículo 23 de la Ley 40/2015.
+\item \textbf{Universidad:} proporcionar los recursos que consten en el plan de investigación para realizar la tesis doctoral.
+\end{itemize}
+
+\vspace{0.08cm}
+\begin{center}Alcalá de Henares, \PhDUnderline{5.0cm}{\myPaperworkDate}\end{center}
+\begin{center}
+\PhDSignatureLine{Nueva persona designada}\hfill
+\PhDSignatureLine{Persona sustituida}\hfill
+\PhDSignatureLine{Doctorando/a}
+\end{center}
+\enlargethispage{1.8cm}
+\PhDPrivacyFooter{14/05/2025}{EDUAH/11}
+
+\newpage
+\fontsize{9}{10.8}\selectfont
+\PhDModernHeader{}
+\PhDSectionBar{\textbf{INFORME DE LA COMISIÓN ACADÉMICA}}
+La Comisión Académica del Programa en\\[0.08cm]
+\PhDUnderline{\linewidth}{\myPhDProgram}\\[0.50cm]
+A la vista de la solicitud y de la documentación presentada, acuerda:\\[0.40cm]
+\PhDChoice{\myAcademicCommissionDecision}{Favorable}{Informar favorablemente, dado que considera la solicitud debidamente justificada.}\\[0.50cm]
+\PhDChoice{\myAcademicCommissionDecision}{Desfavorable}{Informar desfavorablemente. Motivos:}\\[0.15cm]
+\PhDResponseBox{7.0cm}{\myAcademicCommissionReasons}
+
+\vfill
+\begin{flushright}
+Alcalá de Henares, \PhDUnderline{5.5cm}{\myPaperworkDate}\\[0.40cm]
+La Coordinación del Programa\\[1.40cm]
+Fdo.: \PhDUnderline{6.5cm}{\myAcademicCommissionCoordinator}
+\end{flushright}
+\PhDPrivacyFooter{14/05/2025}{EDUAH/11}
+\end{document}
