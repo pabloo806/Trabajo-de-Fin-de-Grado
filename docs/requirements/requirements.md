@@ -145,45 +145,49 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 ```mermaid
 mindmap
   root((SRS))
-    O1 Importación
-      RF-01 Recorrer biblioteca
-      RF-02 Validar formatos
-      RF-03 Extraer metadatos
+
+    O1 Importacion
+      RF-01 Biblioteca recursiva
+      RF-02 Validacion formatos
+      RF-03 Extraccion metadatos
 
     O2 Analisis Musical
-      RF-04 BPM
-      RF-05 Tonalidad
-      RF-06 Camelot
-      RF-07 Trazabilidad
+      RF-04 Estimacion BPM
+      RF-05 Estimacion tonalidad
+      RF-06 Conversion Camelot
+      RF-07 Trazabilidad analisis
 
     O3 Base de Datos
-      RF-08 Persistencia
+      RF-08 Persistencia pistas
       RF-09 Evitar reanalisis
+      RF-09b Deteccion nuevas pistas
       RF-10 Historico setlists
-      RF-11 Busquedas
+      RF-11 Consultas filtradas
+      RF-11b Ordenacion consultas
 
-    O4 Generador
-      RF-12 Duracion
-      RF-13 BPM
+    O4 Generador Setlists
+      RF-12 Duracion objetivo
+      RF-13 Rango BPM
       RF-14 Compatibilidad armonica
-      RF-15 Generos
+      RF-15 Progresion generos
       RF-16 Pistas ancladas
-      RF-17 Orden automatico
+      RF-17 Generacion automatica
       RF-18 Sin duplicados
       RF-19 Gestion conflictos
-      RF-20 Revision
+      RF-20 Revision resultado
+      RF-20b Edicion manual
 
     O5 Exportacion
-      RF-21 Formato Rekordbox
+      RF-21 Exportacion XML
       RF-22 Resolucion rutas
-      RF-23 Importacion correcta
+      RF-23 Validacion Rekordbox
 
-    O6 Panel
-      RF-24 Historico
-      RF-25 Top canciones
-      RF-26 Distribuciones
-      RF-27 Evolucion estilo
-      RF-28 Exportacion datos
+    O6 Panel Estadisticas
+      RF-24 Historial setlists
+      RF-25 Ranking pistas
+      RF-26 Distribuciones musicales
+      RF-27 Evolucion temporal
+      RF-28 Exportacion estadisticas
 
     O7 Evaluacion
       RF-29 Comparacion Rekordbox
