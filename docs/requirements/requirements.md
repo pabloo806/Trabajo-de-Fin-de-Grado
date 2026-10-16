@@ -100,6 +100,7 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 |---|---|---|---|---|---|
 | RF-08 | El sistema persistirá las pistas analizadas y sus descriptores en una base de datos local | O3 | Must | I (puerto en A) | Los datos sobreviven al reinicio de la aplicación |
 | RF-09 | El sistema identificará cada pista de forma única y solo la analizará la primera vez que aparezca en la biblioteca | O3 | Must | D/A | Una segunda importación de la misma carpeta no reanaliza ninguna pista |
+| RF-09b | El sistema detectará nuevas pistas incorporadas a una biblioteca previamente importada y analizará únicamente aquellas que no existan en la base de datos. | O3 | Must | D/A | Tras añadir nuevas pistas a una biblioteca ya indexada, únicamente dichas pistas son analizadas |
 | RF-10 | El sistema persistirá los setlists generados, sus parámetros y su histórico | O3 | Must | I (puerto en A) | Un setlist es recuperable con sus parámetros originales |
 | RF-11 | El sistema permitirá consultar las pistas por BPM, tonalidad, género, año y duración | O3, O4 | Must | A/I | Las consultas devuelven solo pistas que cumplen los filtros |
 
