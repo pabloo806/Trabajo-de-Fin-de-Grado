@@ -143,66 +143,84 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 ### 3.8 Mapa de requisitos funcionales
 
 ```mermaid
-flowchart LR
+flowchart TB
+
+    O1x((O1))
+    O2x((O2))
+    O3x((O3))
+    O4x((O4))
+    O5x((O5))
+    O6x((O6))
+    O7x((O7))
+
+    O1x ---> O2x ---> O3x ---> O4x ---> O5x ---> O6x ---> O7x
+
+    style O1x fill:transparent,stroke:transparent
+    style O2x fill:transparent,stroke:transparent
+    style O3x fill:transparent,stroke:transparent
+    style O4x fill:transparent,stroke:transparent
+    style O5x fill:transparent,stroke:transparent
+    style O6x fill:transparent,stroke:transparent
+    style O7x fill:transparent,stroke:transparent
 
     subgraph O1["O1 - Importación"]
-        direction TB
-        RF01(("RF-01<br/>Recorrer<br/>biblioteca"))
-        RF02(("RF-02<br/>Validar<br/>formatos"))
-        RF03(("RF-03<br/>Extraer<br/>metadatos"))
+        direction LR
+        RF01(("RF-01<br/>Biblioteca"))
+        RF02(("RF-02<br/>Formatos"))
+        RF03(("RF-03<br/>Metadatos"))
     end
 
     subgraph O2["O2 - Análisis Musical"]
-        direction TB
-        RF04(("RF-04<br/>Estimar<br/>BPM"))
-        RF05(("RF-05<br/>Estimar<br/>tonalidad"))
-        RF06(("RF-06<br/>Conversión<br/>Camelot"))
-        RF07(("RF-07<br/>Trazabilidad<br/>análisis"))
+        direction LR
+        RF04(("RF-04<br/>BPM"))
+        RF05(("RF-05<br/>Tonalidad"))
+        RF06(("RF-06<br/>Camelot"))
+        RF07(("RF-07<br/>Trazabilidad"))
     end
 
     subgraph O3["O3 - Base de Datos"]
-        direction TB
-        RF08(("RF-08<br/>Persistencia<br/>pistas"))
-        RF09(("RF-09<br/>Evitar<br/>reanálisis"))
-        RF09B(("RF-09b<br/>Nuevas<br/>pistas"))
-        RF10(("RF-10<br/>Histórico<br/>setlists"))
-        RF11(("RF-11<br/>Consultas<br/>filtradas"))
-        RF11B(("RF-11b<br/>Ordenación<br/>consultas"))
+        direction LR
+        RF08(("RF-08<br/>Persistencia"))
+        RF09(("RF-09<br/>Reanálisis"))
+        RF09B(("RF-09b<br/>Nuevas pistas"))
+        RF10(("RF-10<br/>Histórico"))
+        RF11(("RF-11<br/>Consultas"))
+        RF11B(("RF-11b<br/>Ordenación"))
     end
 
     subgraph O4["O4 - Generador"]
-        direction TB
-        RF12(("RF-12<br/>Duración<br/>objetivo"))
-        RF13(("RF-13<br/>Rango<br/>BPM"))
-        RF14(("RF-14<br/>Compatibilidad<br/>armónica"))
-        RF15(("RF-15<br/>Progresión<br/>géneros"))
-        RF16(("RF-16<br/>Pistas<br/>ancladas"))
-        RF17(("RF-17<br/>Generación<br/>automática"))
-        RF18(("RF-18<br/>Sin<br/>duplicados"))
-        RF19(("RF-19<br/>Gestión<br/>conflictos"))
-        RF20(("RF-20<br/>Revisión<br/>resultado"))
-        RF20B(("RF-20b<br/>Edición<br/>manual"))
+        direction LR
+        RF12(("RF-12<br/>Duración"))
+        RF13(("RF-13<br/>BPM"))
+        RF14(("RF-14<br/>Compatibilidad"))
+        RF15(("RF-15<br/>Géneros"))
+        RF16(("RF-16<br/>Anclajes"))
+        RF17(("RF-17<br/>Generación"))
+        RF18(("RF-18<br/>Duplicados"))
+        RF19(("RF-19<br/>Conflictos"))
+        RF20(("RF-20<br/>Revisión"))
+        RF20B(("RF-20b<br/>Edición"))
     end
 
     subgraph O5["O5 - Exportación"]
-        direction TB
-        RF21(("RF-21<br/>Exportación<br/>XML"))
-        RF22(("RF-22<br/>Resolución<br/>rutas"))
-        RF23(("RF-23<br/>Validación<br/>Rekordbox"))
+        direction LR
+        RF21(("RF-21<br/>XML"))
+        RF22(("RF-22<br/>Rutas"))
+        RF23(("RF-23<br/>Validación"))
     end
 
     subgraph O6["O6 - Estadísticas"]
-        direction TB
-        RF24(("RF-24<br/>Historial<br/>setlists"))
-        RF25(("RF-25<br/>Ranking<br/>pistas"))
-        RF26(("RF-26<br/>Distribuciones<br/>musicales"))
-        RF27(("RF-27<br/>Evolución<br/>temporal"))
-        RF28(("RF-28<br/>Exportación<br/>datos"))
+        direction LR
+        RF24(("RF-24<br/>Historial"))
+        RF25(("RF-25<br/>Ranking"))
+        RF26(("RF-26<br/>Distribuciones"))
+        RF27(("RF-27<br/>Evolución"))
+        RF28(("RF-28<br/>Exportación"))
     end
 
     subgraph O7["O7 - Evaluación"]
-        direction TB
-        RF29(("RF-29<br/>Comparación<br/>Rekordbox"))
+        direction LR
+        RF29(("RF-29<br/>Comparación"))
     end
 ```
 
