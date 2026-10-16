@@ -131,8 +131,8 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 |---|---|---|---|---|---|
 | RF-24 | El sistema mostrará el historial de setlists generados | O6 | Could | P/A | El historial lista todos los setlists persistidos |
 | RF-25 | El sistema mostrará las pistas más utilizadas | O6 | Could | A | El ranking coincide con el recuento en el histórico |
-| RF-26 | El sistema mostrará la distribución de BPM, tonalidades y géneros de la biblioteca | O6 | Could | A | Las distribuciones coinciden con los datos almacenados |
-| RF-27 | El sistema mostrará la evolución del estilo del DJ a lo largo del tiempo | O6 | Could | A | Las series temporales derivan del histórico |
+| RF-26 | El sistema mostrará la distribución de BPM, tonalidades (incluyendo su representación mediante la Rueda Camelot) y géneros musicales presentes en la biblioteca mediante gráficos estadísticos | O6 | Could | A | Los valores mostrados coinciden con los datos almacenados en la base de datos y las representaciones gráficas reflejan correctamente su distribución. |
+| RF-27 | El sistema mostrará la evolución temporal de los géneros musicales, la media de BPM y las tonalidades empleadas en los setlists generados mediante gráficos de líneas múltiples | O6 | Could | A | Las series temporales representadas se calculan correctamente a partir del histórico de setlists almacenado. |
 | RF-28 | El sistema exportará los datos del panel en TXT, M3U y CSV | O6 | Could | I | Los ficheros se generan con el contenido mostrado |
 
 ### 3.7 Evaluación (O7)
