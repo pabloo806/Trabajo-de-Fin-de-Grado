@@ -99,8 +99,8 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 | ID | Requisito | Obj. | MoSCoW | Capa | Criterio de aceptación |
 |---|---|---|---|---|---|
 | RF-08 | El sistema persistirá las pistas analizadas y sus descriptores en una base de datos local | O3 | Must | I (puerto en A) | Los datos sobreviven al reinicio de la aplicación |
-| RF-09 | El sistema identificará cada pista de forma única y solo la analizará la primera vez que aparezca en la biblioteca | O3 | Must | D/A | Una segunda importación de la misma carpeta no reanaliza ninguna pista |
-| RF-09b | El sistema detectará nuevas pistas incorporadas a una biblioteca previamente importada y analizará únicamente aquellas que no existan en la base de datos. | O3 | Must | D/A | Tras añadir nuevas pistas a una biblioteca ya indexada, únicamente dichas pistas son analizadas |
+| RF-09 | El sistema asignará a cada pista un identificador único e independiente de su nombre o ubicación. | O3 | Must | D/A | Una misma pista conserva el mismo identificador aunque cambie de nombre o ubicación. |
+| RF-09b | El sistema detectará nuevas pistas incorporadas a una biblioteca previamente importada y analizará únicamente aquellas cuyo identificador no exista en la base de datos | O3 | Must | D/A | Tras añadir nuevas pistas a una biblioteca ya indexada, únicamente dichas pistas son analizada. |
 | RF-10 | El sistema persistirá los setlists generados, sus parámetros y su histórico | O3 | Must | I (puerto en A) | Un setlist es recuperable con sus parámetros originales |
 | RF-11 | El sistema permitirá consultar las pistas por BPM, tonalidad, título, género, año y duración | O3, O4 | Must | A/I | Las consultas devuelven solo pistas que cumplen los filtros |
 | RF-11b | El sistema permitirá ordenar los resultados de las consultas de pistas por BPM, tonalidad, título, año o duración, tanto en orden ascendente como descendente. | O3, O4 | Must | A/I | Tras seleccionar un campo de ordenación y una dirección (ascendente o descendente), las pistas se muestran ordenadas correctamente según el criterio elegido. |
@@ -117,7 +117,7 @@ Reproducción de audio y mezcla en directo (tiempo real); streaming o catálogos
 | RF-18 | El sistema no repetirá una pista dentro de un mismo setlist | O4 | Must | D | Ninguna pista aparece dos veces |
 | RF-19 | Cuando las restricciones definidas por el usuario no puedan satisfacerse simultáneamente, el sistema informará de la imposibilidad de generar el setlist e identificará las restricciones en conflicto | O4 | Must | A | Si no existe una combinación de pistas que satisfaga todas las restricciones establecidas, el sistema muestra un mensaje identificando las restricciones incompatibles y no genera ni almacena un setlist inválido |
 | RF-20 | El sistema mostrará el setlist generado con el orden, los descriptores de cada pista y la evaluación de cada transición | O4 | Must | P | El DJ puede revisar el resultado antes de exportarlo |
-| RF-20b | El sistema permitira editar el setlist generado cambiando parámetros y reordenando de forma manual | O4 | Could | P | El DJ puede editar el resultado tras exportarlo |
+| RF-20b | El sistema permitirá modificar manualmente el orden de reproducción de un setlist generado antes de su exportación. | O4 | Could | P | El DJ puede reordenar pistas y guardar la nueva secuencia |
 
 ### 3.5 Exportación a Rekordbox (O5)
 | ID | Requisito | Obj. | MoSCoW | Capa | Criterio de aceptación |
@@ -162,7 +162,7 @@ flowchart TB
     subgraph O3["O3 - Base de Datos"]
         direction LR
         RF08(("RF-08<br/>Persistencia"))
-        RF09(("RF-09<br/>Reanálisis"))
+        RF09(("RF-09<br/>Identificación"))
         RF09B(("RF-09b<br/>Nuevas pistas"))
         RF10(("RF-10<br/>Histórico"))
         RF11(("RF-11<br/>Consultas"))
@@ -180,7 +180,7 @@ flowchart TB
         RF18(("RF-18<br/>Duplicados"))
         RF19(("RF-19<br/>Conflictos"))
         RF20(("RF-20<br/>Revisión"))
-        RF20B(("RF-20b<br/>Edición"))
+        RF20B(("RF-20b<br/>Reordenación"))
     end
 
     subgraph O5["O5 - Exportación"]
