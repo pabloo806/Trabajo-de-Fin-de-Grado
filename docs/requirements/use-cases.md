@@ -40,43 +40,60 @@
 flowchart LR
 
     DJ((DJ))
-    RB((Rekordbox))
-    FS((Sistema de archivos))
 
-    CU01[CU-01 Analizar nueva biblioteca]
-    CU02[CU-02 Actualizar biblioteca]
-    CU03[CU-03 Consultar biblioteca]
-    CU04[CU-04 Definir parámetros]
-    CU05[CU-05 Generar setlist]
-    CU06[CU-06 Consultar historial]
-    CU07[CU-07 Exportar setlist]
-    CU08[CU-08 Modificar setlist]
-    CU09[CU-09 Consultar estadísticas]
-    CU10[CU-10 Exportar estadísticas]
-    CU11[CU-11 Evaluar resultados]
+    subgraph SG["SetlistGen"]
+
+        subgraph LIB["Biblioteca musical"]
+            CU01["CU-01 Analizar nueva biblioteca"]
+            CU02["CU-02 Actualizar biblioteca"]
+            CU03["CU-03 Consultar y ordenar biblioteca"]
+        end
+
+        subgraph GEN["Generación"]
+            CU04["CU-04 Definir parámetros"]
+            CU05["CU-05 Generar setlist"]
+            CU08["CU-08 Modificar setlist"]
+        end
+
+        subgraph SET["Setlists"]
+            CU06["CU-06 Consultar historial"]
+            CU07["CU-07 Exportar setlist"]
+        end
+
+        subgraph EST["Estadísticas y evaluación"]
+            CU09["CU-09 Consultar estadísticas"]
+            CU10["CU-10 Exportar datos"]
+            CU11["CU-11 Evaluar resultados"]
+        end
+
+    end
+
+    FS((Sistema de<br/>archivos))
+
+    RB((Rekordbox))
 
     DJ --> CU01
     DJ --> CU02
     DJ --> CU03
-    DJ --> CU04
+
     DJ --> CU05
     DJ --> CU06
     DJ --> CU07
     DJ --> CU08
+
     DJ --> CU09
     DJ --> CU10
     DJ --> CU11
 
-    CU05 -. incluye .-> CU04
+    CU05 -. «include» .-> CU04
 
-    CU01 --- FS
-    CU02 --- FS
-    CU07 --- FS
+    FS --- CU01
+    FS --- CU02
+    FS --- CU07
 
-    CU07 --- RB
-    CU11 --- RB
+    RB --- CU07
+    RB --- CU11
 ```
-
 ---
 
 # 4. Casos de uso críticos
