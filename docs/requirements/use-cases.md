@@ -4,15 +4,7 @@
 **Documentos relacionados:** `requisitos.md`, `glosario.md`
 
 ---
-
-## 1. Actores
-| Actor | Tipo | Descripción |
-|---|---|---|
-| DJ | Principal | Usuario que analiza su biblioteca, genera setlists y los exporta |
-| Rekordbox | Secundario (externo) | Recibe la lista exportada y proporciona los valores de referencia |
-| Sistema de archivos local | Secundario (externo) | Provee el audio y recibe los ficheros exportados |
-
-## 2. Catálogo
+## 1. Catálogo
 
 | ID | Nombre | Actor | RF relacionados | Prioridad | Detalle |
 |---|---|---|---|---|---|
@@ -47,7 +39,7 @@ flowchart LR
 
 ---
 
-## 3. Casos de uso críticos
+## 2. Casos de uso críticos
 
 ### CU-01. Analizar nueva biblioteca
 - **Actor principal:** DJ. **Secundario:** Sistema de archivos local.
