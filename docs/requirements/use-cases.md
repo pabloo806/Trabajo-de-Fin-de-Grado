@@ -1,166 +1,206 @@
 # Catálogo de Casos de Uso
 
-**Versión:** 1.0 (propuesta) · **Fecha:** 2026-10-09
-**Documentos relacionados:** `requisitos.md`, `glosario.md`
+**Proyecto:** SetlistGen  
+**Versión:** 1.0  
+**Fecha:** 2026-10-19
 
 ---
 
-## 1. Actores
+# 1. Actores
 
 | Actor | Tipo | Descripción |
 |---|---|---|
-| DJ | Principal | DJ semiprofesional o profesional que prepara setlists a partir de su biblioteca |
-| Rekordbox | Sistema externo | Entorno de importación del setlist y fuente de valores de referencia para la evaluación |
-| Sistema de archivos local | Sistema externo | Origen del audio y destino de las exportaciones |
+| DJ | Principal | Usuario principal del sistema. Gestiona la biblioteca, genera setlists y consulta resultados. |
+| Rekordbox | Sistema externo | Destino de los setlists exportados y fuente de referencia para la evaluación. |
+| Sistema de archivos local | Sistema externo | Origen de las pistas musicales y destino de las exportaciones. |
 
 ---
 
-## 2. Catálogo
+# 2. Catálogo de casos de uso
 
 | ID | Nombre | Actor | RF relacionados | Prioridad | Detalle |
 |---|---|---|---|---|---|
-| CU-01 | Analizar nueva biblioteca | DJ, Sistema de Archivos Local |  | Must | Sí |
-| CU-02 | Actualizar biblioteca existente | DJ, Sistema de Archivos Local |  | Must | — |
-| CU-03 | Consultar la biblioteca analizada | DJ |  | Must | — |
-| CU-04 | Definir parámetros del setlist | DJ |  | Must | — |
-| CU-05 | Generar setlist | DJ |  | Must | Sí |
-| CU-06 | Consultar el histórico de setlists | DJ |  | Should | — |
-| CU-07 | Consultar el setlist seleccionado | DJ |  | Should | — |
-| CU-08 | Exportar setlist seleccionado a Rekordbox | DJ, Rekordbox |  | Must | Sí |
-| CU-09 | Consultar estadísticas de la biblioteca y del histórico | DJ |  | Could | — |
-| CU-10 | Exportar datos del panel (TXT/M3U/CSV) | DJ |  | Could | — |
-| CU-11 | Contrastar descriptores con la referencia de Rekordbox | DJ, Rekordbox |  | Should | — |
+| CU-01 | Analizar nueva biblioteca | DJ | RF-01, RF-02, RF-03, RF-04, RF-05, RF-06, RF-07, RF-08, RF-09 | Must | Sí |
+| CU-02 | Actualizar biblioteca existente | DJ | RF-09b | Must | — |
+| CU-03 | Consultar y ordenar biblioteca | DJ | RF-11, RF-11b | Must | — |
+| CU-04 | Definir parámetros de generación | DJ | RF-12, RF-13, RF-14, RF-15, RF-16 | Must | — |
+| CU-05 | Generar setlist | DJ | RF-10, RF-17, RF-18, RF-19, RF-20 | Must | Sí |
+| CU-06 | Consultar historial de setlists | DJ | RF-10, RF-24 | Could | — |
+| CU-07 | Exportar setlist a Rekordbox | DJ, Rekordbox | RF-21, RF-22, RF-23 | Must | Sí |
+| CU-08 | Modificar orden de un setlist | DJ | RF-20b | Could | — |
+| CU-09 | Consultar estadísticas | DJ | RF-25, RF-26, RF-27 | Could | — |
+| CU-10 | Exportar datos estadísticos | DJ | RF-28 | Could | — |
+| CU-11 | Evaluar resultados frente a Rekordbox | DJ, Rekordbox | RF-29 | Should | — |
 
-Relaciones: CU-05 incluye CU-04. CU-01 y CU-02 comparten el flujo de análisis. CU-08 parte de un setlist de CU-05, de CU-06 o de CU-07.
+---
+
+# 3. Diagrama de casos de uso
 
 ```mermaid
 flowchart LR
-  DJ((DJ)) --> CU01[CU-01 Analizar nueva biblioteca]
-  DJ --> CU02[CU-02 Actualizar biblioteca]
-  DJ --> CU03[CU-03 Consultar biblioteca]
-  DJ --> CU05[CU-05 Generar setlist]
-  CU05 -. include .-> CU04[CU-04 Definir parámetros]
-  DJ --> CU06[CU-06 Histórico]
-  DJ --> CU07[CU-07 Exportar a Rekordbox]
-  DJ --> CU08[CU-08 Estadísticas]
-  CU08 -. extend .-> CU09[CU-09 Exportar panel]
-  DJ --> CU10[CU-10 Contrastar con referencia]
-  CU07 --- RB((Rekordbox))
-  CU10 --- RB
+
+    DJ((DJ))
+    RB((Rekordbox))
+    FS((Sistema de archivos))
+
+    CU01[CU-01 Analizar nueva biblioteca]
+    CU02[CU-02 Actualizar biblioteca]
+    CU03[CU-03 Consultar biblioteca]
+    CU04[CU-04 Definir parámetros]
+    CU05[CU-05 Generar setlist]
+    CU06[CU-06 Consultar historial]
+    CU07[CU-07 Exportar setlist]
+    CU08[CU-08 Modificar setlist]
+    CU09[CU-09 Consultar estadísticas]
+    CU10[CU-10 Exportar estadísticas]
+    CU11[CU-11 Evaluar resultados]
+
+    DJ --> CU01
+    DJ --> CU02
+    DJ --> CU03
+    DJ --> CU04
+    DJ --> CU05
+    DJ --> CU06
+    DJ --> CU07
+    DJ --> CU08
+    DJ --> CU09
+    DJ --> CU10
+    DJ --> CU11
+
+    CU05 -. incluye .-> CU04
+
+    CU01 --- FS
+    CU02 --- FS
+    CU07 --- FS
+
+    CU07 --- RB
+    CU11 --- RB
 ```
 
 ---
 
-## 3. Casos de uso críticos
+# 4. Casos de uso críticos
 
-### CU-01. Analizar nueva biblioteca
-- **Actor principal:** DJ. **Secundario:** Sistema de archivos local.
-- **Objetivo:** incorporar a la base de datos las pistas de una carpeta con sus metadatos, BPM, tonalidad y código Camelot.
-- **Capa de aplicación (puertos):** `LibraryScanner`, `MetadataReader`, `AudioAnalyzer`, `TrackRepository`.
+Se consideran críticos los casos de uso:
 
-**Precondiciones**
-1. La carpeta indicada existe y es legible.
-2. La base de datos está inicializada y accesible.
-3. El analizador de audio está disponible.
+- CU-01 Analizar nueva biblioteca.
+- CU-05 Generar setlist.
+- CU-07 Exportar setlist a Rekordbox.
 
-**Flujo principal**
-1. El DJ indica la carpeta raíz de su biblioteca (RF-01).
+Estos casos implementan los objetivos principales O1, O4 y O5 del anteproyecto y concentran la mayor parte de la complejidad técnica del sistema.
+
+---
+
+# 5. CU-01 Analizar nueva biblioteca
+
+## Objetivo
+
+Analizar una biblioteca musical local y almacenar los metadatos y descriptores musicales de las pistas encontradas.
+
+## Actor principal
+
+DJ
+
+## Actores secundarios
+
+Sistema de archivos local
+
+## Precondiciones
+
+1. La carpeta existe.
+2. La carpeta es accesible.
+3. La base de datos está disponible.
+
+## Flujo principal
+
+1. El DJ selecciona una carpeta raíz.
 2. El sistema recorre la carpeta de forma recursiva.
-3. El sistema separa los ficheros soportados (MP3, WAV, FLAC, AIFF) de los demás (RF-02).
-4. Para cada pista soportada, el sistema calcula su identificador y comprueba si ya está en la base de datos (RF-09).
-5. Para cada pista nueva, el sistema extrae los metadatos de las etiquetas (RF-03).
-6. El sistema estima el BPM y la tonalidad, deriva el código Camelot y registra el origen de cada descriptor (RF-04 a 07).
-7. El sistema persiste la pista con sus descriptores (RF-08).
-8. El sistema muestra el progreso del proceso (RNF-15).
-9. Al terminar, el sistema muestra un informe: pistas analizadas, ya existentes, descartadas y con error.
+3. El sistema identifica los formatos válidos.
+4. Extrae los metadatos disponibles.
+5. Calcula BPM y tonalidad.
+6. Obtiene el código Camelot.
+7. Registra el origen de los descriptores.
+8. Almacena la información en la base de datos.
+9. Muestra un informe del proceso.
 
-**Flujos alternativos**
-- **A1.** La carpeta no contiene pistas válidas: el sistema informa y finaliza sin cambios.
-- **A2.** Todas las pistas ya estaban en la base de datos: el sistema informa de que no hay nada que analizar (RNF-04).
-- **A3.** Metadatos incompletos: los campos ausentes quedan como nulos y el proceso continúa.
-- **A4.** El DJ cancela: se conservan las pistas ya persistidas y la base de datos queda consistente (RNF-18).
+## Postcondiciones
 
-**Excepciones**
-- **E1.** La carpeta no es accesible o no hay permisos: el sistema informa del error y no modifica la base de datos.
-- **E2.** Un fichero está corrupto o no se puede decodificar: se registra su causa y se continúa con el resto (RNF-16).
-- **E3.** El análisis no produce resultado fiable para una pista (audio muy corto o silencio): se almacena la pista con descriptores nulos y se marca el fallo.
-- **E4.** La base de datos no está disponible: el sistema aborta con un mensaje de error y no deja datos parciales.
-
-**Postcondiciones**
-1. Cada pista válida de la carpeta figura en la base de datos con sus descriptores, o con la marca de fallo.
-2. Ninguna pista ya existente fue reanalizada.
-3. El informe del proceso queda disponible para el DJ.
+1. Las pistas quedan almacenadas en la base de datos.
+2. Los descriptores musicales quedan disponibles para consultas y generación.
 
 ---
 
-### CU-05. Generar setlist
-- **Actor principal:** DJ.
-- **Objetivo:** obtener un setlist ordenado que respete los parámetros del DJ y las reglas de mezcla.
-- **Incluye:** CU-04 Definir parámetros.
-- **Capa de aplicación (puertos):** `TrackRepository`, `SetlistRepository`. La lógica de ordenación reside en el dominio.
+# 6. CU-05 Generar setlist
 
-**Precondiciones**
-1. La base de datos contiene pistas analizadas con BPM y tonalidad.
-2. Hay suficientes pistas candidatas para que la generación sea posible en principio.
+## Objetivo
 
-**Flujo principal**
-1. El DJ solicita generar un setlist.
-2. El sistema recoge los parámetros (CU-04): duración total, rango de BPM, tonalidades admitidas o compatibilidad exigida, progresión de géneros por intervalos y pistas ancladas (RF-12 a 16).
-3. El sistema valida la coherencia de los parámetros.
-4. El sistema consulta las pistas candidatas (RF-11).
-5. El sistema construye un orden de reproducción con saltos de tempo moderados y tonalidades compatibles según la Rueda Camelot (RF-17), sin repetir pistas (RF-18).
-6. El sistema coloca las pistas ancladas en sus posiciones y ajusta la duración total a la tolerancia (RF-12, 16).
-7. El sistema persiste el setlist junto con sus parámetros y la semilla empleada (RF-10).
-8. El sistema muestra el setlist con el orden, los descriptores y la valoración de cada transición (RF-20).
+Generar automáticamente un setlist compatible con las restricciones definidas por el DJ.
 
-**Flujos alternativos**
-- **A1.** El DJ ajusta los parámetros y regenera el setlist, conservando el histórico de intentos.
-- **A2.** Hay pistas sin BPM o tonalidad: se excluyen de la selección y se informa de cuántas.
-- **A3.** No se define progresión de géneros: el sistema ignora ese criterio.
+## Actor principal
 
-**Excepciones**
-- **E1.** Parámetros inválidos (por ejemplo, intervalos que no suman la duración o rango de BPM invertido): el sistema los rechaza e indica el campo.
-- **E2.** Restricciones inalcanzables con la biblioteca actual: el sistema informa de cuáles entran en conflicto y sugiere relajarlas; no persiste un setlist que las incumpla (RF-19).
-- **E3.** Pistas ancladas incompatibles entre sí: el sistema informa del conflicto.
-- **E4.** Fallo de persistencia: el setlist se muestra, pero se avisa de que no quedó guardado.
+DJ
 
-**Postcondiciones**
-1. Existe un setlist persistido, reproducible a partir de sus parámetros y su semilla (RNF-11).
-2. Todas sus transiciones cumplen las restricciones configuradas (RNF-10).
-3. El setlist queda disponible para exportación (CU-07).
+## Precondiciones
+
+1. Existe una biblioteca previamente analizada.
+2. La base de datos contiene pistas válidas.
+
+## Flujo principal
+
+1. El DJ solicita la generación.
+2. El sistema solicita los parámetros configurables.
+3. El DJ define duración, BPM, compatibilidad armónica y demás restricciones.
+4. El sistema valida los parámetros.
+5. El sistema selecciona las pistas candidatas.
+6. El sistema genera una secuencia válida.
+7. El sistema evita duplicados.
+8. El sistema almacena el resultado.
+9. El sistema muestra el setlist generado.
+
+## Flujos alternativos
+
+### A1. Restricciones incompatibles
+
+1. El sistema detecta que no existe una solución válida.
+2. El sistema informa de las restricciones en conflicto.
+3. El proceso finaliza sin generar un setlist.
+
+## Postcondiciones
+
+1. Existe un setlist válido.
+2. El setlist queda asociado a sus parámetros de generación.
 
 ---
 
-### CU-07. Exportar setlist a Rekordbox
-- **Actor principal:** DJ. **Secundarios:** Rekordbox, Sistema de archivos local.
-- **Objetivo:** obtener un fichero importable por Rekordbox con el setlist y las rutas de sus pistas.
-- **Capa de aplicación (puertos):** `SetlistRepository`, `SetlistExporter`.
+# 7. CU-07 Exportar setlist a Rekordbox
 
-**Precondiciones**
-1. Existe un setlist persistido, generado en CU-05 o recuperado en CU-06.
-2. Las pistas del setlist siguen disponibles en las rutas registradas.
+## Objetivo
 
-**Flujo principal**
-1. El DJ selecciona el setlist a exportar.
-2. El DJ elige el formato permitido (XML o M3U/M3U8, según ADR-005) y el destino.
-3. El sistema comprueba que cada pista tiene una ruta accesible y la resuelve de forma que Rekordbox la localice (RF-22).
-4. El sistema genera el fichero en el formato elegido (RF-21).
-5. El sistema escribe el fichero en el destino.
-6. El sistema informa de la ruta del fichero y del número de pistas exportadas.
-7. El DJ importa el fichero en Rekordbox y comprueba que la lista se carga con sus pistas resueltas (RF-23).
+Exportar un setlist generado a un fichero XML compatible con Rekordbox.
 
-**Flujos alternativos**
-- **A1.** Hay pistas cuyo fichero fue movido o borrado: el sistema las lista y deja al DJ excluirlas o cancelar.
-- **A2.** El destino ya existe: el sistema pide confirmación antes de sobrescribir.
-- **A3.** El DJ cambia de formato y repite la exportación.
+## Actor principal
 
-**Excepciones**
-- **E1.** No hay permisos de escritura en el destino: el sistema informa del error y no genera ficheros parciales.
-- **E2.** El setlist está vacío: el sistema lo rechaza.
-- **E3.** Nombres con caracteres no representables en el formato: el sistema los codifica o normaliza y lo registra.
-- **E4.** Rekordbox rechaza o no resuelve el fichero: el sistema no puede detectarlo; la incidencia se registra en el protocolo de validación.
+DJ
 
-**Postcondiciones**
-1. El fichero exportado es válido según el formato elegido.
-2. El setlist y la biblioteca del sistema no se modifican.
-3. La base de datos interna de Rekordbox no se modifica; la importación es una acción del DJ.
+## Actores secundarios
+
+Rekordbox.
+Sistema de archivos local.
+
+## Precondiciones
+
+1. Existe un setlist generado.
+2. Las rutas de las pistas son válidas.
+
+## Flujo principal
+
+1. El DJ selecciona un setlist.
+2. El sistema valida las rutas de las pistas.
+3. El sistema genera el XML.
+4. El sistema guarda el fichero en disco.
+5. El DJ importa el fichero en Rekordbox.
+
+## Postcondiciones
+
+1. El fichero XML queda disponible para su importación.
+2. El setlist original permanece inalterado.
