@@ -10,6 +10,6 @@ Esta documentación servirá como base para el diseño, implementación y valida
 
 ## ✅ Estado
 
-🟡 En preparación
+🟢 Finalizado (Pendiente de Aprobación por los tutores)
 
 Actualmente se encuentra en la fase inicial de análisis.  
