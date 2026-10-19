@@ -19,14 +19,14 @@
 
 | ID | Nombre | Actor | RF relacionados | Prioridad | Detalle |
 |---|---|---|---|---|---|
-| CU-01 | Analizar nueva biblioteca | DJ | RF-01 a 09 | Must | **Sí** |
-| CU-02 | Actualizar biblioteca existente | DJ | RF-01, 02, 09 | Must | — |
-| CU-03 | Consultar la biblioteca analizada | DJ | RF-11 | Must | — |
-| CU-04 | Definir parámetros del setlist | DJ | RF-12 a 16 | Must | — |
-| CU-05 | Generar setlist | DJ | RF-10, 12 a 20 | Must | **Sí** |
-| CU-06 | Consultar el histórico de setlists | DJ | RF-10, 24 | Should | — |
-| CU-07 | Exportar setlist a Rekordbox | DJ, Rekordbox | RF-21 a 23 | Must | **Sí** |
-| CU-08 | Consultar estadísticas de la biblioteca y del histórico | DJ | RF-25 a 27 | Could | — |
+| CU-01 | Analizar nueva biblioteca | DJ | RF-01, RF-02, RF-03, RF-04, RF-05, RF-06, RF-07, RF-08, RF-09 | Must | Sí |
+| CU-02 | Actualizar biblioteca existente | DJ | RF-01, RF-02, RF-09b | Must | — |
+| CU-03 | Consultar la biblioteca analizada | DJ | RF-11, RF-11b | Must | — |
+| CU-04 | Definir parámetros del setlist | DJ | RF-12, RF-13, RF-14, RF-15, RF-16 | Must | — |
+| CU-05 | Generar setlist | DJ | RF-17, RF-18, RF-19, RF-20, RF-20b | Must | Sí |
+| CU-06 | Consultar el histórico de setlists | DJ | RF-10, RF-24 | Should | — |
+| CU-07 | Exportar setlist a Rekordbox | DJ, Rekordbox | RF-21, RF-22, RF-23 | Must | Sí |
+| CU-08 | Consultar estadísticas de la biblioteca y del histórico | DJ | RF-25, RF-26, RF-27 | Could | — |
 | CU-09 | Exportar datos del panel (TXT/M3U/CSV) | DJ | RF-28 | Could | — |
 | CU-10 | Contrastar descriptores con la referencia de Rekordbox | DJ, Rekordbox | RF-29 | Should | — |
 
