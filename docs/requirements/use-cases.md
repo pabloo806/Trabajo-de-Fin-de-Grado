@@ -4,7 +4,18 @@
 **Documentos relacionados:** `requisitos.md`, `glosario.md`
 
 ---
-## 1. Catálogo
+
+## 1. Actores
+
+| Actor | Tipo | Descripción |
+|---|---|---|
+| DJ | Principal | DJ semiprofesional o profesional que prepara setlists a partir de su biblioteca |
+| Rekordbox | Sistema externo | Entorno de importación del setlist y fuente de valores de referencia para la evaluación |
+| Sistema de archivos local | Sistema externo | Origen del audio y destino de las exportaciones |
+
+---
+
+## 2. Catálogo
 
 | ID | Nombre | Actor | RF relacionados | Prioridad | Detalle |
 |---|---|---|---|---|---|
@@ -39,7 +50,7 @@ flowchart LR
 
 ---
 
-## 2. Casos de uso críticos
+## 3. Casos de uso críticos
 
 ### CU-01. Analizar nueva biblioteca
 - **Actor principal:** DJ. **Secundario:** Sistema de archivos local.
