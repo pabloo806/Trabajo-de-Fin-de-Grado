@@ -1,82 +1,109 @@
 # Glosario del Dominio
 
-**Versión:** 1.0 (propuesta) · **Fecha:** 2026-10-09
+**Versión:** 2.0 (alineado con SRS v3.0) · **Fecha:** 2026-10-19
+
 **Uso:** vocabulario común para el modelo de dominio, el código y la memoria. Los nombres de entidades propuestos para el código se indican entre paréntesis.
 
 ---
 
-## 1. Dominio musical
+# 1. Dominio musical
 
 | Término | Definición | Relevancia en el sistema |
 |---|---|---|
 | **Tempo / BPM** | Velocidad de una pieza expresada en pulsos por minuto (*beats per minute*). Puede ser no entero. | Descriptor estimado (RF-04) y criterio de compatibilidad entre pistas. |
 | **Tonalidad** | Par tónica-modo (por ejemplo, La menor o Do mayor) que describe el centro tonal de una pieza. | Descriptor estimado (RF-05). |
 | **Modo** | Mayor o menor. | Determina la letra del código Camelot. |
-| **Círculo de quintas** | Ordenación de las doce notas por intervalos de quinta; las tonalidades vecinas comparten casi todas sus notas. | Fundamento de la compatibilidad armónica [6]. |
-| **Rueda Camelot** | Sistema de notación que mapea las 24 tonalidades a códigos del 1 al 12 más una letra: **A** para menor y **B** para mayor. Por ejemplo, 8A es La menor y 8B es Do mayor. | Notación derivada de la tonalidad (RF-06). |
+| **Círculo de quintas** | Ordenación de las doce notas por intervalos de quinta; las tonalidades vecinas comparten casi todas sus notas. | Fundamento de la compatibilidad armónica. |
+| **Rueda Camelot** | Sistema de notación que mapea las 24 tonalidades a códigos del 1 al 12 más una letra: A para menor y B para mayor. | Notación derivada de la tonalidad (RF-06). |
 | **Código Camelot** | Identificador de una tonalidad en la Rueda Camelot (1A a 12B). | Valor almacenado y usado por el generador (`CamelotKey`). |
-| **Mezcla armónica** | Práctica de encadenar pistas con tonalidades compatibles para evitar disonancias en la transición. | Regla central del generador (RF-17). |
-| **Compatibilidad armónica** | Relación entre dos códigos Camelot que permite mezclarlos: el mismo código, ±1 en el número con la misma letra, o el mismo número con la letra opuesta (tonalidad relativa). | Criterio de RF-14 y RNF-10. Otras reglas más avanzadas quedan fuera de alcance. |
-| **Transición** | Paso de una pista a la siguiente dentro de un setlist. | Unidad que el generador valora y el sistema muestra (`Transition`). |
+| **Mezcla armónica** | Práctica de encadenar pistas con tonalidades compatibles para evitar disonancias en la transición. | Fundamenta RF-14 y RF-17. |
+| **Compatibilidad armónica** | Relación entre dos códigos Camelot compatibles para una transición. | RF-14, RF-17 y RNF-10. |
+| **Transición** | Paso de una pista a la siguiente dentro de un setlist. | Entidad evaluada por el generador (`Transition`). |
+| **Compatibilidad de transición** | Evaluación de una transición considerando BPM, tonalidad y reglas armónicas. | RF-17 y RF-20. |
 | **Salto de tempo** | Diferencia de BPM entre dos pistas consecutivas. | Restricción de moderación en RF-17. |
-| **Error de octava (de tempo)** | Estimación que es múltiplo o submúltiplo del BPM real (×2, ÷2, ×3, ÷3). | Se contabiliza aparte en RNF-06 y RNF-09. |
-| **Descriptor musical** | Propiedad de una pista derivada del audio o de sus etiquetas: BPM, tonalidad, código Camelot, duración, género, año. | Conjunto de datos que consume el generador (`Descriptor`). |
-| **Cromagrama** | Representación de la energía de la señal por clases de altura (doce notas) a lo largo del tiempo. | Técnica habitual en la estimación de tonalidad [1]. |
-| **Perfil de tonalidad** | Plantilla de referencia con la que se compara la distribución de alturas de una pista para decidir su tonalidad. | Técnica habitual en la estimación de tonalidad. |
-| **MIR** | *Music Information Retrieval*: disciplina que extrae información de la música a partir de la señal. | Marco teórico del motor de análisis [1], [3], [4]. |
+| **Error de octava (de tempo)** | Estimación que es múltiplo o submúltiplo del BPM real (×2, ÷2, ×3, ÷3). | RNF-06 y RNF-09. |
+| **Descriptor musical** | Propiedad de una pista derivada del audio o de sus etiquetas: BPM, tonalidad, Camelot, duración, género o año. | Información consumida por el generador (`Descriptor`). |
+| **Cromagrama** | Representación de la energía de la señal por clases de altura a lo largo del tiempo. | Técnica habitual para estimar tonalidad. |
+| **Perfil de tonalidad** | Plantilla con la que se compara la distribución de alturas de una pista para decidir su tonalidad. | Técnica habitual para estimar tonalidad. |
+| **MIR** | *Music Information Retrieval*: disciplina que extrae información musical a partir de señales de audio. | Marco teórico del motor de análisis. |
 
-## 2. Dominio DJ
+---
+
+# 2. Dominio DJ
 
 | Término | Definición | Relevancia en el sistema |
 |---|---|---|
 | **DJ** | Profesional o aficionado que selecciona y mezcla música para una audiencia. | Actor principal. |
-| **Pista (Track)** | Fichero de audio de la biblioteca con sus metadatos y descriptores. | Entidad central (`Track`). |
-| **Biblioteca musical** | Conjunto de pistas del DJ almacenadas en una carpeta local. | Entrada del sistema (`Library`). |
-| **Setlist** | Lista ordenada de pistas preparada para una actuación. | Salida del generador (`Setlist`). |
-| **Parámetros de generación** | Duración total, rango de BPM, tonalidades o compatibilidad exigida, progresión de géneros y pistas ancladas. | Entrada del generador (`GenerationParameters`). |
-| **Progresión de géneros** | Secuencia de géneros asignada a intervalos de tiempo del setlist. | RF-15. |
-| **Pista anclada** | Pista que el DJ fija en una posición concreta del setlist. | RF-16. |
-| **Rekordbox** | Aplicación de gestión de bibliotecas y reproducción para DJs de Pioneer DJ. | Destino de la exportación y fuente de referencia [7]. |
+| **Pista (Track)** | Fichero de audio de la biblioteca con metadatos y descriptores musicales asociados. | Entidad central (`Track`). |
+| **Biblioteca musical** | Conjunto de pistas gestionadas por el DJ. | Entrada principal del sistema (`Library`). |
+| **Biblioteca candidata** | Subconjunto de pistas que cumplen los filtros iniciales para la generación. | Entrada del algoritmo. |
+| **Setlist** | Lista ordenada de pistas preparada para una actuación. | Salida principal del sistema (`Setlist`). |
+| **Setlist válido** | Setlist que cumple todas las restricciones configuradas y no contiene duplicados. | RF-17, RF-18 y RNF-10. |
+| **Parámetros de generación** | Duración, BPM, compatibilidad armónica, progresión de géneros y pistas ancladas. | Entrada del generador (`GenerationParameters`). |
+| **Progresión de géneros** | Secuencia de géneros asignada a distintos intervalos temporales. | RF-15. |
+| **Pista anclada** | Pista fijada explícitamente en una posición concreta del setlist. | RF-16. |
+| **Restricción de generación** | Condición que debe cumplirse durante la construcción del setlist. | RF-12 a RF-19. |
+| **Orden de reproducción** | Secuencia final de pistas propuesta al DJ. | RF-17. |
+| **Conflicto de restricciones** | Situación en la que no existe un conjunto de pistas capaz de satisfacer simultáneamente todas las restricciones. | RF-19. |
+| **Semilla** | Valor empleado para inicializar procesos pseudoaleatorios. | RNF-11. |
+| **Histórico de setlists** | Registro persistente de los setlists generados y de sus parámetros. | RF-10 y RF-24. |
+| **Evaluación de transición** | Valoración de la calidad de una transición. | RF-20. |
+| **Ajuste del setlist** | Reordenación manual del setlist antes de su exportación. | RF-20b. |
+| **Rekordbox** | Aplicación de gestión musical para DJs de Pioneer DJ. | Destino de exportación y referencia de evaluación. |
 
-## 3. Datos y formatos
+---
 
-| Término | Definición | Relevancia en el sistema |
-|---|---|---|
-| **Metadatos / etiquetas** | Información incrustada en el fichero de audio: título, artista, género, año, duración. | Fuente de RF-03. |
-| **ID3** | Estándar de etiquetas de los ficheros MP3. Otros formatos usan mecanismos equivalentes (por ejemplo, comentarios Vorbis en FLAC o trozos ID3 en WAV y AIFF). | El lector de metadatos abstrae estas diferencias. |
-| **Rekordbox XML** | Formato XML de intercambio de bibliotecas y listas de Rekordbox, con una colección de pistas y un árbol de listas que las referencian por identificador. Cada pista incluye atributos como la ubicación del fichero. | Formato candidato de exportación (RF-21, ADR-005). |
-| **M3U / M3U8** | Formato de texto de listas de reproducción: una ruta de fichero por línea; M3U8 usa codificación UTF-8. | Formato alternativo de exportación; también usado en el panel (RF-28). |
-| **Ruta resuelta** | Ruta de un fichero expresada de modo que la aplicación destino lo localice sin ambigüedad. | RF-22, RNF-22. |
-| **Identificador de pista** | Valor que identifica de forma única una pista con independencia de su nombre o ubicación (por ejemplo, un resumen criptográfico del contenido). | Base de RF-09 y RNF-04. |
-| **Fuente única de verdad** | Almacén que contiene la versión oficial de los datos. | La base de datos local (O3). |
-| **Origen del descriptor** | Indicación de si un valor procede de las etiquetas o de la estimación. | RF-07. |
-
-## 4. Evaluación
+# 3. Datos y formatos
 
 | Término | Definición | Relevancia en el sistema |
 |---|---|---|
-| **Valor de referencia** | Valor de BPM o tonalidad usado como patrón de comparación (aquí, el de Rekordbox para las mismas pistas). | RF-29. No es una verdad absoluta y se discute en la memoria. |
-| **Exactitud de BPM estricta** | Proporción de pistas cuyo BPM estimado está dentro de una tolerancia relativa de la referencia (propuesta: ±4 %). | RNF-05. |
-| **Exactitud de BPM con tolerancia de octava** | Igual que la anterior, admitiendo múltiplos y submúltiplos habituales. | RNF-06. |
-| **Exactitud de tonalidad** | Proporción de pistas con tónica y modo idénticos a la referencia, o compatibles según Camelot. | RNF-07 y RNF-08. |
-| **SUS** | *System Usability Scale*: cuestionario estándar de usabilidad con puntuación de 0 a 100. | RNF-14. |
+| **Metadatos / etiquetas** | Información incrustada en un fichero de audio: título, artista, género, año y duración. | Fuente de RF-03. |
+| **ID3** | Estándar de etiquetado utilizado principalmente en MP3. | Utilizado por el lector de metadatos. |
+| **Rekordbox XML** | Formato XML de intercambio utilizado por Rekordbox. | RF-21. |
+| **M3U / M3U8** | Formato textual de listas de reproducción basado en rutas de ficheros. | RF-28. |
+| **Ruta resuelta** | Ruta expresada de forma que Rekordbox pueda localizar correctamente la pista. | RF-22. |
+| **Identificador de pista** | Valor único e independiente del nombre o ubicación física del archivo. | RF-09 y RF-09b. |
+| **Actualización incremental** | Importación que analiza únicamente pistas cuyo identificador aún no existe en la base de datos. | RF-09b. |
+| **Fuente única de verdad** | Almacén considerado oficial para un conjunto de datos. | Base de datos local. |
+| **Origen del descriptor** | Indica si un descriptor procede de etiquetas o de análisis automático. | RF-07. |
+| **Migración** | Cambio versionado en el esquema de la base de datos. | Mantenimiento de O3. |
+| **Panel** | Vista agregada del historial y las estadísticas de la aplicación. | RF-24 a RF-28. |
 
-## 5. Ingeniería del software y arquitectura
+---
+
+# 4. Evaluación
 
 | Término | Definición | Relevancia en el sistema |
 |---|---|---|
-| **Arquitectura limpia (Clean Architecture)** | Organización en capas concéntricas (dominio, aplicación, infraestructura e interfaz) donde las dependencias apuntan hacia el dominio. | Principio rector del diseño (RNF-23). |
-| **Regla de dependencia** | Las capas internas no conocen a las externas. | Verificable en CI. |
-| **Entidad de dominio** | Objeto con identidad y reglas de negocio independientes de la tecnología. | `Track`, `Setlist`, etc. |
-| **Caso de uso** | Operación de la capa de aplicación que orquesta entidades y puertos para lograr un objetivo del usuario. | Catálogo CU-01 a CU-10. |
-| **Puerto** | Interfaz definida por el dominio o la aplicación que describe una dependencia externa. | `AudioAnalyzer`, `TrackRepository`, `SetlistExporter`. |
-| **Adaptador** | Implementación concreta de un puerto con una tecnología. | Un analizador basado en una librería de audio concreta. |
-| **Repositorio** | Puerto que abstrae el almacenamiento y la consulta de entidades. | `TrackRepository`, `SetlistRepository`. |
-| **Determinismo** | Misma entrada, mismo resultado. | RNF-11. |
-| **Idempotencia** | Repetir una operación no cambia el resultado tras la primera ejecución. | Importaciones repetidas (RNF-04). |
-| **ADR** | *Architecture Decision Record*: documento que registra una decisión arquitectónica, sus alternativas y consecuencias. | `DECISIONS_LOG.md` y `docs/adr/`. |
-| **MoSCoW** | Técnica de priorización: Must, Should, Could, Won't. | Prioridad de requisitos. |
-| **Línea base** | Versión aprobada de un conjunto de documentos que solo cambia mediante control de cambios. | Hito H1. |
+| **Valor de referencia** | Valor de BPM o tonalidad empleado como patrón de comparación. | RF-29. |
+| **Exactitud de BPM estricta** | Porcentaje de estimaciones de BPM dentro de la tolerancia establecida respecto a la referencia. | RNF-05. |
+| **Exactitud de BPM con tolerancia de octava** | Exactitud admitiendo errores de octava habituales. | RNF-06. |
+| **Exactitud de tonalidad** | Coincidencia de tonalidad respecto a la referencia. | RNF-07 y RNF-08. |
+| **Conjunto de evaluación** | Colección de pistas utilizada para medir el rendimiento del sistema. | ADR-009 y RF-29. |
+| **Benchmark** | Prueba diseñada para medir rendimiento o escalabilidad. | RNF-01, RNF-02, RNF-03 y RNF-18. |
 
-## 6. Referencias
-Las referencias [1], [3], [4], [6] y [7] corresponden a la bibliografía del anteproyecto: Müller; McFee et al. (librosa); Bogdanov et al. (Essentia); Font, Serrà y Serra (Camelot Wheel); documentación de Rekordbox.
+---
+
+# 5. Ingeniería del software y arquitectura
+
+| Término | Definición | Relevancia en el sistema |
+|---|---|---|
+| **Arquitectura limpia (Clean Architecture)** | Organización en capas donde las dependencias apuntan hacia el dominio. | Base arquitectónica del proyecto. |
+| **Regla de dependencia** | Las capas internas no dependen de las externas. | RNF-22. |
+| **Entidad de dominio** | Objeto con identidad y reglas de negocio propias. | `Track`, `Setlist`, `Transition`. |
+| **Caso de uso** | Operación de aplicación que satisface un objetivo del usuario. | Catálogo CU-01 a CU-11. |
+| **Puerto** | Interfaz que define una dependencia externa. | `AudioAnalyzer`, `TrackRepository`, `SetlistExporter`. |
+| **Adaptador** | Implementación concreta de un puerto. | Infrastructure Layer. |
+| **Repositorio** | Puerto encargado del almacenamiento y consulta de entidades. | `TrackRepository`, `SetlistRepository`. |
+| **Determinismo** | Misma entrada y misma semilla producen el mismo resultado. | RNF-11. |
+| **Idempotencia** | Repetir una operación produce el mismo estado final. | RF-09b, RNF-04. |
+| **ADR** | *Architecture Decision Record*. Documento que registra decisiones arquitectónicas. | Arquitectura y gestión del proyecto. |
+| **MoSCoW** | Técnica de priorización basada en Must, Should, Could y Won't. | Priorización de requisitos. |
+| **Línea base** | Versión aprobada de un conjunto de documentos. | Hito H1. |
+| **Trazabilidad** | Relación verificable entre objetivos, requisitos, casos de uso, pruebas e implementación. | Sección 5 del SRS. |
+
+---
+
+# 6. Referencias
+
+Las referencias bibliográficas asociadas a BPM, tonalidad, Camelot, MIR y Rekordbox corresponden a la bibliografía del anteproyecto y de la memoria del TFG. Esta sección se sincronizará con el fichero BibTeX definitivo utilizado por la memoria.
