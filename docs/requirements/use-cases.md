@@ -41,51 +41,33 @@ flowchart LR
 
     DJ((DJ))
 
-    subgraph SG["SetlistGen"]
-
-        subgraph LIB["Biblioteca musical"]
-            CU01["CU-01 Analizar nueva biblioteca"]
-            CU02["CU-02 Actualizar biblioteca"]
-            CU03["CU-03 Consultar y ordenar biblioteca"]
-        end
-
-        subgraph GEN["Generación"]
-            CU04["CU-04 Definir parámetros"]
-            CU05["CU-05 Generar setlist"]
-            CU08["CU-08 Modificar setlist"]
-        end
-
-        subgraph SET["Setlists"]
-            CU06["CU-06 Consultar historial"]
-            CU07["CU-07 Exportar setlist"]
-        end
-
-        subgraph EST["Estadísticas y evaluación"]
-            CU09["CU-09 Consultar estadísticas"]
-            CU10["CU-10 Exportar datos"]
-            CU11["CU-11 Evaluar resultados"]
-        end
-
-    end
-
-    FS((Sistema de<br/>archivos))
+    CU01([CU-01 Analizar nueva biblioteca])
+    CU02([CU-02 Actualizar biblioteca])
+    CU03([CU-03 Consultar biblioteca])
+    CU04([CU-04 Definir parámetros])
+    CU05([CU-05 Generar setlist])
+    CU06([CU-06 Consultar historial])
+    CU07([CU-07 Exportar setlist])
+    CU08([CU-08 Modificar setlist])
+    CU09([CU-09 Consultar estadísticas])
+    CU10([CU-10 Exportar estadísticas])
+    CU11([CU-11 Evaluar resultados])
 
     RB((Rekordbox))
+    FS((Sistema de archivos))
 
     DJ --> CU01
     DJ --> CU02
     DJ --> CU03
-
     DJ --> CU05
     DJ --> CU06
     DJ --> CU07
     DJ --> CU08
-
     DJ --> CU09
     DJ --> CU10
     DJ --> CU11
 
-    CU05 -. «include» .-> CU04
+    CU05 -.<<include>>.-> CU04
 
     FS --- CU01
     FS --- CU02
