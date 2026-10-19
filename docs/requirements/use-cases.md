@@ -19,17 +19,17 @@
 
 | ID | Nombre | Actor | RF relacionados | Prioridad | Detalle |
 |---|---|---|---|---|---|
-| CU-01 | Analizar nueva biblioteca | DJ, Sistema de Archivos Local | RF-01, RF-02, RF-03, RF-04, RF-05, RF-06, RF-07, RF-08, RF-09 | Must | Sí |
-| CU-02 | Actualizar biblioteca existente | DJ, Sistema de Archivos Local | RF-01, RF-02, RF-09b | Must | — |
-| CU-03 | Consultar la biblioteca analizada | DJ | RF-11, RF-11b | Must | — |
-| CU-04 | Definir parámetros del setlist | DJ | RF-12, RF-13, RF-14, RF-15, RF-16 | Must | — |
-| CU-05 | Generar setlist | DJ | RF-17, RF-18, RF-19, RF-20, RF-20b | Must | Sí |
-| CU-06 | Consultar el histórico de setlists | DJ | RF-10, RF-24 | Should | — |
+| CU-01 | Analizar nueva biblioteca | DJ, Sistema de Archivos Local |  | Must | Sí |
+| CU-02 | Actualizar biblioteca existente | DJ, Sistema de Archivos Local |  | Must | — |
+| CU-03 | Consultar la biblioteca analizada | DJ |  | Must | — |
+| CU-04 | Definir parámetros del setlist | DJ |  | Must | — |
+| CU-05 | Generar setlist | DJ |  | Must | Sí |
+| CU-06 | Consultar el histórico de setlists | DJ |  | Should | — |
 | CU-07 | Consultar el setlist seleccionado | DJ |  | Should | — |
-| CU-08 | Exportar setlist seleccionado a Rekordbox | DJ, Rekordbox | RF-21, RF-22, RF-23 | Must | Sí |
-| CU-09 | Consultar estadísticas de la biblioteca y del histórico | DJ | RF-25, RF-26, RF-27 | Could | — |
-| CU-10 | Exportar datos del panel (TXT/M3U/CSV) | DJ | RF-28 | Could | — |
-| CU-11 | Contrastar descriptores con la referencia de Rekordbox | DJ, Rekordbox | RF-29 | Should | — |
+| CU-08 | Exportar setlist seleccionado a Rekordbox | DJ, Rekordbox |  | Must | Sí |
+| CU-09 | Consultar estadísticas de la biblioteca y del histórico | DJ |  | Could | — |
+| CU-10 | Exportar datos del panel (TXT/M3U/CSV) | DJ |  | Could | — |
+| CU-11 | Contrastar descriptores con la referencia de Rekordbox | DJ, Rekordbox |  | Should | — |
 
 Relaciones: CU-05 incluye CU-04. CU-01 y CU-02 comparten el flujo de análisis. CU-08 parte de un setlist de CU-05, de CU-06 o de CU-07.
 
