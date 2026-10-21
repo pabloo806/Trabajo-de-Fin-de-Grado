@@ -1,3 +1,4 @@
+```mermaid
 flowchart TB
 
     DJ((DJ))
@@ -36,3 +37,4 @@ flowchart TB
     linkStyle 3 stroke:#4B5563,stroke-width:2px;
     linkStyle 4 stroke:#4B5563,stroke-width:2px;
     linkStyle 5 stroke:#4B5563,stroke-width:2px;
+```
