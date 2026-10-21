@@ -1,14 +1,13 @@
 ```mermaid
 flowchart TB
 
-    DJ([DJ])
-
+    DJ((DJ))
     subgraph Sistema
-        SG([SetlistGen])
+        SG((SetlistGen))
     end
 
-    FS[Sistema de<br/>Archivos Local]
-    RB[Rekordbox]
+    FS((Sistema de<br/>Archivos Local))
+    RB((Rekordbox))
 
     DJ -->|Configura<br/>generacion| SG
     DJ -->|Consulta<br/>resultados| SG
