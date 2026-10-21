@@ -1,7 +1,7 @@
 ```mermaid
 flowchart TB
 
-    DJ((DJ))
+    DJ([DJ])
 
     FS[(Biblioteca Musical Local)]
     RB[Rekordbox]
