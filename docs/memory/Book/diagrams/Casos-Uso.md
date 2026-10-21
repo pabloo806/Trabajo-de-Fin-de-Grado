@@ -1,3 +1,4 @@
+```mermaid
 flowchart LR
 
     DJ((DJ))
@@ -42,3 +43,4 @@ flowchart LR
 
     class DJ,RB,FS actor;
     class CU01,CU02,CU03,CU04,CU05,CU06,CU07,CU08,CU09,CU10,CU11 usecase;
+```
