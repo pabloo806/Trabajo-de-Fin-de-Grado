@@ -4,7 +4,7 @@ flowchart TB
     DJ([DJ])
 
     FS[(Biblioteca Musical Local)]
-    RB[Rekordbox]
+    RB([Rekordbox])
 
     subgraph O1["O1 - Importación"]
         RF1["RF-01 · RF-02 · RF-03"]
