@@ -1,10 +1,10 @@
 ```mermaid
 flowchart TB
 
-    DJ[DJ]
+    DJ([DJ])
 
     subgraph Sistema
-        SG[SetlistGen]
+        SG([SetlistGen])
     end
 
     FS[Sistema de<br/>Archivos Local]
