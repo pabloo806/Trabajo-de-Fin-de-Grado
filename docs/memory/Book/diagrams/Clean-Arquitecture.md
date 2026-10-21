@@ -1,3 +1,4 @@
+```mermaid
 flowchart TB
 
     DJ([DJ])
@@ -114,3 +115,4 @@ flowchart TB
 
     %% RNF
     style RNF fill:#F3F4F6,stroke:#111827,stroke-width:3px
+```
