@@ -1,9 +1,8 @@
-```mermaid
 flowchart TB
 
     DJ([DJ])
 
-    FS[(Biblioteca Musical Local)]
+    FS["(Biblioteca Musical Local)"]
     RB([Rekordbox])
 
     subgraph O1["O1 - Importación"]
@@ -56,19 +55,11 @@ flowchart TB
 
         P["Presentación"]
 
-        A["Aplicación
-        Casos de Uso
-        Puertos"]
+        A["Aplicación<br/>Casos de Uso<br/>Puertos"]
 
-        D["Dominio
-        Reglas de negocio
-        Camelot
-        Generación"]
+        D["Dominio<br/>Reglas de negocio<br/>Camelot<br/>Generación"]
 
-        I["Infraestructura
-        Audio
-        BBDD
-        XML"]
+        I["Infraestructura<br/>Audio<br/>BBDD<br/>XML"]
 
         P --> A
         A --> D
@@ -99,13 +90,27 @@ flowchart TB
     RNF --> O6
     RNF --> O7
 
-    style O1 fill:#FFF3B0,stroke:#D4AC0D,stroke-width:2px
-    style O2 fill:#D5F5E3,stroke:#27AE60,stroke-width:2px
-    style O3 fill:#D6EAF8,stroke:#3498DB,stroke-width:2px
-    style O4 fill:#F5C6F7,stroke:#9B59B6,stroke-width:2px
-    style O5 fill:#FFD6A5,stroke:#E67E22,stroke-width:2px
-    style O6 fill:#FADBD8,stroke:#E74C3C,stroke-width:2px
-    style O7 fill:#E5E7E9,stroke:#616A6B,stroke-width:2px
+    %% OBJETIVOS
+    style O1 fill:#FEF3C7,stroke:#D97706,stroke-width:3px
+    style O2 fill:#DCFCE7,stroke:#16A34A,stroke-width:3px
+    style O3 fill:#DBEAFE,stroke:#2563EB,stroke-width:3px
+    style O4 fill:#F3E8FF,stroke:#9333EA,stroke-width:3px
+    style O5 fill:#FED7AA,stroke:#EA580C,stroke-width:3px
+    style O6 fill:#FCE7F3,stroke:#DB2777,stroke-width:3px
+    style O7 fill:#E5E7EB,stroke:#4B5563,stroke-width:3px
 
-    style CA fill:#F4F6F7,stroke:#2C3E50,stroke-width:2px
-```
+    %% ACTORES
+    style DJ fill:#DBEAFE,stroke:#2563EB,stroke-width:3px
+    style FS fill:#FFEDD5,stroke:#EA580C,stroke-width:3px
+    style RB fill:#FECACA,stroke:#DC2626,stroke-width:3px
+
+    %% CLEAN ARCHITECTURE
+    style CA fill:#F8FAFC,stroke:#0F172A,stroke-width:3px
+
+    style P fill:#E0F2FE,stroke:#0284C7,stroke-width:2px
+    style A fill:#DCFCE7,stroke:#16A34A,stroke-width:2px
+    style D fill:#F3E8FF,stroke:#9333EA,stroke-width:2px
+    style I fill:#FFEDD5,stroke:#EA580C,stroke-width:2px
+
+    %% RNF
+    style RNF fill:#F3F4F6,stroke:#111827,stroke-width:3px
