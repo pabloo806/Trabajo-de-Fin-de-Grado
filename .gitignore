@@ -52,6 +52,9 @@ coverage.xml
 .pytest_cache/
 cover/
 
+!docs/memory/Book/cover/
+!docs/memory/Book/cover/**
+
 # Translations
 *.mo
 *.pot

@@ -1,0 +1,26 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: selección de la cubierta y portada.
+%
+% Uso: inclusión automática; normalmente no debes modificarlo.
+% No se compila por separado.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Includes the cover sequence selected by the layout profile associated
+% with the \myDegree variable.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \ifthenelse{\equal{\myLanguage}{spanish}}
+% {
+%   \addcontentsline{toc}{chapter}{Portada}
+% }
+% {
+%   \addcontentsline{toc}{chapter}{Cover page}
+% }
+
+% The selected layout profile contains the complete ordered cover sequence.
+\DegreeRegistryInputCover
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:

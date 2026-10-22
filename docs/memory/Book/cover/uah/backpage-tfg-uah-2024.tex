@@ -1,0 +1,30 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: contraportada institucional UAH (modelo de 2024).
+%
+% Uso: mantenimiento de la plantilla; normalmente no debes modificarlo.
+% Se incluye según el perfil seleccionado; no se compila por separado.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% This is a trick to avoid the header to be shown. There must be a
+% better way...
+\chapter*{ }
+\thispagestyle{empty}
+
+\cleartoleftpage
+\thispagestyle{empty}
+
+% To add background watermark, defined in config/preamble.tex
+\PutBackPageBackground
+
+%\large
+\null
+\vspace{11cm}
+\begin{center}
+  {\color{pantone293} \fontsize{40}{48} \selectfont {\ifthenelse{\equal{\mySchool}{Escuela Politécnica Superior}}{\myThesisAcademicYear}{\myThesisDefenseYear}}} % Customize font size
+\end{center}
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:
+
+
