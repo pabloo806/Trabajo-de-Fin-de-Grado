@@ -66,6 +66,15 @@ flowchart TD
 
 # 🛠️ Stack Tecnológico
 
+Las tecnologías definitivas del proyecto se encuentran actualmente en evaluación y serán seleccionadas mediante registros de decisiones arquitectónicas (ADR).
+
+Las opciones candidatas incluyen distintas alternativas para:
+
+- Motor de análisis musical.
+- Persistencia.
+- Interfaz de usuario.
+- Arquitectura de la aplicación.
+
 ## Backend
 
 - Python
