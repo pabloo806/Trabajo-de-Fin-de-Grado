@@ -5,26 +5,148 @@
 \chapter{Estado del arte}
 \label{cha:estado-del-arte}
 
+Este capítulo sitúa SetlistGen en el panorama existente. Se revisan en primer lugar las herramientas con las que los DJs gestionan y preparan sus sesiones (sección~\ref{sec:eda-herramientas}), después la literatura sobre generación y secuenciación de listas y sobre mezcla armónica (sección~\ref{sec:eda-generacion}) y las librerías disponibles para el análisis musical (sección~\ref{sec:eda-librerias}). La sección~\ref{sec:eda-sintesis} sintetiza las limitaciones detectadas y la oportunidad que aborda el proyecto.
+
+Las fuentes de las secciones sobre herramientas comerciales son de naturaleza heterogénea: documentación oficial de los fabricantes, páginas de producto y, en un caso, la descripción que hace su propio autor en un foro de la comunidad. Se indica en cada caso, y las afirmaciones sobre capacidades se limitan a lo que esas fuentes documentan a fecha de octubre de 2026.
+
 \section{Herramientas de gestión y preparación de sets}
 \label{sec:eda-herramientas}
 
-% TODO: Rekordbox, Serato, Traktor, DJUced y otras.
+\subsection{Rekordbox}
+
+Rekordbox, de Pioneer DJ (actualmente AlphaTheta), es el entorno de referencia de este trabajo, tanto por su implantación entre DJs profesionales como por ser el destino de la exportación. Según la documentación oficial del producto, la aplicación analiza el \ac{BPM} y la rejilla rítmica de cada pista, estima su tonalidad y puede obtener información de análisis desde un servidor cuando está conectada a Internet para reducir el tiempo de preparación~\cite{rekordbox_features}. Entre sus funciones de ayuda a la selección, la misma fuente describe el descubrimiento de pistas similares a una pista elegida y la posibilidad de completar listas de reproducción con pistas afines según el género, el \ac{BPM}, la tonalidad, el artista y otros atributos~\cite{rekordbox_features}.
+
+En cuanto a la interoperabilidad, Rekordbox permite importar y exportar colecciones y listas de reproducción mediante un formato XML documentado por el fabricante (sección~\ref{sec:fund-formatos}). Este mecanismo es el que utilizan terceros para intercambiar listas con la aplicación y el que hace viable la integración de SetlistGen sin acceder a la base de datos interna de Rekordbox~\cite{pyrekordbox_xml}.
+
+\subsection{Herramientas especializadas y soluciones de la comunidad}
+
+Mixed In Key popularizó el análisis de tonalidad orientado a DJs y la notación Camelot que se describe en la sección~\ref{sec:fund-camelot}~\cite{mixedinkey_camelot}. DJ.Studio ofrece una función de ordenación automática de listas de reproducción conforme a principios de mezcla armónica, según la documentación de su propio fabricante~\cite{djstudio_camelot}. Setflow es una aplicación web desarrollada por un DJ aficionado que, según la descripción de su autor en un foro de la comunidad, importa la biblioteca de Rekordbox a partir del XML de exportación, encadena pistas con una variación de tempo acotada, planifica una progresión de tonalidades sobre la rueda Camelot y exporta el resultado en M3U8 o en XML de Rekordbox~\cite{setflow}. Esta última fuente no ha pasado ningún proceso de revisión y debe tomarse como indicio de lo que la comunidad construye, no como evidencia de rendimiento.
+
+La tabla~\ref{tab:eda-herramientas} resume qué documentan las fuentes consultadas para cada herramienta en relación con las funciones que interesan a este trabajo.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Capacidades documentadas de las herramientas revisadas (octubre de 2026).}
+  \label{tab:eda-herramientas}
+  \small
+  \begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    \textbf{Herramienta} & \textbf{Funciones documentadas} & \textbf{Naturaleza de la fuente} \\
+    \hline
+    Rekordbox & Análisis de \ac{BPM} y tonalidad; sugerencia de pistas similares; relleno de listas por atributos; importación y exportación XML & Documentación y página de producto del fabricante~\cite{rekordbox_features,pyrekordbox_xml} \\
+    \hline
+    Mixed In Key & Análisis de tonalidad; notación Camelot & Sitio del fabricante~\cite{mixedinkey_camelot} \\
+    \hline
+    DJ.Studio & Ordenación automática de listas con criterios de mezcla armónica & Blog del fabricante~\cite{djstudio_camelot} \\
+    \hline
+    Setflow & Importación de XML de Rekordbox; encadenado por tempo y tonalidad; exportación M3U8/XML & Descripción del autor en un foro~\cite{setflow} \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{Lo que estas herramientas hacen y lo que no documentan}
+
+Del análisis anterior se desprenden varias observaciones relevantes para el planteamiento de SetlistGen.
+
+La primera es que el problema del que se ocupa este trabajo no está desatendido. Las aplicaciones de gestión resuelven bien la búsqueda de pistas compatibles con una pista concreta, y existen soluciones comerciales y comunitarias que ordenan una selección dada con criterios armónicos. Cualquier contribución de este trabajo debe plantearse sobre esa base, no sobre la ausencia de alternativas.
+
+La segunda es que las funciones de sugerencia que documenta Rekordbox están ancladas en una pista de referencia o en una selección previa: orientan al DJ hacia candidatas compatibles con lo que ya ha elegido. Las fuentes consultadas no documentan que la aplicación construya una secuencia completa a partir de restricciones globales, como una duración total, una evolución de géneros por intervalos de tiempo o pistas fijadas en posiciones concretas. Esta afirmación se limita a la documentación examinada; no se ha podido comprobar el comportamiento interno de un producto propietario.
+
+La tercera es que los algoritmos de estas herramientas son cerrados. En la búsqueda realizada no se han localizado evaluaciones publicadas de la calidad de sus resultados, lo que impide compararlas de forma reproducible y justifica que este trabajo incorpore un protocolo de evaluación explícito (capítulo~\ref{cha:validacion}).
 
 \section{Generación de listas y mezcla armónica}
 \label{sec:eda-generacion}
 
-% TODO: soluciones afines y su análisis crítico.
+\subsection{Generación automática de listas de reproducción}
+
+La generación automática de listas de reproducción cuenta con una literatura extensa. Bonnin y Jannach~\cite{bonnin2014automated} ofrecen una revisión sistemática de los enfoques y de sus formas de evaluación. Una primera familia, la más extendida, ordena las pistas según una medida de similitud calculada a partir del contenido de audio, de los metadatos o de los hábitos de escucha; una referencia clásica del cálculo de similitud musical es la tesis de Pampalk~\cite{pampalk2006computational}. Otra familia formula la selección como un problema de satisfacción de restricciones sobre atributos de las pistas, de modo que la lista resultante cumple condiciones expresadas por el usuario~\cite{pachet2000combinatorial,aucouturier2002scaling}. Una tercera modela las transiciones entre pistas de forma probabilística, por ejemplo con cadenas de Markov entrenadas sobre listas existentes, enfoque revisado en el contexto de la continuación automática de listas~\cite{schedl2018current}.
+
+La formulación por restricciones es la más próxima a SetlistGen, porque el DJ expresa lo que necesita (duración, rango de tempo, tonalidades, géneros) y espera que el resultado lo cumpla. La diferencia principal con la literatura de recomendación es el criterio de calidad. En esta, la lista suele valorarse por su acierto respecto a los gustos de un oyente. En un setlist, interesa sobre todo que las transiciones sean mezclables y que la progresión global responda a la intención del DJ.
+
+\subsection{Secuenciación de pistas para DJ}
+
+Existe un conjunto de trabajos específicos sobre la secuenciación de pistas de baile y la mezcla automática. Cliff~\cite{cliff2000hang} abordó pronto el encadenado automático y la mezcla continua de pistas de música de baile. Ishizaki et al.~\cite{ishizaki2009full} propusieron un sistema de mezcla automática que ajusta el tempo minimizando una función que modela la incomodidad del oyente. Más recientemente, Vande Veire y De Bie~\cite{vandeveire2018raw} describieron un sistema de DJ automático completo para \emph{drum and bass}, desde el audio en bruto hasta la mezcla, y Bittner et al.~\cite{bittner2017automatic} trataron conjuntamente la secuenciación de listas y la generación de transiciones en un entorno de producción.
+
+Un resultado especialmente pertinente es el de Kell y Tzanetakis~\cite{kell2013empirical}, que analizaron sesiones reales de la \ac{EDM} con extracción automática de características. Sus conclusiones indican que el orden de las pistas importa, que el timbre es un factor relevante en la selección y la ordenación, y que el modelo estándar de devolver las pistas por similitud decreciente respecto a la inicial puede no ser óptimo para este repertorio. Esto respalda dos decisiones de planteamiento de SetlistGen: tratar la secuencia completa como objeto de optimización y evaluar las transiciones individualmente, en lugar de limitarse a ordenar por proximidad a una pista semilla.
+
+\subsection{Mezcla armónica y rueda Camelot}
+
+La mezcla armónica enlaza pistas de tonalidades compatibles para evitar disonancias durante la mezcla. Su formalización sobre una notación sencilla, la rueda Camelot, se atribuye a Mark Davis y se difundió con el software de Mixed In Key~\cite{mixedinkey_camelot}. Desde un punto de vista teórico, la rueda reetiqueta las 24 tonalidades mayores y menores sobre el círculo de quintas (sección~\ref{sec:fund-camelot}), cuya relevancia psicológica en la percepción de la proximidad entre tonalidades documentó Krumhansl~\cite{krumhansl1990cognitive}.
+
+Dos matices importan aquí. El primero es que la compatibilidad armónica es una condición necesaria pero no suficiente de una buena transición: coincidir en tonalidad no evita conflictos melódicos, de voces o de estructura. El segundo, que la calidad de la mezcla armónica depende de la calidad de la estimación de tonalidad, que en la música electrónica es un problema abierto, como se expone en la sección~\ref{sec:eda-librerias} y en la sección~\ref{sec:fund-tonalidad}.
 
 \section{Librerías de análisis musical}
 \label{sec:eda-librerias}
 
-% TODO: librosa, Essentia y alternativas; matriz comparativa.
+\subsection{Estimación de tempo y tonalidad: estado de la cuestión}
+
+La estimación automática de tempo está bien estudiada. La comparación de referencia de Gouyon et al.~\cite{gouyon2006experimental} mostró que los algoritmos de inducción de tempo alcanzan una exactitud superior al 80 \% en música de tempo constante si no se exige identificar un nivel métrico concreto, lo que anticipa el principal tipo de error, la confusión de octava. Métodos más recientes incorporan modelos basados en redes neuronales recurrentes, que algunas librerías ofrecen ya entrenados~\cite{bock2016madmom}.
+
+La estimación de tonalidad a partir de la señal se basa habitualmente en comparar la distribución de energía por clases de altura con perfiles de tonalidad de referencia~\cite{gomez2006tonal}. En la \ac{EDM} este enfoque tiene limitaciones propias. Faraldo et al.~\cite{faraldo2016key} estudiaron las características tonales de este repertorio, derivaron nuevos perfiles a partir de un corpus y mejoraron el rendimiento de los métodos basados en plantillas, y Knees et al.~\cite{knees2015giantsteps} publicaron dos conjuntos de datos de tempo y tonalidad de \ac{EDM} anotados a partir de correcciones de usuarios. Ambos trabajos subrayan que este es un repertorio donde los resultados genéricos no pueden darse por válidos sin comprobación.
+
+\subsection{Alternativas disponibles}
+
+Las librerías que el anteproyecto identifica como candidatas, junto con alguna otra relevante, son las siguientes:
+
+\begin{itemize}
+  \item \textbf{librosa}~\cite{mcfee2015librosa}: librería de análisis de audio y música para Python, orientada a la investigación, con primitivas para la extracción de características y un seguimiento de pulsos basado en programación dinámica~\cite{ellis2007beat}.
+  \item \textbf{Essentia}~\cite{bogdanov2013essentia}: librería de análisis de audio para \ac{MIR} que incluye extractores de descriptores rítmicos y tonales.
+  \item \textbf{madmom}~\cite{bock2016madmom}: librería de procesamiento de señales de audio y música para Python, con modelos de tempo y de seguimiento de pulsos.
+  \item \textbf{Mutagen}~\cite{mutagen}: librería de Python para leer y escribir las etiquetas de los ficheros de audio. Es la candidata para la extracción de metadatos, no para el análisis de la señal.
+  \item \textbf{Music.py (musicpy)}~\cite{musicpy}: la documentación del proyecto la describe como un lenguaje de programación musical en Python, basado en teoría musical, que expresa notas, acordes y melodías y los exporta, por ejemplo, a MIDI. Opera, por tanto, sobre representaciones simbólicas y no sobre la señal de audio, de modo que, a priori, no cubre la estimación de \ac{BPM} y tonalidad de una grabación. Su posible papel quedaría limitado a operaciones auxiliares de teoría musical.
+\end{itemize}
+
+La elección entre estas alternativas no se da por tomada. Se resolverá en la fase de diseño mediante una prueba de concepto que contraste la exactitud de cada una con los valores de referencia de Rekordbox, y se registrará como decisión arquitectónica. La tabla~\ref{tab:eda-criterios} recoge los criterios con los que se comparará y su vínculo con los requisitos del sistema.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Criterios de comparación de las librerías de análisis.}
+  \label{tab:eda-criterios}
+  \small
+  \begin{tabularx}{\textwidth}{|l|X|l|}
+    \hline
+    \textbf{Criterio} & \textbf{Cuestión que debe responderse} & \textbf{Requisitos} \\
+    \hline
+    Exactitud de tempo & Proporción de pistas con \ac{BPM} dentro de tolerancia, con y sin errores de octava & RNF-05, RNF-06 \\
+    \hline
+    Exactitud de tonalidad & Coincidencia exacta y compatibilidad Camelot respecto a la referencia & RNF-07, RNF-08 \\
+    \hline
+    Coste computacional & Tiempo de análisis por pista y por lote & RNF-01, RNF-02 \\
+    \hline
+    Integración & Posibilidad de encapsularla tras un puerto sustituible & RNF-22, RNF-23 \\
+    \hline
+    Instalación y portabilidad & Instalación reproducible en Windows y macOS & RNF-19, RNF-20 \\
+    \hline
+    Formatos soportados & Lectura de MP3, WAV, FLAC y AIFF & RF-02 \\
+    \hline
+    Licencia & Compatibilidad con la licencia del repositorio y con su distribución & RNF-26 \\
+    \hline
+    Mantenimiento & Actividad del proyecto, documentación y versiones estables & --- \\
+    \hline
+  \end{tabularx}
+\end{table}
 
 \section{Síntesis y oportunidad}
 \label{sec:eda-sintesis}
 
-% TODO: hueco que cubre el proyecto, sin afirmaciones no verificadas.
+La revisión permite identificar cuatro limitaciones que delimitan el espacio en el que se sitúa SetlistGen.
 
+\begin{enumerate}[label=\textbf{L\arabic*.}, leftmargin=*]
+  \item \textbf{Sugerencia anclada en una pista.} Las funciones de ayuda a la selección documentadas en las aplicaciones de gestión parten de una pista o de una selección previa. La construcción de un setlist completo bajo restricciones globales de duración, progresión de géneros y pistas ancladas no figura en las fuentes consultadas.
+  \item \textbf{Algoritmos cerrados y no evaluados.} No se han localizado evaluaciones públicas y reproducibles de la calidad de los setlists que generan las herramientas existentes.
+  \item \textbf{Dependencia de la calidad del análisis.} La literatura muestra que la estimación de tonalidad y de tempo en música electrónica no es trivial~\cite{faraldo2016key,gouyon2006experimental}, y las fuentes consultadas no documentan que las herramientas informen de la fiabilidad de cada estimación.
+  \item \textbf{Falta de un banco de pruebas abierto.} Quien quiera contrastar un analizador con la referencia de su propia aplicación de DJ debe construir su propio procedimiento.
+\end{enumerate}
+
+SetlistGen no pretende ser la primera herramienta que ordena pistas con criterios armónicos. La existencia de soluciones comerciales y de la comunidad lo desmiente. Su oportunidad radica en la combinación de cuatro rasgos:
+\begin{itemize}
+  \item un flujo integrado que parte de una carpeta de audio local y termina en un fichero importable por Rekordbox;
+  \item un generador parametrizado por restricciones globales, incluida la progresión de géneros por intervalos de tiempo y las pistas ancladas;
+  \item un procesamiento exclusivamente local, sin envío de la biblioteca a servicios externos;
+  \item un protocolo de evaluación explícito que contrasta los descriptores estimados con la referencia de Rekordbox y recoge la valoración de DJs.
+\end{itemize}
+
+Estos rasgos orientan los objetivos del capítulo~\ref{cha:introduccion} y los criterios de validación del capítulo~\ref{cha:validacion}.
 
 %%% Local Variables:
 %%% TeX-master: "../book"

@@ -1,193 +1,324 @@
-% Bibliography used by the example document.
+% Bibliografía de la memoria del TFG (estilo IEEE, biblatex + biber).
 %
-% The first block contains entries cited by the active chapters. The final
-% block keeps a small set of unused entries as examples of common BibLaTeX
-% entry types. Unused entries are not printed in the bibliography.
+% Estado de verificación (23-oct-2026):
+%  - [V] contrastada en línea durante la redacción de los capítulos.
+%  - [A] procede de la bibliografía del anteproyecto aprobado.
+%  - [C] referencia clásica incluida por conocimiento propio: comprobar los datos
+%        (volumen, páginas) con la fuente original antes del depósito.
+%
+% NOTA: no se cita la referencia [6] del anteproyecto (Font, Serrà y Serra,
+% «Analysis of the Norms Enforced by the Camelot Wheel Harmonic Mixing System»)
+% porque no se ha podido localizar. Verificarla antes de incorporarla.
 
-% Entries cited by the example document
-
-% Fake papers used only by the thesis-by-compendium example
-
-@article{garcia2026paper1,
-  author       = {García, Alicia and Smith, Robert and Doe, Jane},
-  title        = {On the Unexpected Reliability of Coffee Cups as Fiducial Markers in Indoor Video Sequences},
-  journaltitle = {Journal of Slightly Practical Computer Vision},
-  date         = {2026},
-  volume       = {14},
-  number       = {3},
-  pages        = {217--218},
-  note         = {Fictional demonstration publication; mock identifier JSPCV-2026-042},
-}
-
-@article{garcia2026paper2,
-  author       = {García, Alicia and Smith, Robert and Doe, Jane},
-  title        = {Temporal Consistency in Human--Object Interaction: Why the Spoon Usually Moves Before the Mug},
-  journaltitle = {International Transactions on Everyday Scene Understanding},
-  date         = {2026},
-  volume       = {6},
-  number       = {2},
-  pages        = {41--42},
-  note         = {Fictional demonstration publication; mock identifier ITESU-2026-011},
-}
-
-@article{garcia2026paper3,
-  author       = {García, Alicia and Smith, Robert and Doe, Jane},
-  title        = {Toward Reproducible Desk-Based Vision Experiments: A Multi-Camera Study of Papers, Pens, and Other Obstacles},
-  journaltitle = {Proceedings of the Workshop on Mostly Controlled Environments},
-  date         = {2026},
-  volume       = {1},
-  number       = {1},
-  pages        = {73--74},
-  note         = {Fictional demonstration publication; mock identifier WMCE-2026-073},
-}
-
-@Misc{gnulinux,
-  note =	 {\url{http://es.wikipedia.org/wiki/GNU/Linux}},
-  title =	 {Información sobre GNU/Linux en wikipedia},
-  urldate = {2026-10-03}
-}
-
-@Book{lamport94,
-  author =	 {Leslie Lamport},
-  title = 	 {LaTeX: A Document Preparation System, 2nd edition},
-  publisher = 	 {Addison Wesley Professional},
-  year = 	 1994,
-  series =	 {}
-}
-
-@Misc{emacs,
-  note =	 {\url{http://savannah.gnu.org/projects/emacs/}},
-  title =	 {Página de la aplicación emacs},
-  urldate = {2026-10-03}
-}
-
-@Misc{cvs,
-  note =	 {\url{http://savannah.nongnu.org/projects/cvs/}},
-  title =	 {Página de la aplicación CVS},
-  urldate = {2026-10-03}
-}
-
-@Misc{gcc,
-  note =	 {\url{http://savannah.gnu.org/projects/gcc/}},
-  title =	 {Página de la aplicación gcc},
-  urldate = {2026-10-03}
-}
-
-@Misc{make,
-  note =	 {\url{http://savannah.gnu.org/projects/make/}},
-  title =	 {Página de la aplicación make},
-  urldate = {2026-10-03}
-}
-
-@misc{git-latexdiff,
-  title   = {Página de \texttt{git-latexdiff} en Gitorious},
-  url     = {https://gitorious.org/git-latexdiff},
-  urldate = {2026-10-03}
-}
-
-@techreport{moore2002,
-  author      = {Moore, Darren C.},
-  title       = {The {IDIAP} Smart Meeting Room},
-  institution = {IDIAP Research Institute},
-  location    = {Switzerland},
-  year        = {2004},
-  month       = nov,
-  url         = {http://publications.idiap.ch/downloads/reports/2002/com02-07.pdf},
-}
-
-@article{ramirez2026jstars,
-  author  = {Ramirez-Torres, Erick Eduardo and
-             Macias-Guarasa, Javier and
-             Pizarro, Daniel and
-             Tejedor, Javier and
-             Palazuelos-Cagigas, Sira Elena and
-             Vidal-Moreno, Pedro J. and
-             Martin-Lopez, Sonia and
-             Gonzalez-Herraez, Miguel and
-             Vanthillo, Roel},
-  title   = {Vessel Detection and Localization Using Distributed Acoustic Sensing in Submarine Optical Fiber Cables},
-  journal = {IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
-  year    = {2026},
-  volume  = {19},
-  pages   = {27946--27965},
-  doi     = {10.1109/JSTARS.2026.3716768},
-}
-
-@article{Sanabria2026Landmark,
-  author  = {Sanabria-Macias, Frank and
-             Prados-Torreblanca, Andrés and
-             Marron-Romera, Marta and
-             Macias-Guarasa, Javier and
-             Buenaposada, José M. and
-             Baumela, Luis and
-             Palazuelos-Cagigas, Sira E.},
-  title   = {Landmark-Assisted Face and Mouth {3D} Localization in Smart Spaces with a Monocular Camera},
-  journal = {Journal of Visual Communication and Image Representation},
-  year    = {2026},
-  volume  = {118},
-  pages   = {104842},
-  issn    = {1047-3203},
-  doi     = {10.1016/j.jvcir.2026.104842},
-  OPTurl     = {https://www.sciencedirect.com/science/article/pii/S1047320326001379},
-}
-
-@misc{texis,
-  title   = {{TeXiS}: Una plantilla de {LaTeX} para tesis y otros documentos},
-  url     = {http://gaia.fdi.ucm.es/projects/texis/},
-  urldate = {2026-10-03}
-}
-
-@article{velasco2016generative,
-  author  = {Velasco, Jose and
-             Martín-Arguedas, Carlos J. and
-             Macias-Guarasa, Javier and
-             Pizarro, Daniel and
-             Mazo, Manuel},
-  title   = {Proposal and Validation of an Analytical Generative Model of {SRP-PHAT} Power Maps in Reverberant Scenarios},
-  journal = {Signal Processing},
-  year    = {2016},
-  volume  = {119},
-  pages   = {209--228},
-  issn    = {0165-1684},
-  doi     = {10.1016/j.sigpro.2015.08.003},
-  OPTurl     = {https://www.sciencedirect.com/science/article/pii/S0165168415002650},
-}
-
-% Unused examples of other common entry types
-
-@inproceedings{armani03,
-  author    = {Armani, Luca and Matassoni, Marco and Omologo, Maurizio and Svaizer, Piergiorgio},
-  title     = {Use of a {CSP}-Based Voice Activity Detector for Distant-Talking {ASR}},
-  booktitle = {European Conference on Speech Communication and Technology},
-  year      = {2003},
-  pages     = {501--504},
-}
-
-@book{brandstein01,
-  editor    = {Brandstein, Michael and Ward, Darren},
-  title     = {Microphone Arrays: Signal Processing Techniques and Applications},
+% ---------------------------------------------------------------- Libros y tesis
+@book{muller2021fundamentals, % [C] 2.ª ed. (2021); el anteproyecto cita la 1.ª ed. (2015)
+  author    = {Müller, Meinard},
+  title     = {Fundamentals of Music Processing: Using Python and Jupyter Notebooks},
+  edition   = {2},
   publisher = {Springer},
-  year      = {2001},
+  address   = {Cham, Suiza},
+  year      = {2021},
 }
 
-@manual{nelson90,
-  author       = {Nelson, Sam},
-  title        = {Document Preparation with {LaTeX}},
-  organization = {University of Stirling},
-  year         = {1990},
-  month        = oct,
+@book{klapuri2006signal, % [A]
+  editor    = {Klapuri, Anssi and Davy, Manuel},
+  title     = {Signal Processing Methods for Music Transcription},
+  publisher = {Springer},
+  address   = {Nueva York, EE. UU.},
+  year      = {2006},
 }
 
-@phdthesis{seltzer03,
-  author = {Seltzer, Michael L.},
-  title  = {Microphone Array Processing for Robust Speech Recognition},
-  school = {Carnegie Mellon University},
-  year   = {2003},
+@book{krumhansl1990cognitive, % [C]
+  author    = {Krumhansl, Carol L.},
+  title     = {Cognitive Foundations of Musical Pitch},
+  publisher = {Oxford University Press},
+  address   = {Nueva York, EE. UU.},
+  year      = {1990},
 }
 
-@mastersthesis{varma02,
-  author = {Varma, Krishnaraj},
-  title  = {Time-Delay-Estimate-Based Direction-of-Arrival Estimation for Speech in Reverberant Environments},
-  school = {Virginia Polytechnic Institute and State University},
-  year   = {2002},
+@phdthesis{gomez2006tonal, % [C]
+  author    = {Gómez, Emilia},
+  title     = {Tonal Description of Music Audio Signals},
+  school    = {Universitat Pompeu Fabra},
+  address   = {Barcelona, España},
+  type      = {Tesis doctoral},
+  year      = {2006},
+}
+
+@phdthesis{pampalk2006computational, % [A]
+  author    = {Pampalk, Elias},
+  title     = {Computational Models of Music Similarity and their Application in Music Information Retrieval},
+  school    = {Vienna University of Technology},
+  address   = {Viena, Austria},
+  type      = {Tesis doctoral},
+  year      = {2006},
+}
+
+% ---------------------------------------------------------------- Artículos
+@article{gouyon2006experimental, % [V]
+  author    = {Gouyon, Fabien and Klapuri, Anssi and Dixon, Simon and Alonso, Miguel and Tzanetakis, George and Uhle, Christian and Cano, Pedro},
+  title     = {An experimental comparison of audio tempo induction algorithms},
+  journal   = {IEEE Transactions on Audio, Speech, and Language Processing},
+  volume    = {14},
+  number    = {5},
+  pages     = {1832--1844},
+  year      = {2006},
+  doi       = {10.1109/TSA.2005.858509},
+}
+
+@article{ellis2007beat, % [C]
+  author    = {Ellis, Daniel P. W.},
+  title     = {Beat Tracking by Dynamic Programming},
+  journal   = {Journal of New Music Research},
+  volume    = {36},
+  number    = {1},
+  pages     = {51--60},
+  year      = {2007},
+}
+
+@article{scheirer1998tempo, % [C]
+  author    = {Scheirer, Eric D.},
+  title     = {Tempo and beat analysis of acoustic musical signals},
+  journal   = {The Journal of the Acoustical Society of America},
+  volume    = {103},
+  number    = {1},
+  pages     = {588--601},
+  year      = {1998},
+}
+
+@article{krumhansl1982tracing, % [C]
+  author    = {Krumhansl, Carol L. and Kessler, Edward J.},
+  title     = {Tracing the dynamic changes in perceived tonal organization in a spatial representation of musical keys},
+  journal   = {Psychological Review},
+  volume    = {89},
+  number    = {4},
+  pages     = {334--368},
+  year      = {1982},
+}
+
+@article{bonnin2014automated, % [C]
+  author    = {Bonnin, Geoffray and Jannach, Dietmar},
+  title     = {Automated Generation of Music Playlists: Survey and Experiments},
+  journal   = {ACM Computing Surveys},
+  volume    = {47},
+  number    = {2},
+  eid       = {26},
+  year      = {2014},
+}
+
+@article{schedl2018current, % [C]
+  author    = {Schedl, Markus and Zamani, Hamed and Chen, Ching-Wei and Deldjoo, Yashar and Elahi, Mehdi},
+  title     = {Current challenges and visions in music recommender systems research},
+  journal   = {International Journal of Multimedia Information Retrieval},
+  volume    = {7},
+  number    = {2},
+  pages     = {95--116},
+  year      = {2018},
+  eprint    = {1710.03208},
+  eprinttype = {arxiv},
+}
+
+@article{vandeveire2018raw, % [C]
+  author    = {Vande Veire, Len and De Bie, Tijl},
+  title     = {From raw audio to a seamless mix: creating an automated {DJ} system for Drum and Bass},
+  journal   = {EURASIP Journal on Audio, Speech, and Music Processing},
+  volume    = {2018},
+  eid       = {13},
+  year      = {2018},
+}
+
+@article{pachet2000combinatorial, % [C]
+  author    = {Pachet, François and Roy, Pierre and Cazaly, Daniel},
+  title     = {A combinatorial approach to content-based music selection},
+  journal   = {IEEE MultiMedia},
+  volume    = {7},
+  number    = {1},
+  year      = {2000},
+}
+
+@article{kirkpatrick1983optimization, % [C]
+  author    = {Kirkpatrick, Scott and Gelatt, C. Daniel and Vecchi, Mario P.},
+  title     = {Optimization by Simulated Annealing},
+  journal   = {Science},
+  volume    = {220},
+  number    = {4598},
+  pages     = {671--680},
+  year      = {1983},
+}
+
+% ---------------------------------------------------------------- Congresos
+@inproceedings{mcfee2015librosa, % [A]
+  author    = {McFee, Brian and Raffel, Colin and Liang, Dawen and Ellis, Daniel P. W. and McVicar, Matt and Battenberg, Eric and Nieto, Oriol},
+  title     = {librosa: Audio and Music Signal Analysis in Python},
+  booktitle = {Proc. 14th Python in Science Conference (SciPy)},
+  address   = {Austin, TX, EE. UU.},
+  pages     = {18--25},
+  year      = {2015},
+}
+
+@inproceedings{bogdanov2013essentia, % [A]
+  author    = {Bogdanov, Dmitry and Wack, Nicolas and Gómez, Emilia and Gulati, Sankalp and Herrera, Perfecto and Mayor, Oscar and Roma, Gerard and Salamon, Justin and Zapata, José and Serra, Xavier},
+  title     = {{ESSENTIA}: an Audio Analysis Library for Music Information Retrieval},
+  booktitle = {Proc. 14th International Society for Music Information Retrieval Conference (ISMIR)},
+  address   = {Curitiba, Brasil},
+  pages     = {493--498},
+  year      = {2013},
+}
+
+@inproceedings{bock2016madmom, % [C]
+  author    = {Böck, Sebastian and Korzeniowski, Filip and Schlüter, Jan and Krebs, Florian and Widmer, Gerhard},
+  title     = {madmom: A New Python Audio and Music Signal Processing Library},
+  booktitle = {Proc. 24th ACM International Conference on Multimedia},
+  address   = {Ámsterdam, Países Bajos},
+  year      = {2016},
+}
+
+@inproceedings{faraldo2016key, % [V]
+  author    = {Faraldo, Ángel and Gómez, Emilia and Jordà, Sergi and Herrera, Perfecto},
+  title     = {Key Estimation in Electronic Dance Music},
+  booktitle = {Advances in Information Retrieval (ECIR 2016)},
+  publisher = {Springer},
+  address   = {Cham, Suiza},
+  pages     = {335--347},
+  year      = {2016},
+  doi       = {10.1007/978-3-319-30671-1_25},
+}
+
+@inproceedings{knees2015giantsteps, % [V] título y congreso verificados; páginas sin comprobar
+  author    = {Knees, Peter and Faraldo, Ángel and Herrera, Perfecto and Vogl, Richard and Böck, Sebastian and Hörschläger, Florian and Le Goff, Mickael},
+  title     = {Two Data Sets for Tempo Estimation and Key Detection in Electronic Dance Music Annotated from User Corrections},
+  booktitle = {Proc. 16th International Society for Music Information Retrieval Conference (ISMIR)},
+  address   = {Málaga, España},
+  year      = {2015},
+}
+
+@inproceedings{kell2013empirical, % [V]
+  author    = {Kell, Thor and Tzanetakis, George},
+  title     = {Empirical Analysis of Track Selection and Ordering in Electronic Dance Music using Audio Feature Extraction},
+  booktitle = {Proc. 14th International Society for Music Information Retrieval Conference (ISMIR)},
+  address   = {Curitiba, Brasil},
+  pages     = {505--510},
+  year      = {2013},
+}
+
+@inproceedings{bittner2017automatic, % [V]
+  author    = {Bittner, Rachel M. and Gu, Minwei and Hernandez, Gandalf and Humphrey, Eric J. and Jehan, Tristan and McCurry, Hunter and Montecchio, Nicola},
+  title     = {Automatic Playlist Sequencing and Transitions},
+  booktitle = {Proc. 18th International Society for Music Information Retrieval Conference (ISMIR)},
+  address   = {Suzhou, China},
+  pages     = {442--448},
+  year      = {2017},
+}
+
+@inproceedings{ishizaki2009full, % [C]
+  author    = {Ishizaki, Hiromi and Hoashi, Keiichiro and Takishima, Yasuhiro},
+  title     = {Full-Automatic {DJ} Mixing System with Optimal Tempo Adjustment based on Measurement Function of User Discomfort},
+  booktitle = {Proc. 10th International Society for Music Information Retrieval Conference (ISMIR)},
+  address   = {Kobe, Japón},
+  year      = {2009},
+}
+
+@inproceedings{aucouturier2002scaling, % [C]
+  author    = {Aucouturier, Jean-Julien and Pachet, François},
+  title     = {Scaling up music playlist generation},
+  booktitle = {Proc. IEEE International Conference on Multimedia and Expo (ICME)},
+  year      = {2002},
+}
+
+@incollection{brooke1996sus, % [C]
+  author    = {Brooke, John},
+  title     = {{SUS}: A ``Quick and Dirty'' Usability Scale},
+  booktitle = {Usability Evaluation in Industry},
+  publisher = {Taylor \& Francis},
+  address   = {Londres, Reino Unido},
+  pages     = {189--194},
+  year      = {1996},
+}
+
+@techreport{cliff2000hang, % [C]
+  author    = {Cliff, David},
+  title     = {Hang the {DJ}: Automatic Sequencing and Seamless Mixing of Dance-Music Tracks},
+  institution = {HP Laboratories Bristol},
+  number    = {HPL-2000-104},
+  year      = {2000},
+}
+
+@manual{iso29148, % [C]
+  title        = {Systems and software engineering — Life cycle processes — Requirements engineering},
+  organization = {ISO/IEC/IEEE},
+  number       = {29148:2018},
+  year         = {2018},
+}
+
+% ---------------------------------------------------------------- Recursos en línea
+@online{rekordbox_features, % [V]
+  title   = {rekordbox: Feature overview},
+  organization = {AlphaTheta},
+  url     = {https://rekordbox.com/en/feature/overview/},
+  urldate = {2026-10-23},
+}
+
+@online{pyrekordbox_xml, % [V]
+  title   = {Rekordbox XML database format},
+  organization = {pyrekordbox documentation},
+  url     = {https://pyrekordbox.readthedocs.io/en/latest/formats/xml.html},
+  urldate = {2026-10-23},
+}
+
+@online{mixedinkey_camelot, % [V]
+  title   = {How To Use Harmonic Mixing},
+  organization = {Mixed In Key},
+  url     = {https://mixedinkey.com/?p=324},
+  urldate = {2026-10-23},
+}
+
+@online{djstudio_camelot, % [V] documentación del fabricante
+  title   = {The {DJ}'s Guide to the Camelot Wheel and Harmonic Mixing},
+  organization = {DJ.Studio},
+  url     = {https://dj.studio/blog/camelot-wheel},
+  urldate = {2026-10-23},
+}
+
+@online{setflow, % [V] descripción del autor en un foro; fuente no revisada
+  title   = {Setflow.app -- Harmonic Mixes with Rekordbox Tracks},
+  organization = {DJ TechTools Forum},
+  url     = {https://forum.djtechtools.com/t/setflow-app-harmonic-mixes-with-rekordbox-tracks/154464},
+  urldate = {2026-10-23},
+}
+
+@online{musicpy, % [V]
+  title   = {musicpy: a music programming language in Python},
+  author  = {Rainbow-Dreamer},
+  url     = {https://github.com/Rainbow-Dreamer/musicpy},
+  urldate = {2026-10-23},
+}
+
+@online{mutagen, % [C]
+  title   = {Mutagen: Python multimedia tagging library},
+  url     = {https://github.com/quodlibet/mutagen},
+  urldate = {2026-10-23},
+}
+
+@online{id3v24, % [C]
+  title   = {{ID3} tag version 2.4.0 -- Main structure},
+  organization = {id3.org},
+  url     = {https://id3.org/id3v2.4.0-structure},
+  urldate = {2026-10-23},
+}
+
+@online{nygard2011adr, % [C]
+  author  = {Nygard, Michael},
+  title   = {Documenting Architecture Decisions},
+  organization = {Cognitect},
+  date    = {2011-11-15},
+  url     = {https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions},
+  urldate = {2026-10-23},
+}
+
+@online{driessen2010gitflow, % [C]
+  author  = {Driessen, Vincent},
+  title   = {A successful {Git} branching model},
+  date    = {2010-01-05},
+  url     = {https://nvie.com/posts/a-successful-git-branching-model/},
+  urldate = {2026-10-23},
 }
