@@ -19,6 +19,17 @@ ADR-XXX
 
 ---
 
+## ADRs propuestos
+
+- ADR-001: Arquitectura general del sistema
+- ADR-002: Motor de análisis musical
+- ADR-003: Algoritmo de generación de setlists
+- ADR-004: Persistencia
+- ADR-005: Exportación a Rekordbox
+
+---
+
 ## Estado
 
-🟡 Pendiente de creación
+🟡 En elaboración
+
