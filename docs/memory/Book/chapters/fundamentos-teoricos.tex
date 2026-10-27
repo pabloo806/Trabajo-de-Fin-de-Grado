@@ -14,7 +14,7 @@ Este capítulo reúne los conceptos necesarios para comprender el resto de la me
 
 Una pista digital es una secuencia de muestras $x[n]$ de una señal de presión sonora, tomadas a una frecuencia de muestreo $f_s$. Por el teorema de Nyquist, solo pueden representarse sin ambigüedad las componentes de frecuencia inferiores a $f_s/2$. El formato PCM almacena las muestras sin compresión y es el contenido habitual de los ficheros WAV y AIFF. FLAC comprime sin pérdida y recupera exactamente las mismas muestras, mientras que MP3 aplica una compresión con pérdida que descarta información considerada perceptualmente poco relevante. Los cuatro formatos que admite el sistema (MP3, WAV, FLAC y AIFF) son, por tanto, contenedores y codificaciones diferentes de la misma magnitud, y los algoritmos de análisis operan sobre las muestras ya decodificadas.
 
-Las señales musicales no son estacionarias, de modo que el análisis de frecuencias se realiza por tramos. La transformada de Fourier de tiempo corto (\ac{STFT}) divide la señal en ventanas solapadas y calcula el espectro de cada una:
+Las señales musicales no son estacionarias, de modo que el análisis de frecuencias se realiza por tramos. La \acf{stft} divide la señal en ventanas solapadas y calcula el espectro de cada una:
 \begin{equation}
   X(m,k) = \sum_{n=0}^{N-1} x[n + mH]\, w[n]\, e^{-j 2\pi k n / N},
   \label{eq:stft}
@@ -23,11 +23,11 @@ donde $w[n]$ es la ventana de análisis, $N$ su longitud, $H$ el salto entre ven
 
 \subsection{Descriptores musicales y recuperación de información musical}
 
-La disciplina que extrae información útil de la música a partir de su señal, de sus metadatos o de ambos es la recuperación de información musical (\ac{MIR}). Sus descriptores suelen clasificarse por nivel de abstracción. Los de bajo nivel se calculan directamente sobre la señal, como el espectrograma, la energía o el cromagrama. Los de nivel medio resumen estructuras musicales, como el tempo, la posición de los pulsos o la tonalidad. Los de alto nivel se refieren a categorías semánticas, como el género o el estado de ánimo.
+La disciplina que extrae información útil de la música a partir de su señal, de sus metadatos o de ambos es la \acf{mir}. Sus descriptores suelen clasificarse por nivel de abstracción. Los de bajo nivel se calculan directamente sobre la señal, como el espectrograma, la energía o el cromagrama. Los de nivel medio resumen estructuras musicales, como el tempo, la posición de los pulsos o la tonalidad. Los de alto nivel se refieren a categorías semánticas, como el género o el estado de ánimo.
 
 SetlistGen trabaja con tres tipos de descriptores:
 \begin{itemize}
-  \item \textbf{Estimados desde la señal:} \ac{BPM} y tonalidad, de los que se deriva el código Camelot. Son descriptores de nivel medio.
+  \item \textbf{Estimados desde la señal:} \acf{bpm} y tonalidad, de los que se deriva el código Camelot. Son descriptores de nivel medio.
   \item \textbf{Leídos de las etiquetas:} título, artista, género, año y duración. El género se toma de las etiquetas y no se estima automáticamente.
   \item \textbf{Derivados:} el código Camelot y las medidas de compatibilidad entre pistas.
 \end{itemize}
@@ -38,16 +38,16 @@ Distinguir el origen de cada valor es relevante porque un mismo descriptor puede
 
 \subsection{Pulso, tempo y ritmo}
 
-El ritmo es la organización temporal de los eventos sonoros. Sobre él se percibe un pulso, una referencia periódica a la que el oyente sincroniza el movimiento, y el tempo es la frecuencia de ese pulso. Se expresa en \ac{BPM} y se relaciona con el periodo $T$ (en segundos) entre pulsos consecutivos como
+El ritmo es la organización temporal de los eventos sonoros. Sobre él se percibe un pulso, una referencia periódica a la que el oyente sincroniza el movimiento, y el tempo es la frecuencia de ese pulso. Se expresa en \ac{bpm} y se relaciona con el periodo $T$ (en segundos) entre pulsos consecutivos como
 \begin{equation}
   \mathrm{BPM} = \frac{60}{T}.
   \label{eq:bpm}
 \end{equation}
-Un valor de $120$~\ac{BPM} corresponde a un pulso cada $0{,}5$ segundos. El tempo no tiene por qué ser un número entero. La mayor parte de la música de baile mantiene un tempo prácticamente constante a lo largo de la pista, lo que facilita su estimación, pero ocurre con frecuencia que el nivel métrico percibido sea ambiguo.
+Un valor de $120$~\ac{bpm} corresponde a un pulso cada $0{,}5$ segundos. El tempo no tiene por qué ser un número entero. La mayor parte de la música de baile mantiene un tempo prácticamente constante a lo largo de la pista, lo que facilita su estimación, pero ocurre con frecuencia que el nivel métrico percibido sea ambiguo.
 
 \subsection{Estimación automática}
 
-Los métodos de estimación de tempo comparten una estructura general. En primer lugar se calcula una función de novedad (\emph{onset strength}) que mide la aparición de nuevos eventos, por ejemplo mediante el flujo espectral entre tramas consecutivas de la \ac{STFT}. A continuación se busca la periodicidad dominante de esa función, bien mediante autocorrelación o análisis espectral, bien mediante bancos de resonadores como los del trabajo clásico de Scheirer~\cite{scheirer1998tempo}. Por último, algunos métodos refinan la solución con seguimiento de pulsos, por ejemplo mediante programación dinámica~\cite{ellis2007beat}, que impone coherencia temporal en la posición de los pulsos.
+Los métodos de estimación de tempo comparten una estructura general. En primer lugar se calcula una función de novedad (\emph{onset strength}) que mide la aparición de nuevos eventos, por ejemplo mediante el flujo espectral entre tramas consecutivas de la \acf{stft}. A continuación se busca la periodicidad dominante de esa función, bien mediante autocorrelación o análisis espectral, bien mediante bancos de resonadores como los del trabajo clásico de Scheirer~\cite{scheirer1998tempo}. Por último, algunos métodos refinan la solución con seguimiento de pulsos, por ejemplo mediante programación dinámica~\cite{ellis2007beat}, que impone coherencia temporal en la posición de los pulsos.
 
 \subsection{Errores de octava y tolerancia}
 
@@ -56,7 +56,7 @@ El error característico de la estimación de tempo es el error de octava: el al
   \left|\hat{b} - b\right| \le 0{,}04\, b,
   \label{eq:acc1}
 \end{equation}
-y una exactitud que admite además los factores $2$, $1/2$, $3$ y $1/3$ con la misma tolerancia. Esta distinción es la que adoptan los requisitos no funcionales RNF-05 y RNF-06 del sistema. En el contexto del DJ, un error de octava no es inocuo: una pista estimada a la mitad de su tempo real puede incluirse en un rango de \ac{BPM} que no le corresponde. Su efecto sobre el generador debe, por tanto, medirse.
+y una exactitud que admite además los factores $2$, $1/2$, $3$ y $1/3$ con la misma tolerancia. Esta distinción es la que adoptan los requisitos no funcionales RNF-05 y RNF-06 del sistema. En el contexto del \ac{dj}, un error de octava no es inocuo: una pista estimada a la mitad de su tempo real puede incluirse en un rango de \ac{bpm} que no le corresponde. Su efecto sobre el generador debe, por tanto, medirse.
 
 \section{Tonalidad y estimación de tonalidad}
 \label{sec:fund-tonalidad}
@@ -73,7 +73,7 @@ Dos relaciones entre tonalidades son especialmente importantes:
 
 \subsection{El círculo de quintas}
 
-El círculo de quintas dispone las doce clases de altura de modo que cada una está a una quinta justa de la siguiente. Las tonalidades contiguas en el círculo (por ejemplo, Do mayor, Sol mayor y Fa mayor) comparten seis de sus siete notas, y esa proximidad es la base de la compatibilidad armónica: dos pistas en tonalidades vecinas se superponen con poca disonancia. La rueda Camelot, descrita en la sección~\ref{sec:fund-camelot}, es una notación que reetiqueta este círculo para uso de DJs.
+El círculo de quintas dispone las doce clases de altura de modo que cada una está a una quinta justa de la siguiente. Las tonalidades contiguas en el círculo (por ejemplo, Do mayor, Sol mayor y Fa mayor) comparten seis de sus siete notas, y esa proximidad es la base de la compatibilidad armónica: dos pistas en tonalidades vecinas se superponen con poca disonancia. La rueda Camelot, descrita en la sección~\ref{sec:fund-camelot}, es una notación que reetiqueta este círculo para uso de \acp{dj}.
 
 \subsection{Estimación desde la señal}
 
@@ -86,7 +86,7 @@ donde $r$ es el coeficiente de correlación. Los perfiles clásicos proceden de 
 
 \subsection{Dificultades en la música electrónica}
 
-La estimación de tonalidad es menos fiable en la música electrónica de baile que en el repertorio tonal clásico. Los perfiles clásicos asumen una armonía basada en el sistema mayor-menor, y gran parte de la \ac{EDM} emplea tonalidades ambiguas, centros tonales poco definidos, modos distintos de los dos canónicos o pistas con muy pocas notas y predominio de bajo y percusión. Faraldo et al.~\cite{faraldo2016key} analizan estas particularidades y proponen perfiles específicos y etapas de preprocesado que mejoran el rendimiento. Los errores más frecuentes confunden la tonalidad con su relativa, con su quinta o con su paralela, lo que explica que la evaluación de la tonalidad deba medir la proximidad entre la estimada y la de referencia, y no solo la coincidencia exacta (sección~\ref{sec:fund-metricas}).
+La estimación de tonalidad es menos fiable en la música electrónica de baile que en el repertorio tonal clásico. Los perfiles clásicos asumen una armonía basada en el sistema mayor-menor, y gran parte de la \acf{edm} emplea tonalidades ambiguas, centros tonales poco definidos, modos distintos de los dos canónicos o pistas con muy pocas notas y predominio de bajo y percusión. Faraldo et al.~\cite{faraldo2016key} analizan estas particularidades y proponen perfiles específicos y etapas de preprocesado que mejoran el rendimiento. Los errores más frecuentes confunden la tonalidad con su relativa, con su quinta o con su paralela, lo que explica que la evaluación de la tonalidad deba medir la proximidad entre la estimada y la de referencia, y no solo la coincidencia exacta (sección~\ref{sec:fund-metricas}).
 
 \section{Rueda Camelot y mezcla armónica}
 \label{sec:fund-camelot}
@@ -144,7 +144,7 @@ y la compatibilidad se define como
   \end{cases}
   \label{eq:compat}
 \end{equation}
-Esta definición corresponde al criterio básico. Otros movimientos que utilizan los DJs con fines expresivos, como saltos de varias posiciones para modificar la energía, no forman parte de la regla de compatibilidad base y, de incorporarse, se tratarían como parámetros configurables del generador.
+Esta definición corresponde al criterio básico. Otros movimientos que utilizan los \acp{dj} con fines expresivos, como saltos de varias posiciones para modificar la energía, no forman parte de la regla de compatibilidad base y, de incorporarse, se tratarían como parámetros configurables del generador.
 
 Conviene recordar que la rueda es una notación y no una teoría nueva: reexpresa relaciones del círculo de quintas y de la relatividad mayor-menor. Que dos pistas sean compatibles asegura la ausencia de disonancia tonal entre sus notas principales, pero no garantiza una buena mezcla, porque intervienen la melodía, la instrumentación y la estructura.
 
@@ -153,7 +153,7 @@ Conviene recordar que la rueda es una notación y no una teoría nueva: reexpres
 
 \subsection{Formulación}
 
-Sea $\mathcal{T} = \{t_1, \dots, t_N\}$ el conjunto de pistas de la biblioteca. Cada pista $t$ tiene un tempo $b(t)$, un código Camelot $c(t)$, una duración $d(t)$ y un género $g(t)$. El DJ especifica una duración objetivo $D$, un rango de tempo $[b_{\min}, b_{\max}]$, un criterio de compatibilidad armónica, una asignación de géneros a intervalos de tiempo y, opcionalmente, un conjunto de pistas ancladas a posiciones concretas. Un setlist es una secuencia $s = (s_1, \dots, s_n)$ de pistas distintas que cumple las restricciones siguientes:
+Sea $\mathcal{T} = \{t_1, \dots, t_N\}$ el conjunto de pistas de la biblioteca. Cada pista $t$ tiene un tempo $b(t)$, un código Camelot $c(t)$, una duración $d(t)$ y un género $g(t)$. El \ac{dj} especifica una duración objetivo $D$, un rango de tempo $[b_{\min}, b_{\max}]$, un criterio de compatibilidad armónica, una asignación de géneros a intervalos de tiempo y, opcionalmente, un conjunto de pistas ancladas a posiciones concretas. Un setlist es una secuencia $s = (s_1, \dots, s_n)$ de pistas distintas que cumple las restricciones siguientes:
 \begin{align}
   & b_{\min} \le b(s_i) \le b_{\max}, && i = 1,\dots,n, \label{eq:r-bpm}\\
   & H\bigl(c(s_i), c(s_{i+1})\bigr) = 1, && i = 1,\dots,n-1, \label{eq:r-har}\\
@@ -180,7 +180,7 @@ Independientemente del método, varias propiedades son exigibles al generador y 
 
 Rekordbox importa y exporta colecciones y listas de reproducción en un formato XML cuya estructura documenta el fabricante~\cite{pyrekordbox_xml}. El documento tiene un elemento raíz \texttt{DJ\_PLAYLISTS} con dos secciones principales. La sección \texttt{COLLECTION} lista las pistas (\texttt{TRACK}), cada una con un identificador y atributos descriptivos, entre los cuales la ubicación del fichero (\texttt{Location}) es imprescindible. La sección \texttt{PLAYLISTS} contiene un árbol de nodos, que pueden ser carpetas o listas, y estas referencian las pistas por su identificador o por su ubicación, según un atributo que indica el tipo de clave.
 
-Esta estructura tiene dos consecuencias para el diseño. Primero, para que Rekordbox resuelva una pista importada, la ubicación debe expresarse en el formato de ruta que espera la aplicación, lo que obliga a convertir las rutas del sistema operativo con cuidado ante caracteres especiales, espacios y diferencias entre Windows y macOS (requisitos RF-22 y RNF-16). Segundo, la importación es una acción del DJ en la aplicación: el sistema no escribe en la base de datos interna de Rekordbox, y la comprobación de que la lista se carga correctamente es de carácter experimental y manual (RF-23). Los pasos concretos de importación en la interfaz de Rekordbox dependen de la versión de la aplicación y se documentan en el manual de usuario.
+Esta estructura tiene dos consecuencias para el diseño. Primero, para que Rekordbox resuelva una pista importada, la ubicación debe expresarse en el formato de ruta que espera la aplicación, lo que obliga a convertir las rutas del sistema operativo con cuidado ante caracteres especiales, espacios y diferencias entre Windows y macOS (requisitos RF-22 y RNF-16). Segundo, la importación es una acción del \ac{dj} en la aplicación: el sistema no escribe en la base de datos interna de Rekordbox, y la comprobación de que la lista se carga correctamente es de carácter experimental y manual (RF-23). Los pasos concretos de importación en la interfaz de Rekordbox dependen de la versión de la aplicación y se documentan en el manual de usuario.
 
 \subsection{Listas M3U y M3U8}
 
@@ -197,11 +197,11 @@ Los metadatos de los ficheros de audio se almacenan en etiquetas cuyo formato de
 
 Para el tempo se emplean las dos exactitudes descritas en la sección~\ref{sec:fund-bpm}, la estricta y la que tolera errores de octava~\cite{gouyon2006experimental}. Para la tonalidad se distinguen la coincidencia exacta de tónica y modo y la compatibilidad en términos de la rueda Camelot, que es la que importa para la mezcla. Además, los errores de tonalidad se clasifican por tipo (quinta, relativa, paralela, otros). Las campañas de evaluación del campo, como MIREX, ponderan los errores según su cercanía musical, en el mismo sentido. Al tratarse de proporciones sobre un número finito de pistas, los resultados deben acompañarse de intervalos de confianza, por ejemplo mediante el intervalo de Wilson para una proporción, y no solo de un valor puntual (requisito RNF-09).
 
-La referencia en este trabajo son los valores de Rekordbox sobre las mismas pistas. Es una referencia práctica, porque es la herramienta con la que el DJ trabaja, pero no una verdad absoluta, y las discrepancias deben interpretarse como diferencias entre dos estimadores. Los conjuntos de datos con anotaciones obtenidas de otras fuentes, como los de \ac{EDM} de Knees et al.~\cite{knees2015giantsteps}, pueden servir de contraste complementario.
+La referencia en este trabajo son los valores de Rekordbox sobre las mismas pistas. Es una referencia práctica, porque es la herramienta con la que El \ac{dj} trabaja, pero no una verdad absoluta, y las discrepancias deben interpretarse como diferencias entre dos estimadores. Los conjuntos de datos con anotaciones obtenidas de otras fuentes, como los de \ac{edm} de Knees et al.~\cite{knees2015giantsteps}, pueden servir de contraste complementario.
 
 \subsection{Setlists generados}
 
-La evaluación del generador combina medidas objetivas y subjetivas. Entre las objetivas, la tasa de cumplimiento de restricciones (que debe ser total en un setlist válido), el salto de tempo medio entre pistas consecutivas, la proporción de transiciones armónicamente compatibles, la fidelidad a la progresión de géneros solicitada y el determinismo. Entre las subjetivas, la valoración de DJs sobre la coherencia de los setlists en una escala de Likert de 1 a 5 y la usabilidad medida con el cuestionario \emph{System Usability Scale} (SUS)~\cite{brooke1996sus}.
+La evaluación del generador combina medidas objetivas y subjetivas. Entre las objetivas, la tasa de cumplimiento de restricciones (que debe ser total en un setlist válido), el salto de tempo medio entre pistas consecutivas, la proporción de transiciones armónicamente compatibles, la fidelidad a la progresión de géneros solicitada y el determinismo. Entre las subjetivas, la valoración de \acp{dj} sobre la coherencia de los setlists en una escala de Likert de 1 a 5 y la usabilidad medida con el cuestionario \emph{System Usability Scale} (SUS)~\cite{brooke1996sus}.
 
 \subsection{Rendimiento}
 
@@ -210,3 +210,10 @@ El rendimiento se mide como el tiempo de análisis por pista en relación con su
 %%% Local Variables:
 %%% TeX-master: "../book"
 %%% End:
+
+
+
+
+
+
+

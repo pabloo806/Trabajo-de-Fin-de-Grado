@@ -22,7 +22,7 @@ El proyecto lo realiza una sola persona, el autor, con la dirección de un tutor
 
 \subsection{Gestión de requisitos y trazabilidad}
 
-Los requisitos se gestionan en una especificación (\ac{SRS}) que sigue la práctica habitual de la ingeniería de requisitos, de acuerdo con el marco general de la norma ISO/IEC/IEEE~29148~\cite{iso29148}. Cada requisito tiene un identificador único que no se reutiliza (RF-XX para los funcionales y RNF-XX para los no funcionales), una prioridad MoSCoW, el objetivo del anteproyecto del que deriva, la capa arquitectónica principal a la que afecta y un criterio de aceptación verificable. Los requisitos no funcionales con umbral numérico se marcan como provisionales hasta que la prueba de concepto proporcione datos reales.
+Los requisitos se gestionan en una \acf{srs} que sigue la práctica habitual de la ingeniería de requisitos, de acuerdo con el marco general de la norma ISO/IEC/IEEE~29148~\cite{iso29148}. Cada requisito tiene un identificador único que no se reutiliza (RF-XX para los funcionales y RNF-XX para los no funcionales), una prioridad MoSCoW, el objetivo del anteproyecto del que deriva, la capa arquitectónica principal a la que afecta y un criterio de aceptación verificable. Los requisitos no funcionales con umbral numérico se marcan como provisionales hasta que la prueba de concepto proporcione datos reales.
 
 La trazabilidad se mantiene en cadena, tal como muestra la figura~\ref{fig:met-trazabilidad}: cada objetivo del anteproyecto se vincula con los requisitos que lo satisfacen, estos con los casos de uso que los materializan y, en las fases posteriores, con los elementos de diseño y las pruebas que los verifican. La matriz de trazabilidad se versiona junto con la especificación, de modo que un cambio en un requisito puede rastrearse hasta sus consecuencias.
 
@@ -77,7 +77,7 @@ El proyecto adopta como criterios rectores la arquitectura limpia, los principio
 \section{Planificación inicial}
 \label{sec:met-planificacion}
 
-El anteproyecto aprobado incluye un plan de trabajo con diez tareas y una duración total estimada de 20 semanas, ajustable según las indicaciones de los tutores. La tabla~\ref{tab:met-gantt} lo recoge, con las semanas medidas desde el inicio del \ac{TFG}.
+El anteproyecto aprobado incluye un plan de trabajo con diez tareas y una duración total estimada de 20 semanas, ajustable según las indicaciones de los tutores. La tabla~\ref{tab:met-gantt} lo recoge, con las semanas medidas desde el inicio del \ac{tfg}.
 
 \begin{table}[htbp]
   \centering
@@ -96,7 +96,7 @@ El anteproyecto aprobado incluye un plan de trabajo con diez tareas y una duraci
     \hline
     4  & Módulo de importación y extracción de metadatos & 6--8 & 2 sem. \\
     \hline
-    5  & Motor de análisis musical (\ac{BPM}, tonalidad, Camelot) & 8--12 & 4 sem. \\
+    5  & Motor de análisis musical (\ac{bpm}, tonalidad, Camelot) & 8--12 & 4 sem. \\
     \hline
     6  & Generador de setlists & 11--15 & 4 sem. \\
     \hline
@@ -104,7 +104,7 @@ El anteproyecto aprobado incluye un plan de trabajo con diez tareas y una duraci
     \hline
     8  & Panel de gestión y estadísticas (ampliable) & 16--18 & 2 sem. \\
     \hline
-    9  & Pruebas de integración y validación con DJs & 16--19 & 3 sem. \\
+    9  & Pruebas de integración y validación con \acp{dj} & 16--19 & 3 sem. \\
     \hline
     10 & Redacción de la memoria & 13--20 & 7 sem. \\
     \hline
@@ -113,7 +113,7 @@ El anteproyecto aprobado incluye un plan de trabajo con diez tareas y una duraci
 
 Dos rasgos de este plan condicionan la estrategia. El primero es que la prueba de concepto (tarea 2) precede a la arquitectura y a la implementación, de modo que las decisiones sobre librerías y formatos se toman con datos. El segundo es que el panel de gestión (tarea 8) está expresamente marcado como ampliable y se acometerá solo si el calendario lo permite.
 
-Para el seguimiento diario, el repositorio organiza las fases en un esquema más granular: preparación del entorno, análisis, diseño, infraestructura, desarrollo del núcleo (importación, extracción de metadatos, detección de \ac{BPM} y tonalidad, generación), interfaz de usuario, validación, y memoria y defensa. Este esquema no sustituye al plan del anteproyecto: lo desglosa en hitos operativos con sus entregables.
+Para el seguimiento diario, el repositorio organiza las fases en un esquema más granular: preparación del entorno, análisis, diseño, infraestructura, desarrollo del núcleo (importación, extracción de metadatos, detección de \ac{bpm} y tonalidad, generación), interfaz de usuario, validación, y memoria y defensa. Este esquema no sustituye al plan del anteproyecto: lo desglosa en hitos operativos con sus entregables.
 
 \section{Seguimiento y desviaciones}
 \label{sec:met-desviaciones}
@@ -140,13 +140,13 @@ La estrategia de reducción de riesgos descansa en cuatro medidas: realizar pron
     \hline
     \textbf{ID} & \textbf{Riesgo} & \textbf{Prob.} & \textbf{Imp.} & \textbf{Mitigación} \\
     \hline
-    R-01 & Exactitud insuficiente de las estimaciones de \ac{BPM} y tonalidad (errores de octava, ambigüedad modal en \ac{EDM}) & Alta & Alto & Medición con desglose de errores (RNF-09); prueba de concepto comparativa; analizador sustituible (RNF-23) \\
+    R-01 & Exactitud insuficiente de las estimaciones de \ac{bpm} y tonalidad (errores de octava, ambigüedad modal en \ac{edm}) & Alta & Alto & Medición con desglose de errores (RNF-09); prueba de concepto comparativa; analizador sustituible (RNF-23) \\
     \hline
     R-02 & El fichero exportado no se carga correctamente en Rekordbox (rutas, versión de la aplicación) & Media & Alto & Prueba de importación en la tarea 2; verificación manual y registrada (RF-23) \\
     \hline
     R-03 & Etiquetas de género o año incompletas o inconsistentes & Alta & Medio & La progresión de géneros es RF-15 (\emph{Should}); su promoción a \emph{Must} depende de la calidad medida \\
     \hline
-    R-04 & La referencia de Rekordbox no es una verdad absoluta & Media & Medio & Discutirla en la evaluación; contraste con conjuntos de datos anotados de \ac{EDM} \\
+    R-04 & La referencia de Rekordbox no es una verdad absoluta & Media & Medio & Discutirla en la evaluación; contraste con conjuntos de datos anotados de \ac{edm} \\
     \hline
     R-05 & Ampliación excesiva del alcance (panel, formatos adicionales) & Alta & Alto & Priorización MoSCoW; panel como objetivo ampliable; consulta a tutores \\
     \hline
@@ -166,7 +166,7 @@ La estrategia de reducción de riesgos descansa en cuatro medidas: realizar pron
 \section{Gestión de decisiones}
 \label{sec:met-adr}
 
-Las decisiones arquitectónicas relevantes se registran mediante registros de decisión arquitectónica (\ac{ADR}), práctica propuesta por Nygard~\cite{nygard2011adr}. Cada registro documenta el contexto y el problema que origina la decisión, las alternativas evaluadas con sus ventajas e inconvenientes, la decisión adoptada, su justificación y sus consecuencias, y se vincula con los requisitos afectados. Se guardan en el repositorio, junto con la documentación de arquitectura, y se incorporan a la memoria en los capítulos de diseño e implementación y en el apéndice~\ref{cha:doc-tecnica}.
+Las decisiones arquitectónicas relevantes se registran mediante los \acf{adrs}, práctica propuesta por Nygard~\cite{nygard2011adr}. Cada registro documenta el contexto y el problema que origina la decisión, las alternativas evaluadas con sus ventajas e inconvenientes, la decisión adoptada, su justificación y sus consecuencias, y se vincula con los requisitos afectados. Se guardan en el repositorio, junto con la documentación de arquitectura, y se incorporan a la memoria en los capítulos de diseño e implementación y en el apéndice~\ref{cha:doc-tecnica}.
 
 La razón de usar este mecanismo es doble. Por un lado, evita que una decisión relevante quede implícita o se tome por inercia. Por otro, deja constancia de las alternativas descartadas, información que el tribunal valora y que se pierde con facilidad si no se anota en el momento de decidir.
 
@@ -185,3 +185,10 @@ Ninguna de ellas se presupone en los capítulos previos. Para evitar el bloqueo 
 %%% Local Variables:
 %%% TeX-master: "../book"
 %%% End:
+
+
+
+
+
+
+
