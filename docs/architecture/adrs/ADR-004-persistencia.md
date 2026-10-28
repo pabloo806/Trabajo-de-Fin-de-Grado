@@ -6,18 +6,18 @@ Propuesto
 
 ## Contexto
 
-La aplicación necesita almacenar pistas, resultados de análisis, historial y setlists generados.
+La aplicación debe almacenar información sobre pistas, análisis realizados, setlists y configuraciones.
 
 ## Problema
 
-Seleccionar la tecnología de persistencia local para el proyecto.
+Seleccionar el mecanismo de persistencia.
 
 ## Alternativas
 
 - SQLite.
 - PostgreSQL.
-- Ficheros estructurados.
-- Otra base de datos embebida.
+- Base de datos embebida alternativa.
+- Almacenamiento en ficheros.
 
 ## Decisión
 
@@ -25,14 +25,8 @@ Pendiente de evaluación.
 
 ## Justificación
 
-La elección debe equilibrar facilidad de despliegue, simplicidad, rendimiento y mantenibilidad.
+Debe equilibrar simplicidad, despliegue, rendimiento y facilidad de mantenimiento.
 
 ## Consecuencias
 
-La decisión afectará al modelo de datos, a la capa de persistencia y a la distribución final de la aplicación.
-\## Consecuencias
-
-
-
-La decisión afectará al modelo de datos y al despliegue de la aplicación.
-
+Condicionará el modelo de datos y la capa de acceso a datos.
