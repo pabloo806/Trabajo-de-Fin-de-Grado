@@ -30,9 +30,30 @@ Seleccionar la estrategia de generación de setlists.
 - Facilidad de implementación.
 - Facilidad de validación.
 
-## Decisión
+## Evaluación de alternativas
 
-Pendiente de evaluación.
+| Criterio | Peso |
+|-----------|------:|
+| Calidad del resultado | 5 |
+| Cumplimiento de restricciones | 5 |
+| Tiempo de ejecución | 4 |
+| Escalabilidad | 4 |
+| Determinismo | 4 |
+| Facilidad de implementación | 3 |
+| Facilidad de validación | 3 |
+
+## Matriz de decisión
+
+| Alternativa | Calidad | Restricciones | Rendimiento | Escalabilidad | Determinismo | Implementación | Validación | Total |
+|------------|---------:|--------------:|------------:|--------------:|-------------:|---------------:|-----------:|------:|
+| Voraz | | | | | | | | |
+| CSP / Restricciones | | | | | | | | |
+| Beam Search | | | | | | | | |
+| Metaheurística | | | | | | | | |
+
+## Decisión final
+
+Pendiente.
 
 ## Justificación
 
