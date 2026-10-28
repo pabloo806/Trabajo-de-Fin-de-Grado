@@ -3,15 +3,10 @@
 # 🎧 Generador Inteligente de Setlists para DJs
 
 ![Estado](https://img.shields.io/badge/Estado-Diseño_Arquitectónico-blue)
-
 ![Proyecto](https://img.shields.io/badge/Proyecto-TFG-success)
-
 ![Lenguaje](https://img.shields.io/badge/Lenguaje-Python-green)
-
 ![Arquitectura](https://img.shields.io/badge/Arquitectura-Clean_Architecture-orange)
-
 ![Persistencia](https://img.shields.io/badge/Persistencia-SQLite-blue)
-
 ![Exportación](https://img.shields.io/badge/Exportación-Rekordbox_XML-purple)
 
 **Trabajo Fin de Grado · Ingeniería en Sistemas de Información**
