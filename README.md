@@ -2,11 +2,17 @@
 
 # 🎧 Generador Inteligente de Setlists para DJs
 
-![Estado](https://img.shields.io/badge/Estado-Análisis%20de%20Requisitos-blue)
+![Estado](https://img.shields.io/badge/Estado-Diseño_Arquitectónico-blue)
+
 ![Proyecto](https://img.shields.io/badge/Proyecto-TFG-success)
-![Backend](https://img.shields.io/badge/Backend-Python%20%7C%20FastAPI-green)
-![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript-blue)
-![Database](https://img.shields.io/badge/Database-SQLite-orange)
+
+![Lenguaje](https://img.shields.io/badge/Lenguaje-Python-green)
+
+![Arquitectura](https://img.shields.io/badge/Arquitectura-Clean_Architecture-orange)
+
+![Persistencia](https://img.shields.io/badge/Persistencia-SQLite-blue)
+
+![Exportación](https://img.shields.io/badge/Exportación-Rekordbox_XML-purple)
 
 **Trabajo Fin de Grado · Ingeniería en Sistemas de Información**
 
@@ -41,58 +47,97 @@ Desarrollar una aplicación capaz de generar automáticamente setlists para DJs 
 
 ---
 
-# 🏗️ Arquitectura General
+# 🏛️ Arquitectura
+
+La documentación arquitectónica del proyecto se encuentra en:
+
+```text
+docs/architecture/
+```
+
+Incluye:
+
+- ADR-001 Forma de distribución
+- ADR-002 Arquitectura general
+- ADR-003 Motor de análisis musical
+- ADR-004 Persistencia
+- ADR-005 Generación de setlists
+- ADR-006 Exportación a Rekordbox
+- Modelo de datos
+- Diagramas arquitectónicos
+
+## Arquitectura General
 
 ```mermaid
 flowchart TD
 
-    UI[React UI]
-    API[FastAPI API]
+    UI["Aplicación de Escritorio"]
 
-    ANALYSIS[Music Analysis<br/>BPM Detection<br/>Key Detection]
-    GENERATOR[Setlist Generator]
-    DB[(PostgreSQL)]
+    APP["Casos de Uso"]
 
-    UI --> API
+    DOMAIN["Dominio"]
 
-    API --> ANALYSIS
-    API --> GENERATOR
+    PORTS["Puertos"]
 
-    ANALYSIS --> DB
-    GENERATOR --> DB
+    ADAPTERS["Adaptadores"]
+
+    SQLITE[("SQLite")]
+
+    ESS["Essentia"]
+    LIB["Librosa"]
+    MAD["Madmom"]
+
+    XML["Rekordbox XML"]
+
+    UI --> APP
+
+    APP --> DOMAIN
+
+    DOMAIN --> PORTS
+
+    PORTS --> ADAPTERS
+
+    ADAPTERS --> SQLITE
+
+    ADAPTERS --> ESS
+    ADAPTERS --> LIB
+    ADAPTERS --> MAD
+
+    ADAPTERS --> XML
 ```
 
 ---
 
 # 🛠️ Stack Tecnológico
 
-Las tecnologías definitivas del proyecto se encuentran actualmente en evaluación y serán seleccionadas mediante registros de decisiones arquitectónicas (ADR).
-
-Las opciones candidatas incluyen distintas alternativas para:
-
-- Motor de análisis musical.
-- Persistencia.
-- Interfaz de usuario.
-- Arquitectura de la aplicación.
-
-## Backend
+## Lenguaje Principal
 
 - Python
-- FastAPI
-- SQLAlchemy
+
+## Arquitectura
+
+- Clean Architecture
+- SOLID
+- Arquitectura basada en Puertos y Adaptadores
+
+## Persistencia
+
+- SQLite
+
+## Análisis Musical
+
+- Essentia
 - Librosa
-- NumPy
+- Madmom
 
-## Frontend
+## Generación de Setlists
 
-- React
-- TypeScript
-- Vite
-- Material UI
+- Constraint Satisfaction Problem (CSP)
 
-## Base de Datos
+## Exportación
 
-- PostgreSQL
+- Rekordbox XML
+- M3U8
 
 ## Testing
 
@@ -103,12 +148,7 @@ Las opciones candidatas incluyen distintas alternativas para:
 - Git
 - GitHub
 
-## Gestión
-
-- GitHub Projects
-- Microsoft Teams
-
-## Entorno de Desarrollo
+## Desarrollo
 
 - Visual Studio Code
 - Claude Sonnet
@@ -188,16 +228,21 @@ La documentación del proyecto se organiza en las siguientes áreas:
 
 ## Fase 1 · Análisis
 
-- [ ] Requisitos funcionales
-- [ ] Requisitos no funcionales
-- [ ] Actores
-- [ ] Casos de uso
+- [x] Requisitos funcionales
+- [x] Requisitos no funcionales
+- [x] Actores
+- [x] Casos de uso
 
 ## Fase 2 · Diseño
 
-- [ ] Arquitectura software
-- [ ] Modelo de datos
-- [ ] Diseño de API
+- [x] ADR-001 Distribución
+- [x] ADR-002 Arquitectura
+- [x] ADR-003 Motor de análisis
+- [x] ADR-004 Persistencia
+- [x] ADR-005 Generación de setlists
+- [x] ADR-006 Exportación
+- [ ] Modelo de datos detallado
+- [ ] Diseño físico SQLite
 
 ## Fase 3 · Infraestructura
 
@@ -231,17 +276,15 @@ La documentación del proyecto se organiza en las siguientes áreas:
 
 ---
 
-# 📈 Estado Actual
-
 | Área | Estado |
 |--------|--------|
 | Gestión del Proyecto | ✅ Completada |
-| Análisis | 🔄 En progreso |
-| Diseño | ⏳ Pendiente |
-| Backend | ⏳ Pendiente |
-| Frontend | ⏳ Pendiente |
+| Análisis | ✅ Completado |
+| Diseño Arquitectónico | ✅ Completado |
+| Diseño de Datos | 🔄 En progreso |
+| Implementación | ⏳ Pendiente |
 | Testing | ⏳ Pendiente |
-| Memoria | 🔄 En preparación |
+| Memoria | 🔄 En progreso |
 
 ---
 
@@ -285,7 +328,13 @@ El proyecto sigue un enfoque iterativo basado en buenas prácticas de Ingenierí
 
 ```text
 Preparación del entorno ✅
-Análisis de requisitos 🔄
+Análisis de requisitos ✅
+ADRs arquitectónicos ✅
+Arquitectura objetivo ✅
+Modelo de datos 🔄
+Implementación ⏳
+Validación ⏳
+Memoria final 🔄
 ```
 
 Actualmente el proyecto se encuentra en la fase de análisis y definición de requisitos.
