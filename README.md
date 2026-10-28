@@ -7,7 +7,7 @@
 ![Lenguaje](https://img.shields.io/badge/Lenguaje-Python-green)
 ![Arquitectura](https://img.shields.io/badge/Arquitectura-Clean_Architecture-orange)
 ![Persistencia](https://img.shields.io/badge/Persistencia-SQLite-blue)
-![Exportación](https://img.shields.io/badge/Exportación-Rekordbox_XML-purple)
+![Exportación](https://img.shields.io/badge/Exportación-XML_%2B_M3U8-purple)
 
 **Trabajo Fin de Grado · Ingeniería en Sistemas de Información**
 
