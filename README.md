@@ -285,7 +285,19 @@ El proyecto sigue un enfoque iterativo basado en buenas prácticas de Ingenierí
 - Documentación continua
 
 ---
+# 📐 Decisiones Tomadas
 
+| Área | Decisión |
+|--------|--------|
+| Distribución | Aplicación de escritorio |
+| Lenguaje | Python |
+| Arquitectura | Clean Architecture |
+| Persistencia | SQLite |
+| Análisis musical | Essentia + Librosa + Madmom |
+| Generación | CSP |
+| Exportación | XML Rekordbox + M3U8 |
+
+---
 # 🎓 Información Académica
 
 **Alumno:** Pablo Hernández Borregón
@@ -320,7 +332,7 @@ Validación ⏳
 Memoria final 🔄
 ```
 
-Actualmente el proyecto se encuentra en la fase de análisis y definición de requisitos.
+Actualmente el proyecto ha completado las fases de análisis y diseño arquitectónico y se encuentra en la fase de diseño detallado del modelo de datos previa a la implementación.
 
 ---
 
