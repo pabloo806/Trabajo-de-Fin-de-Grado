@@ -29,9 +29,29 @@ Seleccionar el mecanismo de persistencia.
 - Soporte para consultas.
 - Mantenibilidad.
 
-## Decisión
+## Evaluación de alternativas
 
-Pendiente de evaluación.
+| Criterio | Peso |
+|-----------|------:|
+| Facilidad de despliegue | 5 |
+| Rendimiento | 4 |
+| Complejidad operativa | 4 |
+| Portabilidad | 4 |
+| Escalabilidad | 3 |
+| Soporte de consultas | 4 |
+| Mantenimiento | 4 |
+
+## Matriz de decisión
+
+| Alternativa | Despliegue | Rendimiento | Complejidad | Portabilidad | Escalabilidad | Consultas | Mantenimiento | Total |
+|------------|-----------:|------------:|------------:|-------------:|--------------:|----------:|---------------:|------:|
+| SQLite | | | | | | | | |
+| PostgreSQL | | | | | | | | |
+| Ficheros | | | | | | | | |
+
+## Decisión final
+
+Pendiente.
 
 ## Justificación
 
