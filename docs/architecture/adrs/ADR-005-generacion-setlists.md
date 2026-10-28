@@ -20,6 +20,16 @@ Seleccionar la estrategia de generación de setlists.
 - Metaheurísticas.
 - Estrategia híbrida.
 
+## Criterios de evaluación
+
+- Calidad musical del resultado.
+- Cumplimiento de restricciones.
+- Tiempo de ejecución.
+- Escalabilidad frente al tamaño de la biblioteca.
+- Determinismo.
+- Facilidad de implementación.
+- Facilidad de validación.
+
 ## Decisión
 
 Pendiente de evaluación.
