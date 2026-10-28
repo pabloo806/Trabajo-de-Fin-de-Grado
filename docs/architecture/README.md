@@ -234,175 +234,191 @@ flowchart TD
 ```mermaid
 classDiagram
 
-    class Library {
-        tracks
-        statistics
-    }
+class Library {
+    +tracks
+    +statistics
+}
 
-    class Track {
-        id
-        title
-        artist
-        genre
-        bpm
-        key
-        camelot
-    }
+class Track {
+    +id
+    +title
+    +artist
+    +genre
+    +bpm
+    +key
+    +camelot
+}
 
-    class AnalysisResult {
-        bpm
-        musical_key
-        camelot
-    }
+class AnalysisResult {
+    +bpm
+    +musicalKey
+    +camelot
+}
 
-    class Setlist {
-        tracks
-        duration
-        constraints
-    }
+class Setlist {
+    +tracks
+    +duration
+    +constraints
+}
 
-    Library "1" --> "*" Track
-    Track "1" --> "1"*AnalysisResult*    Setlist "*" --> "*" Track
+Library "1" --> "*" Track
+Track "1" --> "1" AnalysisResult
+Setlist "*" --> "*" Track
+
 ```
-
 ---
 
-# Motor de Análi*is Musical
+# Motor de Análisis Musical
 
 *``mermaid
 flowchart TD
 
-    TRACK*Track]
+TRACK[Trac*]
 
-    PORT[AnalysisEngine*
+PORT[Analysis Engine]
 
-    TRACK --> PORT
+ESS[Esse*tia]
+LIB[Librosa]
+MAD[Madmom]
 
-    PORT -->*ESS[Ess*ntia]
-    PORT --> LIB[Librosa*
-    PORT --> MAD[Madmom]
+BPM*BPM]
+KEY[Tonalidad]
+CAM[Camelot]
 
-    ESS*--> BPM[BPM]
-    ESS*--> KEY*Tonalidad]
+*RACK --> PORT
 
-    LIB --> STFT[*TFT]
-    LIB --> CHROMA[C*omagramas]
+PORT --> ESS
+PORT -*> LIB
+PORT --> MAD
 
-    MAD --> BEAT[*eat Tracking]
+ESS --> BPM
+ES* --> KEY
 
-    BPM --> CAM[Cam*l*t]
-    KEY --> CAM
+LIB --> BPM
+
+MAD --> BPM*
+BPM --> CAM
+KEY --> CAM
+
 ```
+````*
 
 *--
 
-# Gener*dor de Setlists
+# Generador de Setlists*
+```mermaid
+flowchart TD
+
+LIBRARY[*iblioteca]
+
+BPM[BPM válido]
+KEY[Co*patibilidad Camelot]
+GENRE[Géneros*
+DURATION[Duración]
+ANCHORS[Pistas*ancladas]
+
+CSP[CSP Solver]
+
+VALID[*etlist válido]
+
+EXPORT[Exportación*
+
+LIBRARY --> CSP
+
+BPM --> CSP
+KEY*--> CSP
+GENRE --> CSP
+DURATION -->*CSP
+ANCHORS --> CSP
+
+CSP --> VALID*
+VALID --> EXPORT
+
+```
+*
+
+*--
+
+# Flujo Principal del *istema
 
 ```mermaid
-flowch*rt TD
-
-    LIBRARY*Biblioteca]
-
-    BPM[BPM válido*
-    KEY[Compatibilidad Camelot]
- *  GEN*E[Géneros]
-    DURATION[Dur*ción]
-    ANCHORS[Pistas ancl*das]
-
-    LIBRARY --> CSP[CSP Solv*r*
-
-    BPM --> CSP
-    KEY --> CSP*    GENRE --> CSP
-    DURATION*--> CSP
-    ANCHORS --> CSP
-
-*   CSP --> VALID[Setlist válido*
-
-    VALID --> EXPORT[Exportación*
-```
-
-*--
-
-# Flujo Principal del Sistema
-*```mermaid
 flowchart LR
 
-    AUDIO*Bibli*teca Musical]
+A*DIO[Biblioteca Musical]
 
-    IMPORT[Importac*ón]
+IMPORT[Im*ortación*
 
-    ANALYSIS[Análisis Musical*
+ANALYSIS[Análisis Musical]
 
-    DB[(SQLite)]
+DB*(SQLite)]
 
-    CSP[Genera*or CSP*
+CSP[Generador CSP*
 
-    SETLIST[Setlist]
+SETLIST[Setlist]
 
-    XML[XM* Rekordbox]
+XML[XML Rek*rdbox]
 
-    M3U8[M*U8]
+M3U8[M3U*]
 
-    RB[Rekord*ox]
+RB[Rekordbox]
 
-    AUDIO --> IMPORT
-    IMPO*T -->*ANALYSIS
-    ANALYSIS --> DB
+A*DIO --> IMPORT
 
-   *DB --> CSP
+IMPORT --> ANALYSI*
 
-    CSP --> SETLIST
+*NALYSIS --> DB
 
-*   SETLIST --> XML
-   *SETLIST --> M3U8
+DB --> CSP
 
-    XML*--> RB
+*SP --> SETLIST
+
+SETLIST --> XML*SETLIST --> M3U8
+
+XML*--> RB
+
 ```
 
 ---
 
-# Integración Com*le*a
+# Integración Completa
 
-```mermaid
-flowchart LR
+```mermaid*flowchart LR
 
-    AU*IO[Audio MP3 WAV*FLAC AIFF]
+AUDIO[*udio MP3 WAV FLAC AIFF]
 
-    IMPORT[Importador*
+IMPORT*Importador]
 
-    ESS[Essentia*
+ESS[Essentia*
+LIB[Librosa]
+MAD[Madmom*
 
-    LIB[Librosa]
+SQLITE[(SQLite)]
 
-    MAD[Mad*om]
+CSP[CSP Genera*or*
 
-    SQLITE[(SQLite)]
+XML[Rekordbox XML]
+M*U8[M3U8]
 
-    CSP*C*P Generator]
+RB[*ekordbox]
 
-    XML[Rekordbox*XML]
+AUDIO --> IMPORT
 
-    M3U8[M3U*]
+*MPORT --> ESS
+IMPORT --> LIB
+IMPOR* -->*MAD
 
-    RB[Rekordbox*
+ESS --> SQLITE
+LIB --> SQLITE**AD --> SQLITE
 
-    AUDIO --> IMPORT
+SQLITE --> CSP
 
-    IMPORT*--> ESS
-*   IMPORT --> LIB
-    IMPORT --> M*D
+C*P --> XML
+CSP --> M3U*
 
-*   ESS --> SQLITE
-    LIB --> SQLI*E
-    MAD --> SQLITE
+XML --> RB
 
-    SQLITE -*> CSP
-
-    CSP --> XML
-    CSP -->*M3U8
-
-    XML --> RB
 ```
+````*
 
 *--
 
