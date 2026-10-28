@@ -2,7 +2,7 @@
 
 # 🎧 Generador Inteligente de Setlists para DJs
 
-![Estado](https://img.shields.io/badge/Estado-Diseño_Arquitectónico-blue)
+![Estado](https://img.shields.io/badge/Estado-Diseño_del_Modelo_de_Datos-blue)
 ![Proyecto](https://img.shields.io/badge/Proyecto-TFG-success)
 ![Lenguaje](https://img.shields.io/badge/Lenguaje-Python-green)
 ![Arquitectura](https://img.shields.io/badge/Arquitectura-Clean_Architecture-orange)
