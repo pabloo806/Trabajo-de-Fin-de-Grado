@@ -1,62 +1,31 @@
-\# ADR-005: Exportación a Rekordbox
+# ADR-005: Exportación a Rekordbox
 
-
-
-\## Estado
-
-
+## Estado
 
 Propuesto
 
-
-
-\## Contexto
-
-
+## Contexto
 
 El sistema debe integrarse con Rekordbox sin acceder directamente a su base de datos.
 
-
-
-\## Problema
-
-
+## Problema
 
 Determinar el mecanismo de exportación compatible con Rekordbox.
 
+## Alternativas
 
+- XML de Rekordbox.
+- M3U8.
+- Múltiples formatos de exportación.
 
-\## Alternativas
-
-
-
-\- XML de Rekordbox.
-
-\- M3U8.
-
-\- Múltiples formatos de exportación.
-
-
-
-\## Decisión
-
-
+## Decisión
 
 Pendiente de evaluación.
 
-
-
-\## Justificación
-
-
+## Justificación
 
 La decisión depende de la interoperabilidad observada durante las pruebas.
 
-
-
-\## Consecuencias
-
-
+## Consecuencias
 
 Afectará a la experiencia de uso y a la facilidad de integración con el software de DJ.
-
