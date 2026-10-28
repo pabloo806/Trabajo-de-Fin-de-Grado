@@ -21,6 +21,16 @@ Determinar cómo se ejecutará SetlistGen.
 - Complemento o integración con Rekordbox.
 - Aplicación híbrida.
 
+## Criterios de evaluación
+
+- Facilidad de acceso a la biblioteca musical local.
+- Experiencia de usuario para DJs.
+- Compatibilidad con Windows y macOS.
+- Complejidad de despliegue.
+- Mantenibilidad.
+- Posibilidad de crecimiento futuro.
+- Integración con Rekordbox.
+
 ## Decisión
 
 Pendiente de evaluación.
