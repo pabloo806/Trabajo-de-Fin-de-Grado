@@ -174,12 +174,11 @@ mindmap
 
 ## Memoria
 
-- [Capítulos de la memoria](docs/memory/Book/chapters/)
 La documentación del proyecto se organiza en las siguientes áreas:
 
-## Diseño
+- [Capítulos de la memoria](docs/memory/Book/chapters/)
 
-### Requisitos
+## Requisitos
 
 - [Especificación de requisitos](docs/requirements/requirements.md)
 - [Casos de uso](docs/requirements/use-cases.md)
