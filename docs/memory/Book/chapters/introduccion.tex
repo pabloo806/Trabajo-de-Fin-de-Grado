@@ -8,20 +8,20 @@
 \section{Contexto y motivación}
 \label{sec:intro-contexto}
 
-La práctica del \acf{dj} combina criterio artístico y destreza técnica. Cada actuación exige seleccionar, ordenar y mezclar pistas respetando la compatibilidad de tempo, expresado en \acf{bpm}, y de tonalidad, además de mantener una progresión coherente de estilos y de energía a lo largo de la sesión. En el entorno digital, esa labor se apoya en bibliotecas musicales locales que pueden alcanzar varios miles de pistas y en aplicaciones de gestión como Rekordbox, que catalogan la colección, analizan automáticamente el \ac{bpm} y la tonalidad de cada pista y la reproducen durante la actuación~\cite{rekordbox_features}.
+La práctica del \acf{dj} combina criterio artístico y destreza técnica. Cada actuación exige seleccionar, ordenar y mezclar pistas respetando la compatibilidad de tempo, expresado en \acf{bpm}, y de tonalidad, además de mantener una progresión coherente de estilos y de energía a lo largo de la sesión. En el entorno digital, esa labor se apoya en bibliotecas musicales locales que pueden alcanzar varios miles de pistas y en aplicaciones de gestión como Rekordbox, que catalogan la colección, analizan automáticamente el \acs{bpm} y la tonalidad de cada pista y la reproducen durante la actuación~\cite{rekordbox_features}.
 
-El análisis automático de tempo y tonalidad ha dejado de ser un diferenciador para convertirse en una prestación estándar de estas aplicaciones. Su consecuencia práctica más visible es la difusión de la mezcla armónica, técnica que consiste en encadenar pistas de tonalidades compatibles. La notación de la rueda Camelot, creada por Mark Davis e incorporada al software de Mixed In Key, redujo esa compatibilidad a una regla de lectura inmediata sobre un código numérico~\cite{mixedinkey_camelot}. Hoy, saber qué pistas son armónicamente mezclables es una consulta trivial. Decidir, entre miles de candidatas, qué conjunto de pistas conforma un setlist de una duración dada, con una evolución de estilos y de tempo determinada, y en qué orden, sigue siendo una tarea de planificación que el \ac{dj} resuelve a mano.
+El análisis automático de tempo y tonalidad ha dejado de ser un diferenciador para convertirse en una prestación estándar de estas aplicaciones. Su consecuencia práctica más visible es la difusión de la mezcla armónica, técnica que consiste en encadenar pistas de tonalidades compatibles. La notación de la rueda Camelot, creada por Mark Davis e incorporada al software de Mixed In Key, redujo esa compatibilidad a una regla de lectura inmediata sobre un código numérico~\cite{mixedinkey_camelot}. Hoy, saber qué pistas son armónicamente mezclables es una consulta trivial. Decidir, entre miles de candidatas, qué conjunto de pistas conforma un setlist de una duración dada, con una evolución de estilos y de tempo determinada, y en qué orden, sigue siendo una tarea de planificación que el \acs{dj} resuelve a mano.
 
-Este \acf{tfg} aborda esa fase de preparación. Se plantea un sistema, denominado en adelante SetlistGen, que parte de una carpeta local de audio en bruto, analiza cada pista, almacena sus descriptores en una base de datos propia y, a partir de los parámetros que introduce el DJ, propone un setlist ordenado que respeta las reglas de mezcla. El resultado se exporta en un formato importable por Rekordbox, de modo que el sistema se integra en el flujo de trabajo real del \ac{dj} en lugar de sustituirlo: el \ac{dj} revisa y ajusta la propuesta en su propio entorno antes de la actuación.
+Este \acf{tfg} aborda esa fase de preparación. Se plantea un sistema, denominado en adelante SetlistGen, que parte de una carpeta local de audio en bruto, analiza cada pista, almacena sus descriptores en una base de datos propia y, a partir de los parámetros que introduce el DJ, propone un setlist ordenado que respeta las reglas de mezcla. El resultado se exporta en un formato importable por Rekordbox, de modo que el sistema se integra en el flujo de trabajo real del \acs{dj} en lugar de sustituirlo: el \acs{dj} revisa y ajusta la propuesta en su propio entorno antes de la actuación.
 
 El proyecto se sitúa en la intersección de varias áreas. Del campo de la recuperación de información musical, conocido internacionalmente como \acf{mir}, toma las técnicas de estimación de tempo y tonalidad a partir de la señal de audio. De la teoría musical aplicada, las reglas de compatibilidad armónica. De los sistemas de recomendación y de la generación automática de listas de reproducción, el planteamiento de la secuenciación de pistas como un problema con restricciones. Y de la ingeniería del software, el marco metodológico que permite construir y validar el sistema con garantías de mantenibilidad y trazabilidad.
 
-La motivación es doble. En lo personal, el autor es \ac{dj} y su propia biblioteca musical constituye el conjunto de datos de partida y de prueba, lo que sitúa el problema en un contexto de uso real y no en un escenario artificial. En lo académico, el trabajo ofrece un caso completo de ingeniería de un sistema de información: desde la especificación de requisitos hasta la evaluación experimental, pasando por el diseño de una arquitectura mantenible, con un problema de dominio que exige contrastar los resultados del sistema con una referencia externa y con el juicio de usuarios expertos.
+La motivación es doble. En lo personal, el autor es \acs{dj} y su propia biblioteca musical constituye el conjunto de datos de partida y de prueba, lo que sitúa el problema en un contexto de uso real y no en un escenario artificial. En lo académico, el trabajo ofrece un caso completo de ingeniería de un sistema de información: desde la especificación de requisitos hasta la evaluación experimental, pasando por el diseño de una arquitectura mantenible, con un problema de dominio que exige contrastar los resultados del sistema con una referencia externa y con el juicio de usuarios expertos.
 
 \section{Planteamiento del problema}
 \label{sec:intro-problema}
 
-Según la experiencia del autor como \ac{dj}, preparar un setlist adecuado para un evento concreto exige varias horas de revisión manual, pista a pista, en las que se combinan filtros por tempo y tonalidad con escuchas para comprobar que la progresión resulta convincente. Formalmente, el problema puede enunciarse así: dada una biblioteca local de $N$ pistas y un conjunto de parámetros definidos por el \ac{dj} (duración total, rango de \ac{bpm} admisible, tonalidades o compatibilidad armónica exigida, progresión de géneros por intervalos de tiempo y, opcionalmente, pistas ancladas en posiciones concretas), obtener una secuencia ordenada de pistas, sin repeticiones, que satisfaga las restricciones y presente transiciones suaves entre pistas consecutivas.
+Según la experiencia del autor como \acs{dj}, preparar un setlist adecuado para un evento concreto exige varias horas de revisión manual, pista a pista, en las que se combinan filtros por tempo y tonalidad con escuchas para comprobar que la progresión resulta convincente. Formalmente, el problema puede enunciarse así: dada una biblioteca local de $N$ pistas y un conjunto de parámetros definidos por el \acs{dj} (duración total, rango de \acs{bpm} admisible, tonalidades o compatibilidad armónica exigida, progresión de géneros por intervalos de tiempo y, opcionalmente, pistas ancladas en posiciones concretas), obtener una secuencia ordenada de pistas, sin repeticiones, que satisfaga las restricciones y presente transiciones suaves entre pistas consecutivas.
 
 Resolver este problema de extremo a extremo plantea tres dificultades diferenciadas.
 
@@ -35,9 +35,9 @@ A estas dificultades se suma una de naturaleza metodológica: la calidad de un s
 
 Tres preguntas guían el trabajo y se corresponden con los objetivos específicos que se detallan en la sección siguiente:
 \begin{itemize}
-  \item ¿Con qué exactitud pueden estimarse automáticamente el \ac{bpm} y la tonalidad de una biblioteca real, en comparación con los valores de Rekordbox?
+  \item ¿Con qué exactitud pueden estimarse automáticamente el \acs{bpm} y la tonalidad de una biblioteca real, en comparación con los valores de Rekordbox?
   \item ¿Es posible generar automáticamente setlists que cumplan de forma verificable las restricciones definidas por el DJ?
-  \item ¿Resultan esos setlists coherentes y utilizables desde el punto de vista de \acp{dj} reales?
+  \item ¿Resultan esos setlists coherentes y utilizables desde el punto de vista de \acsp{dj} reales?
 \end{itemize}
 
 \section{Objetivos}
@@ -45,7 +45,7 @@ Tres preguntas guían el trabajo y se corresponden con los objetivos específico
 
 \subsection{Objetivo general}
 
-El objetivo general del \ac{tfg} es diseñar e implementar un sistema software que asista al \ac{dj} en la preparación de setlists a partir de su propia biblioteca de audio local, reduciendo el tiempo de planificación manual y mejorando la coherencia musical del resultado.
+El objetivo general del \acs{tfg} es diseñar e implementar un sistema software que asista al \acs{dj} en la preparación de setlists a partir de su propia biblioteca de audio local, reduciendo el tiempo de planificación manual y mejorando la coherencia musical del resultado.
 
 \subsection{Objetivos específicos}
 
@@ -53,12 +53,12 @@ Los objetivos específicos, tal y como se establecieron en el anteproyecto aprob
 
 \begin{enumerate}[label=\textbf{O\arabic*.}, leftmargin=*]
   \item Desarrollar un módulo de importación que recorra una carpeta local de audio en bruto (MP3, WAV, FLAC, AIFF), identifique las pistas válidas y extraiga los metadatos ya presentes en las etiquetas (título, artista, género, año, duración).
-  \item Desarrollar un motor de análisis musical que estime, a partir de la señal de audio, el \ac{bpm} y la tonalidad de cada pista, y derive de esta última su notación Camelot para el cálculo de compatibilidad armónica.
+  \item Desarrollar un motor de análisis musical que estime, a partir de la señal de audio, el \acs{bpm} y la tonalidad de cada pista, y derive de esta última su notación Camelot para el cálculo de compatibilidad armónica.
   \item Diseñar e implementar una base de datos que actúe como fuente única de verdad, almacenando las pistas analizadas, sus descriptores, los setlists generados y su histórico, y evitando reanalizar material ya procesado.
   \item Implementar un generador de setlists que, a partir de los parámetros introducidos por el DJ, proponga un orden de reproducción que respete las reglas de mezcla.
   \item Exportar el setlist generado en un formato importable por Rekordbox, verificando que la lista resultante se carga correctamente en la aplicación con sus pistas resueltas.
-  \item Diseñar un panel de gestión y estadísticas con el historial de setlists, las pistas más utilizadas y la distribución de \ac{bpm}, tonalidades y géneros de la biblioteca, con exportación en TXT, M3U y CSV. Este objetivo es ampliable: se abordará una vez consolidados los anteriores y su alcance se ajustará al tiempo disponible.
-  \item Evaluar el sistema mediante pruebas funcionales, contrastando los descriptores estimados con los que proporciona Rekordbox sobre las mismas pistas y, si es posible, recogiendo la valoración de \acp{dj} reales sobre los setlists generados.
+  \item Diseñar un panel de gestión y estadísticas con el historial de setlists, las pistas más utilizadas y la distribución de \acs{bpm}, tonalidades y géneros de la biblioteca, con exportación en TXT, M3U y CSV. Este objetivo es ampliable: se abordará una vez consolidados los anteriores y su alcance se ajustará al tiempo disponible.
+  \item Evaluar el sistema mediante pruebas funcionales, contrastando los descriptores estimados con los que proporciona Rekordbox sobre las mismas pistas y, si es posible, recogiendo la valoración de \acsp{dj} reales sobre los setlists generados.
 \end{enumerate}
 
 La relación entre estos objetivos y los requisitos del sistema se establece en la matriz de trazabilidad del capítulo~\ref{cha:requisitos}.
@@ -72,7 +72,7 @@ Desde la perspectiva académica, el trabajo debe evidenciar la aplicación de la
 \section{Alcance y limitaciones}
 \label{sec:intro-alcance}
 
-\medskip\noindent\textbf{Alcance.} El sistema cubre el ciclo completo que va desde una carpeta de audio local hasta un fichero importable en Rekordbox: importación y extracción de metadatos, estimación de \ac{bpm} y tonalidad con derivación de la notación Camelot, persistencia local, generación de setlists parametrizada, exportación y evaluación frente a la referencia de Rekordbox. El panel de gestión y estadísticas forma parte del alcance como objetivo ampliable. Los bloques funcionales del sistema se muestran en la figura~\ref{fig:intro-bloques}.
+\medskip\noindent\textbf{Alcance.} El sistema cubre el ciclo completo que va desde una carpeta de audio local hasta un fichero importable en Rekordbox: importación y extracción de metadatos, estimación de \acs{bpm} y tonalidad con derivación de la notación Camelot, persistencia local, generación de setlists parametrizada, exportación y evaluación frente a la referencia de Rekordbox. El panel de gestión y estadísticas forma parte del alcance como objetivo ampliable. Los bloques funcionales del sistema se muestran en la figura~\ref{fig:intro-bloques}.
 
 \begin{figure}[htbp]
   \centering
@@ -102,7 +102,7 @@ Desde la perspectiva académica, el trabajo debe evidenciar la aplicación de la
 \end{figure}
 
 
-\medskip\noindent\textbf{Fuera de alcance.} Quedan expresamente excluidos la reproducción de audio y la mezcla en directo (tiempo real), los catálogos y servicios de \emph{streaming}, el entrenamiento de modelos propios, la clasificación automática de género (que se lee de las etiquetas), la edición del audio, los servicios en la nube y la gestión multiusuario, así como la escritura directa en la base de datos interna de Rekordbox. El sistema produce una propuesta que el \ac{dj} importa y ajusta en su entorno; no pretende sustituir a Rekordbox ni automatizar la actuación.
+\medskip\noindent\textbf{Fuera de alcance.} Quedan expresamente excluidos la reproducción de audio y la mezcla en directo (tiempo real), los catálogos y servicios de \emph{streaming}, el entrenamiento de modelos propios, la clasificación automática de género (que se lee de las etiquetas), la edición del audio, los servicios en la nube y la gestión multiusuario, así como la escritura directa en la base de datos interna de Rekordbox. El sistema produce una propuesta que el \acs{dj} importa y ajusta en su entorno; no pretende sustituir a Rekordbox ni automatizar la actuación.
 
 \medskip\noindent\textbf{Decisiones de diseño no cerradas.} Las decisiones de arquitectura (forma de distribución de la aplicación, lenguaje y marcos de implementación, tecnología de persistencia, tecnología de interfaz y estructura de paquetes) se resuelven más adelante mediante los \acf{adrs} y se justifican en los capítulos de diseño (\ref{cha:diseno}) e implementación (\ref{cha:implementacion}). Los capítulos previos, de carácter analítico y teórico, no las presuponen.
 
@@ -111,7 +111,7 @@ Desde la perspectiva académica, el trabajo debe evidenciar la aplicación de la
   \item La referencia de evaluación es Rekordbox, un sistema propietario cuyas estimaciones no constituyen una verdad absoluta. La memoria discute esta limitación al interpretar los resultados.
   \item El conjunto de datos de partida es la biblioteca personal del autor, con el sesgo de repertorio y de calidad de etiquetado que ello implica. La generalización a otras bibliotecas debe tomarse con cautela.
   \item La calidad de la progresión de géneros depende de la completitud y la coherencia de las etiquetas de género disponibles.
-  \item Los umbrales numéricos de los requisitos no funcionales son provisionales y se ratifican tras la prueba de concepto. La valoración por \acp{dj} depende de la disponibilidad de participantes.
+  \item Los umbrales numéricos de los requisitos no funcionales son provisionales y se ratifican tras la prueba de concepto. La valoración por \acsp{dj} depende de la disponibilidad de participantes.
 \end{itemize}
 
 \section{Organización de la memoria}
