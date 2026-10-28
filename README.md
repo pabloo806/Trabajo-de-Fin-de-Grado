@@ -44,22 +44,20 @@ Desarrollar una aplicación capaz de generar automáticamente setlists para DJs 
 
 # 🏛️ Arquitectura
 
+# 🏛️ Arquitectura
+
 La documentación arquitectónica del proyecto se encuentra en:
 
-```text
-docs/architecture/
-```
+- [Arquitectura](docs/architecture/README.md)
 
 Incluye:
 
-- ADR-001 Forma de distribución
-- ADR-002 Arquitectura general
-- ADR-003 Motor de análisis musical
-- ADR-004 Persistencia
-- ADR-005 Generación de setlists
-- ADR-006 Exportación a Rekordbox
-- Modelo de datos
-- Diagramas arquitectónicos
+- [ADR-001: Forma de Distribución](docs/architecture/adrs/ADR-001-forma-distribucion.md)
+- [ADR-002: Arquitectura General](docs/architecture/adrs/ADR-002-arquitectura-general.md)
+- [ADR-003: Motor de Análisis Musical](docs/architecture/adrs/ADR-003-motor-analisis-musical.md)
+- [ADR-004: Persistencia](docs/architecture/adrs/ADR-004-persistencia.md)
+- [ADR-005: Generación de Setlists](docs/architecture/adrs/ADR-005-generacion-setlists.md)
+- [ADR-006: Integración con Rekordbox](docs/architecture/adrs/ADR-006-exportacion-rekordbox.md)
 
 ## Arquitectura General
 
@@ -174,7 +172,28 @@ mindmap
 
 # 📚 Documentación
 
+## Memoria
+
+- [Capítulos de la memoria](docs/memory/Book/chapters/)
 La documentación del proyecto se organiza en las siguientes áreas:
+
+## Diseño
+
+### Requisitos
+
+- [Especificación de requisitos](docs/requirements/requirements.md)
+- [Casos de uso](docs/requirements/use-cases.md)
+- [Matriz de trazabilidad](docs/requirements/traceability-matrix.md)
+- [Glosario](docs/requirements/glosario.md)
+
+### Arquitectura
+
+- [Visión arquitectónica](docs/architecture/README.md)
+- [ADRs](docs/architecture/adrs/)
+- Arquitectura Software
+- Modelo de Datos
+- Diseño de API
+- ADRs (Architecture Decision Records)
 
 ## Gestión de Proyecto
 
@@ -192,22 +211,11 @@ La documentación del proyecto se organiza en las siguientes áreas:
 - Casos de Uso
 - Matriz de Trazabilidad
 
-## Diseño
-
-- Arquitectura Software
-- Modelo de Datos
-- Diseño de API
-- ADRs (Architecture Decision Records)
-
 ## Validación
 
 - Plan de Pruebas
 - Casos de Prueba
 - Validación Experimental
-
-## Memoria
-
-- Documentación progresiva para la memoria del TFG.
 
 ---
 
