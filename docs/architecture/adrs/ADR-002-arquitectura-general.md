@@ -19,6 +19,16 @@ Determinar el estilo arquitectónico del sistema.
 - Arquitectura hexagonal.
 - Monolito tradicional.
 
+## Criterios de evaluación
+
+- Separación de responsabilidades.
+- Facilidad de pruebas.
+- Mantenibilidad.
+- Escalabilidad.
+- Independencia tecnológica.
+- Curva de aprendizaje.
+- Compatibilidad con los requisitos RNF-22, RNF-23 y RNF-24.
+
 ## Decisión
 
 Pendiente de evaluación.
