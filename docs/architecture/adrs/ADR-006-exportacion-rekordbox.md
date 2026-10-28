@@ -19,6 +19,16 @@ Determinar el mecanismo de exportación e interoperabilidad.
 - XML y M3U8 simultáneamente.
 - Otros formatos compatibles.
 
+## Criterios de evaluación
+
+- Compatibilidad con Rekordbox.
+- Robustez de la importación.
+- Simplicidad de implementación.
+- Facilidad de uso para el DJ.
+- Compatibilidad entre versiones de Rekordbox.
+- Posibilidad de automatización.
+- Portabilidad.
+
 ## Decisión
 
 Pendiente de evaluación.
