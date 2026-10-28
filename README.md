@@ -185,29 +185,13 @@ La documentación del proyecto se organiza en las siguientes áreas:
 - [Matriz de trazabilidad](docs/requirements/traceability-matrix.md)
 - [Glosario](docs/requirements/glosario.md)
 
-### Arquitectura
+## Arquitectura
 
 - [Visión arquitectónica](docs/architecture/README.md)
 - [ADRs](docs/architecture/adrs/)
 - Arquitectura Software
 - Modelo de Datos
 - Diseño de API
-
-## Gestión de Proyecto
-
-- Project Roadmap
-- Registro de Decisiones
-- Registro de Reuniones
-- Objetivos del TFG
-- Stack Tecnológico
-
-## Análisis
-
-- Requisitos Funcionales
-- Requisitos No Funcionales
-- Actores
-- Casos de Uso
-- Matriz de Trazabilidad
 
 ## Validación
 
