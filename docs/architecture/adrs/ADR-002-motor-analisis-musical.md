@@ -1,64 +1,32 @@
-\# ADR-002: Motor de Análisis Musical
+# ADR-002: Motor de Análisis Musical
 
-
-
-\## Estado
-
-
+## Estado
 
 Propuesto
 
-
-
-\## Contexto
-
-
+## Contexto
 
 El sistema requiere estimar BPM, tonalidad y código Camelot a partir de archivos de audio.
 
+## Problema
 
+Seleccionar la librería o combinación de librerías responsable del análisis musical.
 
-\## Problema
+## Alternativas
 
+- Librosa.
+- Essentia.
+- Madmom.
+- Combinación de herramientas.
 
-
-Seleccionar la librería o combinación de librerías para el análisis musical.
-
-
-
-\## Alternativas
-
-
-
-\- Librosa
-
-\- Essentia
-
-\- Madmom
-
-\- Combinación de herramientas
-
-
-
-\## Decisión
-
-
+## Decisión
 
 Pendiente de evaluación.
 
+## Justificación
 
+La decisión dependerá de los resultados obtenidos durante la prueba de concepto y de la comparación frente a los resultados de Rekordbox.
 
-\## Justificación
+## Consecuencias
 
-
-
-La decisión dependerá de los resultados de la prueba de concepto y de la comparación contra Rekordbox.
-
-
-
-\## Consecuencias
-
-
-
-La precisión del análisis afectará directamente a la calidad de los setlists generados.
-
+La precisión del análisis afectará directamente a la calidad de los setlists generados y al cumplimiento de los requisitos no funcionales relacionados con exactitud y rendimiento.
