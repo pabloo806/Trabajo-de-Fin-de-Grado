@@ -61,40 +61,39 @@ Incluye:
 
 ```mermaid
 flowchart TD
-
-    UI["Aplicación de Escritorio"]
-
-    APP["Casos de Uso"]
-
-    DOMAIN["Dominio"]
-
-    PORTS["Puertos"]
-
-    ADAPTERS["Adaptadores"]
-
-    SQLITE[("SQLite")]
-
-    ESS["Essentia"]
-    LIB["Librosa"]
-    MAD["Madmom"]
-
-    XML["Rekordbox XML"]
-
-    UI --> APP
-
-    APP --> DOMAIN
-
-    DOMAIN --> PORTS
-
-    PORTS --> ADAPTERS
-
-    ADAPTERS --> SQLITE
-
-    ADAPTERS --> ESS
-    ADAPTERS --> LIB
-    ADAPTERS --> MAD
-
-    ADAPTERS --> XML
+ 
+UI["Aplicación de Escritorio"]
+ 
+APP["Aplicación / Casos de Uso"]
+ 
+DOMAIN["Dominio"]
+ 
+PORTS["Puertos"]
+ 
+ADAPTERS["Adaptadores"]
+ 
+SQLITE["("SQLite")"]
+ 
+ESS["Essentia"]
+LIB["Librosa"]
+MAD["Madmom"]
+ 
+XML["Rekordbox XML"]
+M3U8["M3U8"]
+ 
+UI --> APP
+APP --> DOMAIN
+DOMAIN --> PORTS
+PORTS --> ADAPTERS
+ 
+ADAPTERS --> SQLITE
+ 
+ADAPTERS --> ESS
+ADAPTERS --> LIB
+ADAPTERS --> MAD
+ 
+ADAPTERS --> XML
+ADAPTERS --> M3U8
 ```
 
 ---
