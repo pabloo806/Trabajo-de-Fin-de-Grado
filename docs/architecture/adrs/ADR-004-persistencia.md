@@ -19,6 +19,16 @@ Seleccionar el mecanismo de persistencia.
 - Base de datos embebida alternativa.
 - Almacenamiento en ficheros.
 
+## Criterios de evaluación
+
+- Facilidad de despliegue.
+- Rendimiento.
+- Complejidad operativa.
+- Portabilidad.
+- Escalabilidad.
+- Soporte para consultas.
+- Mantenibilidad.
+
 ## Decisión
 
 Pendiente de evaluación.
