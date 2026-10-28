@@ -117,7 +117,12 @@ flowchart TD
 
 ## Análisis Musical
 
+Motor principal:
+
 - Essentia
+
+Herramientas de apoyo y validación:
+
 - Librosa
 - Madmom
 
