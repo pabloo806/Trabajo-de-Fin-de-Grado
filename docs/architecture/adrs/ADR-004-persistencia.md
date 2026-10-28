@@ -1,61 +1,35 @@
-\# ADR-004: Persistencia
+# ADR-004: Persistencia
 
-
-
-\## Estado
-
-
+## Estado
 
 Propuesto
 
+## Contexto
 
+La aplicación necesita almacenar pistas, resultados de análisis, historial y setlists generados.
 
-\## Contexto
+## Problema
 
+Seleccionar la tecnología de persistencia local para el proyecto.
 
+## Alternativas
 
-La aplicación necesita almacenar pistas, análisis, historial y setlists.
+- SQLite.
+- PostgreSQL.
+- Ficheros estructurados.
+- Otra base de datos embebida.
 
-
-
-\## Problema
-
-
-
-Seleccionar la tecnología de persistencia local.
-
-
-
-\## Alternativas
-
-
-
-\- SQLite
-
-\- PostgreSQL
-
-\- Ficheros estructurados
-
-\- Otra base de datos embebida
-
-
-
-\## Decisión
-
-
+## Decisión
 
 Pendiente de evaluación.
 
+## Justificación
 
+La elección debe equilibrar facilidad de despliegue, simplicidad, rendimiento y mantenibilidad.
 
-\## Justificación
+## Consecuencias
 
-
-
-Debe valorarse facilidad de despliegue, rendimiento y mantenimiento.
-
-
-
+La decisión afectará al modelo de datos, a la capa de persistencia y a la distribución final de la aplicación.
 \## Consecuencias
 
 
