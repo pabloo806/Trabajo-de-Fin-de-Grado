@@ -31,5 +31,4 @@ ADR-XXX
 
 ## Estado
 
-🟡 En elaboración
-
+🟡 En revisión
