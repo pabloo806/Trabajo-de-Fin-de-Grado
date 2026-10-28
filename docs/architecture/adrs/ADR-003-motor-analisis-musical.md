@@ -27,6 +27,114 @@ Los requisitos no funcionales relacionados con precisión, rendimiento y manteni
 
 Determinar cómo integrará SetlistGen el análisis musical.
 
+## Características de las librerías evaluadas
+
+### Librosa
+
+Lenguaje principal:
+
+- Python
+
+Características relevantes:
+
+- Carga y decodificación de audio.
+- Beat tracking.
+- Estimación de tempo.
+- Cálculo de STFT.
+- Espectrogramas Mel.
+- MFCC.
+- Cromagramas.
+- HPSS (separación armónica y percusiva).
+- Extracción de características espectrales.
+- Segmentación musical.
+- Herramientas de visualización.
+
+Puntos fuertes:
+
+- Amplia adopción académica.
+- Excelente documentación.
+- Ecosistema Python maduro.
+- Integración sencilla.
+
+Limitaciones:
+
+- Menor cantidad de descriptores de alto nivel que Essentia.
+- Menos orientada a aplicaciones industriales.
+
+---
+
+### Essentia
+
+Lenguaje principal:
+
+- C++
+
+Bindings:
+
+- Python
+- JavaScript
+
+Características relevantes:
+
+- Beat tracking.
+- Estimación de BPM.
+- Detección de tonalidad.
+- Detección de acordes.
+- Similitud musical.
+- Segmentación automática.
+- Clasificación musical.
+- Recomendación basada en audio.
+- Audio fingerprinting.
+- Caracterización tímbrica.
+- Extracción melódica.
+- Inferencia mediante modelos TensorFlow.
+- Amplia colección de descriptores musicales.
+
+Puntos fuertes:
+
+- Cobertura funcional muy amplia.
+- Gran rendimiento.
+- Diseñada específicamente para MIR.
+- Uso académico e industrial.
+
+Limitaciones:
+
+- Curva de aprendizaje superior.
+- Integración más compleja.
+- Dependencias más pesadas.
+
+---
+
+### Madmom
+
+Lenguaje principal:
+
+- Python
+
+Características relevantes:
+
+- Beat tracking.
+- Tempo estimation.
+- Downbeat tracking.
+- Detección de compás.
+- Detección de onsets.
+- Detección de tonalidad.
+- Detección de acordes.
+- Modelos basados en machine learning.
+- Procesamiento en paralelo mediante Processors.
+
+Puntos fuertes:
+
+- Excelente rendimiento en tareas rítmicas.
+- Algoritmos MIR de referencia.
+- Muy orientada a investigación.
+
+Limitaciones:
+
+- Menor actividad reciente.
+- Ecosistema menor que Librosa.
+- Cobertura funcional inferior a Essentia.
+
 ## Alternativas consideradas
 
 ### A1. Acoplamiento directo a una única librería
@@ -167,6 +275,37 @@ Total = Σ (Valoración × Peso)
 **Total: 75**
 
 ---
+
+## Asignación de responsabilidades
+
+La comparación funcional muestra que ninguna librería domina absolutamente todas las tareas necesarias para el proyecto.
+
+Por ello se considera la siguiente estrategia:
+
+| Necesidad | Librería candidata |
+|------------|-------------------|
+| Lectura y preprocesado de audio | Librosa |
+| STFT y espectrogramas | Librosa |
+| Cromagramas | Librosa / Essentia |
+| Estimación de BPM | Essentia / Madmom |
+| Beat tracking | Madmom |
+| Estimación de tonalidad | Essentia |
+| Derivación de código Camelot | Implementación propia |
+| Evaluación comparativa frente a Rekordbox | Essentia + Librosa + Madmom |
+| Extracción de características avanzadas | Essentia |
+
+### Estrategia adoptada
+
+La arquitectura desacoplará el análisis musical mediante un puerto común.
+
+Inicialmente se priorizará Essentia como motor principal debido a su cobertura funcional.
+
+Librosa y Madmom permanecerán disponibles para:
+
+- Pruebas comparativas.
+- Validación experimental.
+- Sustitución futura.
+- Construcción de prototipos específicos.
 
 ## Decisión
 
