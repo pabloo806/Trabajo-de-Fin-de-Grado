@@ -29,9 +29,28 @@ Determinar el mecanismo de exportación e interoperabilidad.
 - Posibilidad de automatización.
 - Portabilidad.
 
-## Decisión
+## Evaluación de alternativas
 
-Pendiente de evaluación.
+| Criterio | Peso |
+|-----------|------:|
+| Compatibilidad con Rekordbox | 5 |
+| Robustez | 5 |
+| Facilidad de implementación | 4 |
+| Facilidad de uso para el DJ | 5 |
+| Compatibilidad futura | 3 |
+| Portabilidad | 3 |
+
+## Matriz de decisión
+
+| Alternativa | Compatibilidad | Robustez | Implementación | UX | Evolución | Portabilidad | Total |
+|------------|---------------:|----------:|---------------:|---:|----------:|-------------:|------:|
+| XML Rekordbox | | | | | | | |
+| M3U8 | | | | | | | |
+| XML + M3U8 | | | | | | | |
+
+## Decisión final
+
+Pendiente.
 
 ## Justificación
 
