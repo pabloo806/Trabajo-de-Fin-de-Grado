@@ -31,9 +31,30 @@ Seleccionar la tecnología de análisis musical.
 - Actividad y mantenimiento de la librería.
 - Compatibilidad de licencia.
 
-## Decisión
+## Evaluación de alternativas
 
-Pendiente de evaluación.
+| Criterio | Peso |
+|-----------|------:|
+| Exactitud BPM | 5 |
+| Exactitud tonalidad | 5 |
+| Rendimiento | 4 |
+| Facilidad de integración | 4 |
+| Documentación | 3 |
+| Comunidad y mantenimiento | 3 |
+| Compatibilidad de licencia | 3 |
+
+## Matriz de decisión
+
+| Alternativa | BPM | Tonalidad | Rendimiento | Integración | Documentación | Comunidad | Licencia | Total |
+|------------|----:|----------:|------------:|------------:|--------------:|----------:|---------:|------:|
+| Librosa | | | | | | | | |
+| Essentia | | | | | | | | |
+| Madmom | | | | | | | | |
+| Combinación | | | | | | | | |
+
+## Decisión final
+
+Pendiente.
 
 ## Justificación
 
