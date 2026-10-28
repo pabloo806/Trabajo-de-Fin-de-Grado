@@ -270,7 +270,7 @@ Setlist "*" --> "*" Track
 
 # Motor de Análisis Musical
 
-*``mermaid
+```mermaid
 flowchart TD
 
 TRACK[Trac*]
@@ -301,11 +301,10 @@ BPM --> CAM
 KEY --> CAM
 
 ```
-````*
+--
 
-*--
+# Generador de Setlists
 
-# Generador de Setlists*
 ```mermaid
 flowchart TD
 
@@ -335,42 +334,41 @@ CSP --> VALID*
 VALID --> EXPORT
 
 ```
-*
 
-*--
+---
 
-# Flujo Principal del *istema
+# Flujo Principal del Sistema
 
 ```mermaid
 flowchart LR
 
-A*DIO[Biblioteca Musical]
+AUDIO[Biblioteca Musical]
 
-IMPORT[Im*ortación*
+IMPORT[Importación]
 
 ANALYSIS[Análisis Musical]
 
 DB*(SQLite)]
 
-CSP[Generador CSP*
+CSP[Generador CSP]
 
 SETLIST[Setlist]
 
-XML[XML Rek*rdbox]
+XML[XML Rekordbox]
 
 M3U8[M3U*]
 
 RB[Rekordbox]
 
-A*DIO --> IMPORT
+AUDIO --> IMPORT
 
-IMPORT --> ANALYSI*
+IMPORT --> ANALYSIS
 
-*NALYSIS --> DB
+ANALYSIS --> DB
 
 DB --> CSP
 
-*SP --> SETLIST
+CSP --> SETLIST
 
 SETLIST --> XML*SETLIST --> M3U8
 
