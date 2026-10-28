@@ -20,6 +20,17 @@ Seleccionar la tecnología de análisis musical.
 - Combinación de librerías.
 - Desarrollo propio.
 
+## Criterios de evaluación
+
+- Exactitud de BPM.
+- Exactitud de tonalidad.
+- Compatibilidad con código Camelot.
+- Rendimiento de procesamiento.
+- Facilidad de integración.
+- Calidad de la documentación.
+- Actividad y mantenimiento de la librería.
+- Compatibilidad de licencia.
+
 ## Decisión
 
 Pendiente de evaluación.
