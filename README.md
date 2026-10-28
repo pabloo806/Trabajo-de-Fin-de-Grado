@@ -193,7 +193,6 @@ La documentación del proyecto se organiza en las siguientes áreas:
 - Arquitectura Software
 - Modelo de Datos
 - Diseño de API
-- ADRs (Architecture Decision Records)
 
 ## Gestión de Proyecto
 
