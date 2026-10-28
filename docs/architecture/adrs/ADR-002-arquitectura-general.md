@@ -29,9 +29,29 @@ Determinar el estilo arquitectónico del sistema.
 - Curva de aprendizaje.
 - Compatibilidad con los requisitos RNF-22, RNF-23 y RNF-24.
 
-## Decisión
+## Evaluación de alternativas
 
-Pendiente de evaluación.
+| Criterio | Peso |
+|-----------|------:|
+| Separación de responsabilidades | 5 |
+| Testabilidad | 5 |
+| Mantenibilidad | 5 |
+| Escalabilidad | 3 |
+| Curva de aprendizaje | 2 |
+| Independencia tecnológica | 5 |
+
+## Matriz de decisión
+
+| Alternativa | Separación | Testabilidad | Mantenibilidad | Escalabilidad | Curva | Independencia | Total |
+|------------|-----------:|-------------:|---------------:|--------------:|------:|--------------:|------:|
+| Arquitectura en capas | | | | | | | |
+| Clean Architecture | | | | | | | |
+| Hexagonal | | | | | | | |
+| Monolito tradicional | | | | | | | |
+
+## Decisión final
+
+Pendiente.
 
 ## Justificación
 
