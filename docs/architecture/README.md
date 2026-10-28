@@ -144,14 +144,46 @@ flowchart TD
 ```mermaid
 classDiagram
 
-Library --> Track
-Track --> AnalysisResult
-Setlist --> Track
+Library "1" --> "*" Track
+
+Track "1" --> "1" TrackMetadata
+Track "1" --> "*" AnalysisResult
+
+AnalysisResult "*" --> "1" AnalysisRun
+
+GenerationRequest "1" --> "*" Setlist
+
+Setlist "1" --> "*" SetlistTrack
+Setlist "1" --> "*" Transition
+
+SetlistTrack "*" --> "1" Track
+
+Track "1" --> "*" ReferenceMeasurement
+
+EvaluationReport --> AnalysisResult
+EvaluationReport --> ReferenceMeasurement
 
 class Library
+
 class Track
+
+class TrackMetadata
+
 class AnalysisResult
+
+class AnalysisRun
+
+class GenerationRequest
+
 class Setlist
+
+class SetlistTrack
+
+class Transition
+
+class ReferenceMeasurement
+
+class EvaluationReport
 ```
 
 ---
