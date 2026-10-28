@@ -31,9 +31,29 @@ Determinar cómo se ejecutará SetlistGen.
 - Posibilidad de crecimiento futuro.
 - Integración con Rekordbox.
 
-## Decisión
+## Evaluación de alternativas
 
-Pendiente de evaluación.
+| Criterio | Peso |
+|-----------|------:|
+| Acceso a archivos locales | 5 |
+| Experiencia de usuario | 5 |
+| Complejidad de desarrollo | 4 |
+| Portabilidad | 4 |
+| Integración con Rekordbox | 5 |
+| Mantenibilidad | 4 |
+| Escalabilidad futura | 3 |
+
+### Matriz de decisión
+
+| Alternativa | Archivos | UX | Complejidad | Portabilidad | Rekordbox | Mantenibilidad | Evolución | Total |
+|------------|----------:|---:|------------:|-------------:|-----------:|---------------:|----------:|------:|
+| Escritorio | | | | | | | | |
+| Web local | | | | | | | | |
+| Plugin Rekordbox | | | | | | | | |
+
+## Decisión final
+
+Pendiente.
 
 ## Justificación
 
