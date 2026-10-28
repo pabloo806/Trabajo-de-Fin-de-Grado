@@ -44,8 +44,6 @@ Desarrollar una aplicación capaz de generar automáticamente setlists para DJs 
 
 # 🏛️ Arquitectura
 
-# 🏛️ Arquitectura
-
 La documentación arquitectónica del proyecto se encuentra en:
 
 - [Arquitectura](docs/architecture/README.md)
