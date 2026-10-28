@@ -43,7 +43,7 @@ Determinar cómo se ejecutará SetlistGen.
 | Mantenibilidad | 4 |
 | Escalabilidad futura | 3 |
 
-### Matriz de decisión
+## Matriz de decisión
 
 | Alternativa | Archivos | UX | Complejidad | Portabilidad | Rekordbox | Mantenibilidad | Evolución | Total |
 |------------|----------:|---:|------------:|-------------:|-----------:|---------------:|----------:|------:|
