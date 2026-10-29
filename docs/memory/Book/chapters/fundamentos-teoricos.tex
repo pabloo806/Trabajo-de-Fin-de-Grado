@@ -23,11 +23,11 @@ donde $w[n]$ es la ventana de análisis, $N$ su longitud, $H$ el salto entre ven
 
 \subsection{Descriptores musicales y recuperación de información musical}
 
-La disciplina que extrae información útil de la música a partir de su señal, de sus metadatos o de ambos es la \acf{mir}. Sus descriptores suelen clasificarse por nivel de abstracción. Los de bajo nivel se calculan directamente sobre la señal, como el espectrograma, la energía o el cromagrama. Los de nivel medio resumen estructuras musicales, como el tempo, la posición de los pulsos o la tonalidad. Los de alto nivel se refieren a categorías semánticas, como el género o el estado de ánimo.
+La disciplina que extrae información útil de la música a partir de su señal, de sus metadatos o de ambos es la \acs{mir}. Sus descriptores suelen clasificarse por nivel de abstracción. Los de bajo nivel se calculan directamente sobre la señal, como el espectrograma, la energía o el cromagrama. Los de nivel medio resumen estructuras musicales, como el tempo, la posición de los pulsos o la tonalidad. Los de alto nivel se refieren a categorías semánticas, como el género o el estado de ánimo.
 
 SetlistGen trabaja con tres tipos de descriptores:
 \begin{itemize}
-  \item \textbf{Estimados desde la señal:} \acf{bpm} y tonalidad, de los que se deriva el código Camelot. Son descriptores de nivel medio.
+  \item \textbf{Estimados desde la señal:} \acs{bpm} y tonalidad, de los que se deriva el código Camelot. Son descriptores de nivel medio.
   \item \textbf{Leídos de las etiquetas:} título, artista, género, año y duración. El género se toma de las etiquetas y no se estima automáticamente.
   \item \textbf{Derivados:} el código Camelot y las medidas de compatibilidad entre pistas.
 \end{itemize}
@@ -47,7 +47,7 @@ Un valor de $120$~\acs{bpm} corresponde a un pulso cada $0{,}5$ segundos. El tem
 
 \subsection{Estimación automática}
 
-Los métodos de estimación de tempo comparten una estructura general. En primer lugar se calcula una función de novedad (\emph{onset strength}) que mide la aparición de nuevos eventos, por ejemplo mediante el flujo espectral entre tramas consecutivas de la \acf{stft}. A continuación se busca la periodicidad dominante de esa función, bien mediante autocorrelación o análisis espectral, bien mediante bancos de resonadores como los del trabajo clásico de Scheirer~\cite{scheirer1998tempo}. Por último, algunos métodos refinan la solución con seguimiento de pulsos, por ejemplo mediante programación dinámica~\cite{ellis2007beat}, que impone coherencia temporal en la posición de los pulsos.
+Los métodos de estimación de tempo comparten una estructura general. En primer lugar se calcula una función de novedad (\emph{onset strength}) que mide la aparición de nuevos eventos, por ejemplo mediante el flujo espectral entre tramas consecutivas de la \acs{stft}. A continuación se busca la periodicidad dominante de esa función, bien mediante autocorrelación o análisis espectral, bien mediante bancos de resonadores como los del trabajo clásico de Scheirer~\cite{scheirer1998tempo}. Por último, algunos métodos refinan la solución con seguimiento de pulsos, por ejemplo mediante programación dinámica~\cite{ellis2007beat}, que impone coherencia temporal en la posición de los pulsos.
 
 \subsection{Errores de octava y tolerancia}
 
@@ -86,7 +86,7 @@ donde $r$ es el coeficiente de correlación. Los perfiles clásicos proceden de 
 
 \subsection{Dificultades en la música electrónica}
 
-La estimación de tonalidad es menos fiable en la música electrónica de baile que en el repertorio tonal clásico. Los perfiles clásicos asumen una armonía basada en el sistema mayor-menor, y gran parte de la \acf{edm} emplea tonalidades ambiguas, centros tonales poco definidos, modos distintos de los dos canónicos o pistas con muy pocas notas y predominio de bajo y percusión. Faraldo et al.~\cite{faraldo2016key} analizan estas particularidades y proponen perfiles específicos y etapas de preprocesado que mejoran el rendimiento. Los errores más frecuentes confunden la tonalidad con su relativa, con su quinta o con su paralela, lo que explica que la evaluación de la tonalidad deba medir la proximidad entre la estimada y la de referencia, y no solo la coincidencia exacta (sección~\ref{sec:fund-metricas}).
+La estimación de tonalidad es menos fiable en la música electrónica de baile que en el repertorio tonal clásico. Los perfiles clásicos asumen una armonía basada en el sistema mayor-menor, y gran parte de la \acs{edm} emplea tonalidades ambiguas, centros tonales poco definidos, modos distintos de los dos canónicos o pistas con muy pocas notas y predominio de bajo y percusión. Faraldo et al.~\cite{faraldo2016key} analizan estas particularidades y proponen perfiles específicos y etapas de preprocesado que mejoran el rendimiento. Los errores más frecuentes confunden la tonalidad con su relativa, con su quinta o con su paralela, lo que explica que la evaluación de la tonalidad deba medir la proximidad entre la estimada y la de referencia, y no solo la coincidencia exacta (sección~\ref{sec:fund-metricas}).
 
 \section{Rueda Camelot y mezcla armónica}
 \label{sec:fund-camelot}
