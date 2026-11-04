@@ -10,7 +10,6 @@ Centralizar toda la documentación técnica y académica del TFG.
 
 docs/
 │
-├── project-management
 ├── requirements
 ├── architecture
 ├── testing
