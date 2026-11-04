@@ -1,4 +1,3 @@
-[ADR-001-distribucion-sistema.md](https://github.com/user-attachments/files/34364237/ADR-001-distribucion-sistema.md)
 # ADR-001: Forma de Distribución del Sistema
 
 ## Estado
