@@ -1,4 +1,3 @@
-[ADR-002-arquitectura-general.md](https://github.com/user-attachments/files/34364315/ADR-002-arquitectura-general.md)
 # ADR-002: Arquitectura General del Sistema
 
 ## Estado
