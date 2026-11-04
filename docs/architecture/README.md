@@ -1,3 +1,4 @@
+[README-architecture.md](https://github.com/user-attachments/files/34364280/README-architecture.md)
 # Arquitectura de SetlistGen
 
 > Destino en el repositorio: `docs/architecture/README.md`.
