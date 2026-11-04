@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/34364108/README.md)
 <div align="center">
 
 # 🎧 SetlistGen · Generador Automático de Setlists para DJs
