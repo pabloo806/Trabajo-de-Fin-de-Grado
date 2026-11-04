@@ -1,4 +1,3 @@
-[ADR-004-persistencia.md](https://github.com/user-attachments/files/34364365/ADR-004-persistencia.md)
 # ADR-004: Persistencia
 
 ## Estado
