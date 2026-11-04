@@ -2,124 +2,82 @@
 
 ## Introducción
 
-Este documento describe el modelo de dominio, el modelo conceptual y los principios de persistencia del sistema SetlistGen.
+Este documento define el modelo de dominio y la estrategia de persistencia de SetlistGen.
 
-Su objetivo es servir como puente entre:
+Su propósito es establecer una representación consistente de la información gestionada por el sistema y servir como puente entre:
 
-```mermaid
-flowchart TB
-
-    REQ["Ingeniería de Requisitos"]
-    UC["Casos de Uso"]
-    ARCH["Arquitectura"]
-    DOMAIN["Modelo de Dominio"]
-    DATA["Modelo de Datos"]
-    IMPL["Implementación"]
-
-    REQ --> UC
-    UC --> ARCH
-    ARCH --> DOMAIN
-    DOMAIN --> DATA
-    DATA --> IMPL
+```text
+Requisitos
+↓
+Casos de Uso
+↓
+Arquitectura
+↓
+Modelo de Dominio
+↓
+Modelo Relacional
+↓
+Persistencia SQLite
+↓
+Implementación
 ```
-
-Antes de definir el modelo relacional definitivo y el esquema SQLite, es necesario comprender qué entidades forman parte del dominio y qué responsabilidades posee cada una.
-
-Este documento constituye la base para:
-
-- El modelo entidad-relación.
-- El modelo relacional.
-- El diseño físico SQLite.
-- La implementación de repositorios y casos de uso.
 
 ---
 
 # Objetivos de Diseño
 
-El modelo debe garantizar:
+El modelo debe permitir:
 
-- Identidad estable de las pistas.
-- Independencia respecto a rutas y nombres de fichero.
-- Soporte para múltiples motores de análisis.
-- Persistencia de resultados de generación.
-- Reproducibilidad de resultados.
-- Escalabilidad razonable para bibliotecas de varios miles de pistas.
-- Trazabilidad completa de análisis y validación.
-- Compatibilidad con los requisitos RF y RNF.
+- Identificar pistas de manera estable.
+- Detectar nuevas pistas sin reanalizar toda la biblioteca.
+- Gestionar múltiples motores de análisis.
+- Mantener el histórico de análisis.
+- Mantener el histórico de setlists.
+- Permitir comparaciones con Rekordbox.
+- Garantizar trazabilidad y reproducibilidad.
 
 ---
 
 # Principios de Diseño
 
-## Persistencia local
+## P01. Identidad independiente de la ruta
 
-Toda la información se almacena en SQLite.
+La identidad de una pista no depende de:
 
----
-
-## Identidad desacoplada de la ubicación
-
-La identidad lógica de una pista es independiente de:
-
-- Ruta.
-- Nombre.
-- Carpeta.
+- ruta,
+- carpeta,
+- nombre del fichero.
 
 ---
 
-## Multi-motor
+## P02. Soporte multi-motor
 
-El sistema debe permitir almacenar resultados procedentes de:
+Una misma pista puede disponer de múltiples resultados de análisis.
 
-- Essentia.
-- Librosa.
-- Madmom.
+Ejemplo:
 
-Sin sobrescribir resultados previos.
-
----
-
-## Trazabilidad
-
-Todo resultado debe indicar:
-
-- Motor.
-- Versión.
-- Fecha.
-- Configuración.
+```text
+Track
+ ├── Essentia
+ ├── Librosa
+ └── Madmom
+```
 
 ---
 
-## Reproducibilidad
+## P03. Reproducibilidad
 
-Todo setlist generado debe poder reproducirse a partir de:
+Toda generación debe poder reproducirse mediante:
 
-- Parámetros.
-- Semilla.
-- Biblioteca.
-
----
-
-## Separación de responsabilidades
-
-Las entidades representan conceptos del dominio.
-
-Las reglas de negocio se sitúan en servicios de dominio.
+- parámetros,
+- semilla,
+- biblioteca.
 
 ---
 
-# Dependencias Arquitectónicas
+## P04. Historial completo
 
-Este modelo depende directamente de:
-
-- ADR-001 Distribución.
-- ADR-002 Arquitectura.
-- ADR-003 Motor de Análisis.
-- ADR-004 Persistencia.
-- ADR-005 Generación.
-- ADR-006 Exportación.
-- ADR-009 Evaluación.
-- ADR-010 Identificación de pistas.
+Los resultados históricos no se sobrescriben.
 
 ---
 
@@ -127,25 +85,22 @@ Este modelo depende directamente de:
 
 ## Track
 
-### Propósito
-
-Representa una pista musical dentro del sistema.
-
-Constituye la entidad principal del dominio.
+Representa una pista musical única.
 
 ### Responsabilidades
 
 - Mantener identidad lógica.
-- Agrupar metadatos.
-- Asociar resultados de análisis.
+- Agrupar ubicaciones.
+- Agrupar resultados de análisis.
 - Participar en setlists.
 
 ### Atributos mínimos
 
 ```text
 track_id
-created_at
+fingerprint
 status
+created_at
 ```
 
 ### Requisitos relacionados
@@ -158,19 +113,14 @@ status
 
 ## TrackLocation
 
-### Propósito
+Representa una ubicación física concreta.
 
-Representa una ubicación física de una pista.
+### Responsabilidades
 
-### Justificación
-
-Una misma pista puede:
-
-- cambiar de ruta,
-- cambiar de nombre,
-- aparecer duplicada.
-
-La ubicación no forma parte de la identidad.
+- Resolver rutas.
+- Detectar movimientos.
+- Detectar duplicados.
+- Detectar ausencias.
 
 ### Atributos mínimos
 
@@ -178,26 +128,31 @@ La ubicación no forma parte de la identidad.
 location_id
 track_id
 
-file_path
-
+path
 last_seen_at
 
 status
+```
+
+Estados:
+
+```text
+ACTIVE
+MOVED
+MISSING
+DUPLICATE
 ```
 
 ### Requisitos relacionados
 
 - RF-09c
 - RF-22
-- RNF-21
 
 ---
 
 ## TrackMetadata
 
-### Propósito
-
-Representa los metadatos obtenidos a partir de etiquetas.
+Información obtenida desde etiquetas.
 
 ### Atributos mínimos
 
@@ -206,7 +161,7 @@ title
 artist
 genre
 year
-duration_seconds
+duration
 ```
 
 ### Requisitos relacionados
@@ -217,13 +172,7 @@ duration_seconds
 
 ## AnalysisRun
 
-### Propósito
-
-Representa una ejecución concreta de un motor MIR.
-
-### Responsabilidades
-
-Permitir trazabilidad y reproducibilidad.
+Representa una ejecución concreta.
 
 ### Atributos mínimos
 
@@ -244,19 +193,7 @@ executed_at
 
 ## AnalysisResult
 
-### Propósito
-
-Representa el resultado producido por un motor MIR.
-
-### Responsabilidades
-
-Almacenar:
-
-- BPM
-- Tonalidad
-- Camelot
-
-junto con la información del motor que los generó.
+Resultado producido por un motor.
 
 ### Atributos mínimos
 
@@ -271,10 +208,19 @@ bpm
 key_tonic
 key_mode
 
-camelot_code
+camelot
 
 confidence
+
 status
+```
+
+Estados:
+
+```text
+SUCCESS
+FAILED
+LOW_CONFIDENCE
 ```
 
 ### Requisitos relacionados
@@ -289,13 +235,7 @@ status
 
 ## GenerationRequest
 
-### Propósito
-
-Representa una solicitud de generación.
-
-### Responsabilidades
-
-Agrupar todos los parámetros utilizados para generar un setlist.
+Petición de generación.
 
 ### Atributos mínimos
 
@@ -323,9 +263,7 @@ random_seed
 
 ## GenreSegment
 
-### Propósito
-
-Representa restricciones temporales de género.
+Restricción temporal de género.
 
 ### Atributos mínimos
 
@@ -348,9 +286,7 @@ genre
 
 ## Anchor
 
-### Propósito
-
-Representa una pista fijada en una posición concreta.
+Pista fijada en una posición.
 
 ### Atributos mínimos
 
@@ -371,15 +307,7 @@ position
 
 ## Setlist
 
-### Propósito
-
-Representa un setlist generado.
-
-### Responsabilidades
-
-- Mantener el orden de reproducción.
-- Mantener el histórico.
-- Permitir exportación.
+Setlist generado.
 
 ### Atributos mínimos
 
@@ -393,6 +321,14 @@ created_at
 status
 ```
 
+Estados:
+
+```text
+GENERATED
+EDITED
+EXPORTED
+```
+
 ### Requisitos relacionados
 
 - RF-10
@@ -404,9 +340,7 @@ status
 
 ## SetlistTrack
 
-### Propósito
-
-Representa una pista perteneciente a un setlist.
+Relación ordenada entre Setlist y Track.
 
 ### Atributos mínimos
 
@@ -419,25 +353,19 @@ position
 
 ### Requisitos relacionados
 
-- RF-18
-- RF-20
 - RF-20b
 
 ---
 
 ## Transition
 
-### Propósito
-
-Representa una transición entre dos pistas.
+Representa la evaluación de una transición.
 
 ### Estado
 
-Pendiente de validación (OD-06).
+Pendiente de validación por tutor (OD-06).
 
-### Si se materializa
-
-Atributos mínimos:
+### Atributos mínimos
 
 ```text
 transition_id
@@ -446,9 +374,10 @@ from_track_id
 to_track_id
 
 bpm_delta
+
 camelot_distance
 
-transition_score
+score
 ```
 
 ### Requisitos relacionados
@@ -460,9 +389,7 @@ transition_score
 
 ## ReferenceMeasurement
 
-### Propósito
-
-Representa valores de referencia obtenidos desde Rekordbox.
+Datos importados desde Rekordbox.
 
 ### Atributos mínimos
 
@@ -487,9 +414,7 @@ camelot_reference
 
 ## EvaluationReport
 
-### Propósito
-
-Representa resultados agregados de evaluación.
+Resultado agregado de evaluación.
 
 ### Atributos mínimos
 
@@ -524,42 +449,28 @@ minimum
 maximum
 ```
 
-Relacionado con:
+---
 
-- RF-13
+## GenerationSeed
+
+```text
+seed
+```
 
 ---
 
 ## DurationTarget
 
 ```text
-target_duration
+duration
 tolerance
 ```
-
-Relacionado con:
-
-- RF-12
 
 ---
 
 ## HarmonicPolicy
 
-Representa el nivel de compatibilidad armónica exigido.
-
-Relacionado con:
-
-- RF-14
-
----
-
-## GenerationSeed
-
-Representa la semilla utilizada para la generación.
-
-Relacionado con:
-
-- RNF-11
+Configuración de compatibilidad armónica.
 
 ---
 
@@ -569,21 +480,11 @@ Relacionado con:
 
 Responsable de identificar pistas.
 
-Relacionado con:
-
-- RF-09
-- RF-09b
-- RF-09c
-
 ---
 
 ## SetlistGenerationService
 
 Responsable de generar setlists.
-
-Relacionado con:
-
-- ADR-005
 
 ---
 
@@ -591,21 +492,70 @@ Relacionado con:
 
 Responsable de evaluar transiciones.
 
-Relacionado con:
-
-- RF-17
-- RF-20
-
 ---
 
 ## EvaluationService
 
 Responsable de comparar resultados frente a Rekordbox.
 
-Relacionado con:
+---
 
-- RF-29
-- RF-29b
+# MER (v0.1)
+
+```mermaid
+erDiagram
+
+TRACK ||--o{ TRACK_LOCATION : has
+
+TRACK ||--|| TRACK_METADATA : contains
+
+TRACK ||--o{ ANALYSIS_RESULT : produces
+
+ANALYSIS_RUN ||--o{ ANALYSIS_RESULT : executes
+
+GENERATION_REQUEST ||--o{ GENRE_SEGMENT : defines
+
+GENERATION_REQUEST ||--o{ ANCHOR : defines
+
+GENERATION_REQUEST ||--o{ SETLIST : generates
+
+SETLIST ||--o{ SETLIST_TRACK : contains
+
+TRACK ||--o{ SETLIST_TRACK : selected
+
+TRACK ||--o{ REFERENCE_MEASUREMENT : compares
+
+EVALUATION_REPORT ||--o{ REFERENCE_MEASUREMENT : uses
+```
+
+---
+
+# Modelo Relacional (v0.1)
+
+```mermaid
+flowchart LR
+
+TRACK --> TRACK_LOCATION
+
+TRACK --> TRACK_METADATA
+
+TRACK --> ANALYSIS_RESULT
+
+ANALYSIS_RUN --> ANALYSIS_RESULT
+
+GENERATION_REQUEST --> GENRE_SEGMENT
+GENERATION_REQUEST --> ANCHOR
+
+GENERATION_REQUEST --> SETLIST
+
+SETLIST --> SETLIST_TRACK
+
+TRACK --> SETLIST_TRACK
+
+TRACK --> REFERENCE_MEASUREMENT
+
+EVALUATION_REPORT --> REFERENCE_MEASUREMENT
+```
 
 ---
 
@@ -613,7 +563,7 @@ Relacionado con:
 
 ## OD-03
 
-Identidad permanente de pistas.
+Identidad definitiva de pistas.
 
 ---
 
@@ -625,7 +575,7 @@ Persistencia multi-motor.
 
 ## OD-05
 
-Existencia de Library.
+Necesidad de Library.
 
 ---
 
@@ -637,47 +587,41 @@ Persistencia de Transition.
 
 ## OD-07
 
-Validación del modelo de dominio.
+Validación definitiva del dominio.
 
 ---
 
-# Riesgos de Diseño
+# Riesgos
 
 ## RD-01
 
-La estrategia definitiva de identificación de pistas aún no está validada.
-
-Relacionado con:
-
-- ADR-010
+Cambio de estrategia de identificación.
 
 ---
 
 ## RD-02
 
-La persistencia de transiciones sigue abierta.
-
-Relacionado con:
-
-- OD-06
+Cambio de estrategia multi-motor.
 
 ---
 
 ## RD-03
 
-La selección definitiva del motor MIR depende de la prueba de concepto.
+Validación de las transiciones.
 
-Relacionado con:
+---
 
-- ADR-003
+## RD-04
+
+Cambios derivados de la PoC del motor MIR.
 
 ---
 
 # Próximos pasos
 
-1. Validación de OD-03 a OD-07.
-2. Diseño del MER.
-3. Diseño del modelo relacional.
-4. Diseño físico SQLite.
-5. Estrategia de índices.
-6. Estrategia de migraciones.
+1. Validar OD-03..OD-07 con tutor y cotutor.
+2. Congelar entidades.
+3. Diseñar modelo relacional definitivo.
+4. Diseñar esquema SQLite.
+5. Definir índices.
+6. Diseñar migraciones.
