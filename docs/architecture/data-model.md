@@ -9,14 +9,18 @@ Su objetivo es servir como puente entre:
 ```mermaid
 flowchart TB
 
-    A[Requisitos]
-    B[Casos de uso]
-    C[Arquitectura]
-    D[Implementación]
+    REQ["Ingeniería de Requisitos"]
+    UC["Casos de Uso"]
+    ARCH["Arquitectura"]
+    DOMAIN["Modelo de Dominio"]
+    DATA["Modelo de Datos"]
+    IMPL["Implementación"]
 
-    A --> B
-    B --> C
-    C --> D
+    REQ --> UC
+    UC --> ARCH
+    ARCH --> DOMAIN
+    DOMAIN --> DATA
+    DATA --> IMPL
 ```
 
 Antes de definir el modelo relacional definitivo y el esquema SQLite, es necesario comprender qué entidades forman parte del dominio y qué responsabilidades posee cada una.
