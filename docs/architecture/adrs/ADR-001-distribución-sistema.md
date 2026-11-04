@@ -1,12 +1,25 @@
+[ADR-001-distribucion-sistema.md](https://github.com/user-attachments/files/34364237/ADR-001-distribucion-sistema.md)
 # ADR-001: Forma de Distribución del Sistema
 
 ## Estado
 
-Aceptado
+Aceptado (revisado el 2026-10-30)
 
 ## Fecha
 
-2026-10-28
+2026-10-28 (decisión original) · 2026-10-30 (revisión de alineación con la línea base documental)
+
+## Requisitos relacionados
+
+| Requisito | Relación |
+|---|---|
+| RF-01 | Acceso directo a carpetas locales con miles de ficheros |
+| RF-23 | La importación en Rekordbox la realiza el DJ sobre el fichero exportado |
+| RNF-19 | Windows 10/11 y macOS vigente |
+| RNF-20 | Instalación reproducible en un tiempo acotado |
+| RNF-25 | Procesamiento local: ningún dato sale del equipo del DJ |
+
+Restricciones del SRS v4.0 (sección 2.3) y objetivos O1 a O7 del anteproyecto.
 
 ## Contexto
 
@@ -14,15 +27,16 @@ SetlistGen tiene como objetivo asistir al DJ en la preparación de setlists a pa
 
 El sistema debe:
 
-- Acceder a carpetas locales con miles de archivos de audio.
+- Acceder a carpetas locales con miles de archivos de audio (RF-01).
 - Analizar automáticamente BPM, tonalidad y compatibilidad armónica.
 - Mantener una base de datos local con la información procesada.
 - Generar setlists parametrizados.
 - Exportar resultados compatibles con Rekordbox.
-- Funcionar sin depender de servicios externos o almacenamiento en la nube.
+- Funcionar sin depender de servicios externos o almacenamiento en la nube (RNF-25).
+- Funcionar en Windows y macOS (RNF-19).
 - Integrarse de forma natural en el flujo de trabajo habitual de un DJ.
 
-La forma de distribución del sistema condiciona la arquitectura, el acceso a los archivos locales, la persistencia, la interfaz de usuario y la experiencia de uso.
+El anteproyecto deja la forma de distribución como decisión abierta de la fase de arquitectura y propone una implementación del análisis en Python. La forma de distribución condiciona la arquitectura, el acceso a los archivos locales, la persistencia, la interfaz de usuario y la experiencia de uso.
 
 ## Problema
 
@@ -88,6 +102,7 @@ Extensión ejecutada dentro de Rekordbox o fuertemente acoplada al software.
 - Menor control sobre la plataforma.
 - Riesgo elevado de incompatibilidades futuras.
 - Dificulta la evaluación independiente del sistema.
+- Incompatible con la exclusión de escritura directa sobre Rekordbox (SRS 2.5).
 
 ---
 
@@ -114,13 +129,13 @@ Extensión ejecutada dentro de Rekordbox o fuertemente acoplada al software.
 
 ### Método de cálculo
 
-La puntuación ponderada de cada criterio se calcula como:
+Puntuación ponderada:
 
 ```text
 Puntuación ponderada = Valoración × Peso
 ```
 
-La puntuación total de cada alternativa se calcula como:
+Puntuación total:
 
 ```text
 Total = Σ (Valoración × Peso)
@@ -175,7 +190,7 @@ Total = Σ (Valoración × Peso)
 
 Se adopta una **aplicación de escritorio** como forma de distribución de SetlistGen.
 
-La elección concreta del lenguaje de programación, framework de interfaz de usuario y arquitectura de implementación queda pendiente de decisiones posteriores.
+Python es el lenguaje principal del proyecto, de acuerdo con el anteproyecto y el README de arquitectura. Su registro formal, junto con el framework de interfaz de usuario y el sistema de empaquetado, se realizará en ADR-008 (propuesto). Esa decisión posterior no modifica la presente.
 
 ## Justificación
 
@@ -192,7 +207,7 @@ La evaluación multicriterio muestra que esta alternativa obtiene la puntuación
 ### Positivas
 
 - Acceso sencillo a bibliotecas musicales locales.
-- Funcionamiento completamente offline.
+- Funcionamiento completamente offline (RNF-25).
 - Integración natural con herramientas de análisis musical.
 - Menor complejidad técnica que una solución web o un complemento.
 - Independencia respecto a software propietario.
@@ -202,15 +217,39 @@ La evaluación multicriterio muestra que esta alternativa obtiene la puntuación
 
 - Requiere instalación local.
 - Menor accesibilidad remota.
-- Necesidad de generar paquetes o binarios para las plataformas soportadas.
+- Necesidad de generar paquetes o binarios para Windows 10/11 y macOS (RNF-19, RNF-20).
+- Las librerías de análisis candidatas pueden imponer restricciones de instalación o de licencia en alguna plataforma. Se comprueban en la prueba de concepto (ADR-003, ADR-007).
+
+## Impacto en el proyecto
+
+- Fija la forma de entrega del sistema y descarta una arquitectura cliente-servidor.
+- Condiciona ADR-008: el framework de interfaz y el empaquetado deben ser compatibles con una aplicación de escritorio en Windows y macOS.
+- Refuerza la persistencia local (ADR-004) y la exclusión de servicios en la nube (RNF-25).
+- Obliga a incluir la instalación limpia en ambos sistemas entre las pruebas (RNF-19, RNF-20).
+
+## Impacto en la memoria
+
+Aparece en el capítulo 6 (diseño, sección 6.1 Arquitectura del sistema), en el capítulo 7 (entorno y tecnologías) y en el apéndice B (registro de decisiones). El capítulo 4 (sección 4.6) debe actualizarse: esta decisión ya no figura como abierta.
+
+**Guardar este contenido para la memoria del TFG.**
+
+- **Contexto:** el sistema opera sobre bibliotecas locales de miles de ficheros, sin servicios externos, en Windows y macOS.
+- **Problema:** elegir cómo se distribuye y ejecuta.
+- **Alternativas:** aplicación de escritorio, aplicación web local y complemento de Rekordbox.
+- **Solución adoptada:** aplicación de escritorio.
+- **Justificación:** evaluación multicriterio (132, 113 y 60 puntos) y acceso directo a los ficheros.
+- **Ventajas:** funcionamiento local, integración con el análisis y despliegue sencillo.
+- **Limitaciones:** necesita instalación y empaquetado por plataforma.
+- **Impacto:** condiciona el framework de interfaz y el empaquetado.
 
 ## Evidencias utilizadas
 
-- Requisitos funcionales de importación de bibliotecas locales.
-- Requisitos funcionales de análisis musical.
-- Requisitos funcionales de exportación a Rekordbox.
-- Requisitos no funcionales de portabilidad y mantenibilidad.
-- Restricción explícita de funcionamiento local sin dependencia de servicios cloud.
+- RF-01: importación de bibliotecas locales.
+- RF-04, RF-05 y RF-06: análisis musical.
+- RF-21 a RF-23: exportación a Rekordbox.
+- RNF-19, RNF-20 y RNF-25: portabilidad, instalación y procesamiento local.
+- Restricción de funcionamiento local sin dependencia de servicios cloud.
+- Alternativas de distribución planteadas en el anteproyecto.
 
 ## Decisiones relacionadas
 
@@ -219,3 +258,21 @@ La evaluación multicriterio muestra que esta alternativa obtiene la puntuación
 - ADR-004: Persistencia.
 - ADR-005: Algoritmo de Generación de Setlists.
 - ADR-006: Exportación e Integración con Rekordbox.
+- ADR-007: Licencias y compatibilidad legal (propuesto).
+- ADR-008: Lenguaje, interfaz gráfica y empaquetado (propuesto).
+- ADR-009: Dataset y protocolo de evaluación (propuesto).
+- ADR-010: Identificación permanente de pistas (propuesto, OD-03).
+
+## Cambios respecto a la versión original (2026-10-28)
+
+| Cambio | Motivo |
+|---|---|
+| Añadida la sección «Requisitos relacionados» y IDs en «Evidencias» | Los ADR no citaban requisitos |
+| Añadido «Impacto en el proyecto» e «Impacto en la memoria» con bloque reutilizable | Formato obligatorio de ADR |
+| La decisión registra Python como lenguaje y remite a ADR-008 para interfaz y empaquetado | El texto original dejaba el lenguaje pendiente, aunque ya estaba aceptado |
+| Windows 10/11 y macOS citados en contexto y consecuencias | RNF-19 |
+| Añadido un inconveniente de A3 por la exclusión de escritura en Rekordbox | SRS 2.5 |
+| Añadidas las decisiones relacionadas ADR-007 a ADR-010 | Nuevos ADR |
+| Nombre de fichero sin tilde | El nombre con tilde variaba entre el repositorio y el proyecto |
+
+La decisión, las puntuaciones y los totales no se modifican (se ha verificado que los tres totales son correctos).
