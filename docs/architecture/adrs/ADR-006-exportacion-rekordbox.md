@@ -1,4 +1,3 @@
-[ADR-006-exportacion-rekordbox.md](https://github.com/user-attachments/files/34364413/ADR-006-exportacion-rekordbox.md)
 # ADR-006: Exportación e Integración con Rekordbox
 
 ## Estado
