@@ -6,7 +6,7 @@ Este documento describe el modelo de dominio, el modelo conceptual y los princip
 
 Su objetivo es servir como puente entre:
 
-```text
+```mermaid
 Requisitos
 ↓
 Casos de uso
