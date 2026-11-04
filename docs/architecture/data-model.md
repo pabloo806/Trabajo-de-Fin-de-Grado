@@ -6,20 +6,39 @@ Este documento define el modelo de dominio y la estrategia de persistencia de Se
 
 Su propósito es establecer una representación consistente de la información gestionada por el sistema y servir como puente entre:
 
-```text
-Requisitos
-↓
-Casos de Uso
-↓
-Arquitectura
-↓
-Modelo de Dominio
-↓
-Modelo Relacional
-↓
-Persistencia SQLite
-↓
-Implementación
+```mermaid
+flowchart TB
+
+    subgraph A["Fase de Análisis"]
+        R[Requisitos]
+        CU[Casos de Uso]
+    end
+
+    subgraph D["Fase de Diseño"]
+        ARQ[Arquitectura]
+        MD[Modelo de Dominio]
+        MR[Modelo Relacional]
+    end
+
+    subgraph I["Fase de Implementación"]
+        SQLITE[Persistencia SQLite]
+        IMP[Implementación]
+    end
+
+    R --> CU
+    CU --> ARQ
+    ARQ --> MD
+    MD --> MR
+    MR --> SQLITE
+    SQLITE --> IMP
+
+    classDef analysis fill:#dbeafe,stroke:#2563eb,color:#000;
+    classDef design fill:#dcfce7,stroke:#16a34a,color:#000;
+    classDef impl fill:#fef3c7,stroke:#d97706,color:#000;
+
+    class R,CU analysis;
+    class ARQ,MD,MR design;
+    class SQLITE,IMP impl;
 ```
 
 ---
