@@ -1,4 +1,3 @@
-[ADR-005-generacion-setlists.md](https://github.com/user-attachments/files/34364401/ADR-005-generacion-setlists.md)
 # ADR-005: Algoritmo de Generación de Setlists
 
 ## Estado
