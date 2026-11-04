@@ -9,14 +9,14 @@ Su objetivo es servir como puente entre:
 ```mermaid
 flowchart TB
 
-Requisitos
-↓
-Casos de uso
-↓
-Arquitectura
-↓
-Implementación
+    A[Requisitos]
+    B[Casos de uso]
+    C[Arquitectura]
+    D[Implementación]
 
+    A --> B
+    B --> C
+    C --> D
 ```
 
 Antes de definir el modelo relacional definitivo y el esquema SQLite, es necesario comprender qué entidades forman parte del dominio y qué responsabilidades posee cada una.
