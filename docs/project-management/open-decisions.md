@@ -4,7 +4,148 @@
 
 Este documento recopila las decisiones de diseño que permanecen abiertas tras la finalización de las fases de análisis de requisitos y diseño arquitectónico.
 
-Su objetivo es facilitar la revisión con el tutor y el cotutor, permitiendo discutir de forma estructurada aquellos aspectos que condicionarán el diseño detallado, la implementación y la validación experimental del proyecto.
+Su objetivo es facilitar la revisión con el tutor y el cotutor, permitiendo discutir de forma estructurada aquellos aspectos que condicionarán:
+
+- El diseño del dominio.
+- El modelo de datos.
+- La persistencia SQLite.
+- La implementación.
+- La validación experimental.
+
+---
+
+# Estado actual
+
+## Completado
+
+✅ SRS consolidado.
+
+✅ Casos de uso consolidados.
+
+✅ Matriz de trazabilidad consolidada.
+
+✅ Glosario consolidado.
+
+✅ ADR-001 a ADR-006 aceptados.
+
+✅ ADR-007 a ADR-010 propuestos.
+
+✅ Arquitectura de alto nivel definida.
+
+---
+
+## Próximo hito
+
+Diseño del modelo de dominio.
+
+Diseño del modelo de datos.
+
+Diseño físico SQLite.
+
+---
+
+# Resumen Ejecutivo
+
+| ID | Decisión | Impacto | Prioridad | Estado |
+|-----|-----------|----------|-----------|---------|
+| OD-01 | RF-29 Should o Must | Validación experimental | Alta | Pendiente |
+| OD-02 | Salto máximo BPM configurable | Generador y validación | Alta | Pendiente |
+| OD-03 | Identidad permanente de pistas | Dominio y persistencia | Crítica | Pendiente |
+| OD-04 | Persistencia multi-motor | Dominio y modelo de datos | Crítica | Pendiente |
+| OD-05 | Entidad Library | Modelo de dominio | Alta | Pendiente |
+| OD-06 | Persistencia de transiciones | Modelo de dominio y BD | Crítica | Pendiente |
+| OD-07 | Validación del modelo de dominio | Dominio y persistencia | Crítica | Pendiente |
+| OD-08 | Estado de ADR-007 a ADR-010 | Diseño detallado | Media | Pendiente |
+| OD-09 | Motor MIR definitivo | Implementación futura | Media | Pendiente |
+| OD-10 | Estrategia final de evaluación | Validación experimental | Media | Pendiente |
+
+---
+
+# Cuestiones a Tratar en la Próxima Reunión
+
+## Bloque 1 · Requisitos
+
+### P1. Evaluación experimental
+
+¿Debe RF-29 pasar de Should a Must?
+
+Contexto:
+
+La evidencia principal del TFG depende de la comparación frente a Rekordbox.
+
+Impacto:
+
+- Requisitos.
+- Casos de uso.
+- Validación.
+- Capítulo 8.
+
+---
+
+### P2. Salto máximo BPM
+
+¿Debe existir un parámetro explícito que permita limitar el salto máximo de BPM entre pistas consecutivas?
+
+Propuesta:
+
+RF-13b.
+
+Impacto:
+
+- Generador.
+- RNF-10.
+- Validación de transiciones.
+
+---
+
+## Bloque 2 · Dominio
+
+### P3. Identidad de las pistas
+
+¿Es adecuada una estrategia de identificación en dos niveles?
+
+Nivel 1:
+
+- Ruta.
+- Tamaño.
+- Fecha.
+- Huella rápida.
+
+Nivel 2:
+
+- Fingerprint acústico.
+
+Impacto:
+
+- RF-09.
+- RF-09b.
+- RF-09c.
+- Persistencia.
+
+---
+
+### P4. Persistencia multi-motor
+
+¿Debe permitirse almacenar múltiples resultados de análisis para una misma pista?
+
+Relación propuesta:
+
+```text
+Track 1:N AnalysisResult
+
+---
+
+# Decisiones críticas para el inicio del modelo de datos
+
+Las siguientes decisiones afectan directamente al diseño del dominio y de la persistencia:
+
+- OD-03 · Identidad permanente de pistas.
+- OD-04 · Persistencia multi-motor.
+- OD-05 · Existencia de Library.
+- OD-06 · Persistencia de transiciones.
+- OD-07 · Modelo de dominio definitivo.
+
+Estas decisiones deberían revisarse prioritariamente durante la próxima reunión con tutor y cotutor.
 
 ---
 
@@ -12,25 +153,25 @@ Su objetivo es facilitar la revisión con el tutor y el cotutor, permitiendo dis
 
 ## Contexto
 
-Actualmente el requisito RF-29 establece:
+Actualmente RF-29 establece:
 
 > El sistema permitirá contrastar los descriptores estimados con valores de referencia de Rekordbox para las mismas pistas y producirá un informe de discrepancias.
 
-RF-29 está clasificado actualmente como requisito **Should**.
+RF-29 estaba clasificado originalmente como requisito **Should**.
 
-Sin embargo, los siguientes requisitos no funcionales dependen directamente de dicho mecanismo de evaluación:
+Sin embargo:
 
-- RNF-05: Exactitud estricta de BPM.
-- RNF-06: Exactitud BPM permitiendo errores de octava.
-- RNF-07: Exactitud exacta de tonalidad.
-- RNF-08: Exactitud de tonalidad según compatibilidad Camelot.
-- RNF-09: Transparencia y análisis de errores.
+- RNF-05 depende de RF-29.
+- RNF-06 depende de RF-29.
+- RNF-07 depende de RF-29.
+- RNF-08 depende de RF-29.
+- RNF-09 depende de RF-29.
 
-Adicionalmente, uno de los objetivos específicos del proyecto consiste en evaluar los descriptores obtenidos por el sistema frente a los valores proporcionados por Rekordbox.
+Además, el objetivo O7 del anteproyecto consiste precisamente en evaluar el sistema.
 
 ## Problema
 
-Existe una posible incoherencia entre la importancia académica de la evaluación experimental y la prioridad asignada al requisito funcional que permite realizar dicha evaluación.
+La evidencia principal del TFG depende actualmente de un requisito funcional secundario.
 
 ## Alternativas
 
@@ -38,32 +179,30 @@ Existe una posible incoherencia entre la importancia académica de la evaluació
 
 #### Ventajas
 
-- Mantiene la clasificación original del SRS.
-- Reduce alcance obligatorio.
+- Menor alcance obligatorio.
 
 #### Inconvenientes
 
-- La evidencia principal del TFG depende de una funcionalidad secundaria.
-- Dificulta justificar la validación experimental.
+- Debilita la validación experimental.
 
 ### A2. Promover RF-29 a Must
 
 #### Ventajas
 
-- Refleja la importancia de la validación dentro del proyecto.
-- Alinea los requisitos funcionales con los requisitos no funcionales asociados.
+- Refleja la importancia real de la evaluación.
+- Alinea requisitos funcionales y no funcionales.
 
 #### Inconvenientes
 
-- Incrementa el alcance mínimo obligatorio.
+- Incrementa el alcance mínimo del proyecto.
 
 ## Propuesta inicial
 
-Promover RF-29 a requisito Must.
+Promover RF-29 a Must.
 
-## Pendiente de validación
+## Estado
 
-Tutor y cotutor.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
@@ -73,38 +212,38 @@ Tutor y cotutor.
 
 Actualmente el sistema permite definir:
 
-- Duración objetivo del setlist.
-- Rango de BPM.
+- Duración objetivo.
+- Rango BPM.
 - Compatibilidad armónica.
 - Progresión de géneros.
 - Pistas ancladas.
 
-RF-17 establece que las transiciones deben presentar saltos de tempo moderados.
+RF-17 exige transiciones con saltos moderados de BPM.
 
-RNF-10 establece que el 100 % de las transiciones deben respetar las restricciones configuradas.
+RNF-10 exige que todas las restricciones configuradas se respeten.
 
-Actualmente no existe un parámetro explícito que permita definir qué se considera un salto moderado.
+Sin embargo, no existe definición formal de "salto moderado".
 
 ## Problema
 
-La restricción no es completamente verificable porque no existe un valor cuantificable asociado.
+La restricción no es verificable ni reproducible.
 
 ## Alternativas
 
 ### A1. Mantener la situación actual
 
-El sistema interpreta internamente qué significa "salto moderado".
+El sistema interpreta internamente qué es un salto moderado.
 
 #### Ventajas
 
-- Menor complejidad para el usuario.
+- Menos opciones para el usuario.
 
 #### Inconvenientes
 
-- La restricción no es totalmente verificable.
-- La validación experimental es más difícil.
+- Difícil de validar.
+- Ambiguo.
 
-### A2. Añadir un parámetro explícito
+### A2. Configurar explícitamente un límite
 
 Ejemplo:
 
@@ -114,21 +253,20 @@ Salto máximo BPM = 5 BPM
 
 #### Ventajas
 
-- Restricción verificable.
-- Mayor control para el DJ.
-- Facilita la validación experimental.
+- Completamente verificable.
+- Más control para el DJ.
 
 #### Inconvenientes
 
-- Incrementa el número de parámetros configurables.
+- Incrementa los parámetros de generación.
 
 ## Propuesta inicial
 
-Incorporar un nuevo requisito que permita definir el salto máximo de BPM entre pistas consecutivas.
+Crear RF-13b como requisito específico.
 
-## Pendiente de validación
+## Estado
 
-Tutor y cotutor.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
@@ -136,27 +274,22 @@ Tutor y cotutor.
 
 ## Contexto
 
-RF-09 establece:
+RF-09 exige que una pista conserve su identidad aunque:
 
-> Una misma pista debe conservar su identidad aunque cambie de nombre o ubicación.
+- cambie de nombre,
+- cambie de ubicación,
+- sea reimportada.
 
-Por tanto, la identidad no puede depender exclusivamente de:
+Además:
 
-- Nombre del fichero.
-- Ruta.
-- Carpeta.
+- RF-09b exige evitar reanálisis.
+- RNF-04 exige reescaneos rápidos.
+
+ADR-010 propone una estrategia de identificación en dos niveles.
 
 ## Problema
 
-Debe definirse un mecanismo de identificación estable.
-
-La decisión afecta a:
-
-- Importación.
-- Reescaneo.
-- Reanálisis.
-- Exportación.
-- Persistencia.
+Debe definirse el mecanismo definitivo de identificación de pistas.
 
 ## Alternativas
 
@@ -164,8 +297,7 @@ La decisión afecta a:
 
 #### Ventajas
 
-- Fácil implementación.
-- Alta unicidad.
+- Muy simple.
 
 #### Inconvenientes
 
@@ -175,68 +307,97 @@ La decisión afecta a:
 
 #### Ventajas
 
-- Independiente de metadatos.
+- Independiente de los metadatos.
 
 #### Inconvenientes
 
-- Coste computacional elevado.
+- Costoso para bibliotecas grandes.
 
 ### A3. Fingerprint acústico
 
 #### Ventajas
 
-- Diseñado específicamente para identificación musical.
-- Tolera determinadas modificaciones.
+- Diseñado para identificar música.
 
 #### Inconvenientes
 
-- Mayor complejidad.
+- Coste computacional elevado.
+
+### A4. Identificación en dos niveles
+
+Nivel 1:
+
+```text
+ruta
++
+tamaño
++
+fecha
++
+huella rápida
+```
+
+Nivel 2:
+
+```text
+fingerprint acústico
+```
+
+solo cuando sea necesario.
+
+#### Ventajas
+
+- Compatible con RNF-04.
+- Escalable.
+- Robusto.
+
+#### Inconvenientes
+
+- Más complejo.
 
 ## Propuesta inicial
 
-Evaluar una estrategia basada en fingerprint acústico.
+Estrategia de doble nivel propuesta en ADR-010.
 
-## Pendiente de validación
+## Estado
 
-Tutor y cotutor.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
-# OD-04 · Persistencia de resultados multi-motor
+# OD-04 · Persistencia multi-motor
 
 ## Contexto
 
-La arquitectura actual contempla la utilización de varios motores de análisis:
+La arquitectura contempla varios motores MIR:
 
 - Essentia.
 - Librosa.
 - Madmom.
 
-Además, RF-07 exige almacenar:
+RF-07 exige almacenar:
 
-- Origen.
-- Motor.
-- Versión.
+- motor,
+- versión,
+- origen.
 
-RF-29 requiere comparar resultados obtenidos por distintos motores.
+RF-29 exige comparación de resultados.
 
 ## Problema
 
-Debe decidirse si una pista puede almacenar múltiples resultados de análisis simultáneamente.
+Debe decidirse si una pista almacena uno o múltiples resultados.
 
 ## Alternativas
 
-### A1. Un único resultado por pista
+### A1. Un resultado por pista
 
 #### Ventajas
 
 - Modelo sencillo.
-- Menor ocupación.
 
 #### Inconvenientes
 
-- Impide comparativas.
-- Dificulta validación experimental.
+- No permite evaluación comparativa.
 
 ### A2. Múltiples resultados por pista
 
@@ -248,21 +409,21 @@ Track 1:N AnalysisResult
 
 #### Ventajas
 
-- Permite comparación entre motores.
-- Facilita experimentación.
-- Permite coexistencia de versiones.
+- Compatible con evaluación.
+- Permite coexistencia de motores.
+- Compatible con RF-07.
 
 #### Inconvenientes
 
-- Modelo más complejo.
+- Más complejidad.
 
 ## Propuesta inicial
 
 Permitir múltiples resultados por pista.
 
-## Pendiente de validación
+## Estado
 
-Tutor y cotutor.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
@@ -276,7 +437,7 @@ Debe decidirse si una biblioteca constituye una entidad explícita del dominio.
 
 ## Problema
 
-El sistema puede asumir una única biblioteca o permitir múltiples bibliotecas.
+Determinar si el sistema soportará múltiples bibliotecas o una única biblioteca por usuario.
 
 ## Alternativas
 
@@ -284,8 +445,8 @@ El sistema puede asumir una única biblioteca o permitir múltiples bibliotecas.
 
 #### Ventajas
 
-- Permite múltiples bibliotecas.
-- Permite histórico de importaciones.
+- Soporta múltiples bibliotecas.
+- Mantiene histórico de importaciones.
 - Facilita estadísticas.
 
 #### Inconvenientes
@@ -296,23 +457,23 @@ El sistema puede asumir una única biblioteca o permitir múltiples bibliotecas.
 
 #### Ventajas
 
-- Simplificación del dominio.
+- Simplifica el modelo de dominio.
 
 #### Inconvenientes
 
-- Menor flexibilidad.
+- Menor flexibilidad futura.
 
 ## Propuesta inicial
 
 Mantener la entidad Library.
 
-## Pendiente de validación
+## Estado
 
-Tutor y cotutor.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
-# OD-06 · Modelado explícito de transiciones
+# OD-06 · Persistencia de transiciones
 
 ## Contexto
 
@@ -320,80 +481,68 @@ RF-17 exige evaluar transiciones.
 
 RF-20 exige mostrar información asociada a cada transición.
 
-Las transiciones contienen información propia:
+Las transiciones contienen:
 
 - Compatibilidad armónica.
 - Salto BPM.
 - Puntuación.
 - Estado.
 
+Sin embargo RF-20b permite modificar manualmente un setlist.
+
 ## Problema
 
-Debe decidirse si las transiciones se representan mediante una entidad específica.
+Determinar si las transiciones deben persistirse o recalcularse.
 
 ## Alternativas
 
-### A1. Calcularlas dinámicamente
+### A1. Recalcular dinámicamente
 
 #### Ventajas
 
-- Menor persistencia.
+- Menor almacenamiento.
+- Siempre coherente tras modificaciones.
 
 #### Inconvenientes
 
 - Menor trazabilidad.
 
-### A2. Persistir explícitamente las transiciones
+### A2. Persistir explícitamente
 
 #### Ventajas
 
-- Facilita trazabilidad.
-- Facilita validación.
 - Facilita auditoría.
+- Facilita análisis histórico.
 
 #### Inconvenientes
 
-- Más almacenamiento.
+- Riesgo de inconsistencias tras edición manual.
 
 ## Propuesta inicial
 
-Persistir explícitamente las transiciones.
+Pendiente de decisión.
 
-### Campos mínimos
+## Estado
 
-```text
-transition_id
-setlist_id
-from_track_id
-to_track_id
-
-bpm_delta
-camelot_distance
-
-harmonic_valid
-
-transition_score
-```
-
-## Pendiente de validación
-
-Tutor y cotutor.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
-# OD-07 · Modelo de dominio propuesto
+# OD-07 · Modelo de dominio definitivo
 
 ## Objetivo
 
-Validar si el conjunto de entidades propuesto representa adecuadamente el dominio del problema.
+Validar si el conjunto de entidades propuesto representa correctamente el dominio del problema.
 
 ---
 
-## Track
+## Entidades propuestas
 
-Representa una pista musical única independiente de su ubicación física.
+### Track
 
-### Campos mínimos
+Representa una pista musical independiente de su ubicación.
+
+Campos mínimos:
 
 ```text
 track_id
@@ -402,44 +551,35 @@ status
 created_at
 ```
 
-### Justificación
-
-Entidad principal del dominio.
-
-Todos los procesos giran alrededor de ella.
-
 ---
 
-## TrackLocation
+### TrackLocation
 
-Representa una ubicación física concreta de una pista.
+Representa una ubicación física concreta.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 location_id
 track_id
-
 file_path
 last_seen_at
 status
 ```
 
-### Justificación
-
-Permite detectar:
+Permite gestionar:
 
 - pistas movidas,
-- pistas ausentes,
-- duplicados.
+- pistas duplicadas,
+- pistas ausentes.
 
 ---
 
-## TrackMetadata
+### TrackMetadata
 
-Representa metadatos musicales y descriptivos.
+Representa metadatos obtenidos de etiquetas.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 metadata_id
@@ -452,17 +592,13 @@ year
 duration_seconds
 ```
 
-### Justificación
-
-Separa la identidad de la pista de sus etiquetas.
-
 ---
 
-## AnalysisRun
+### AnalysisRun
 
 Representa una ejecución concreta de un motor MIR.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 run_id
@@ -473,17 +609,13 @@ engine_version
 executed_at
 ```
 
-### Justificación
-
-Permite trazabilidad completa de los análisis realizados.
-
 ---
 
-## AnalysisResult
+### AnalysisResult
 
-Representa el resultado obtenido por un motor de análisis.
+Resultado producido por un motor MIR.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 analysis_id
@@ -492,27 +624,21 @@ track_id
 run_id
 
 bpm
-
 key_tonic
 key_mode
-
 camelot_code
 
 confidence
 status
 ```
 
-### Justificación
-
-Permite almacenar múltiples resultados sobre una misma pista.
-
 ---
 
-## GenerationRequest
+### GenerationRequest
 
 Representa una solicitud de generación.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 request_id
@@ -527,17 +653,13 @@ harmonic_policy
 random_seed
 ```
 
-### Justificación
-
-Permite reproducibilidad del proceso de generación.
-
 ---
 
-## GenreSegment
+### GenreSegment
 
-Representa las preferencias de género a lo largo del tiempo.
+Define géneros por intervalos.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 segment_id
@@ -549,42 +671,31 @@ end_time
 genre
 ```
 
-### Justificación
-
-Soporta RF-15.
-
 ---
 
-## Anchor
+### Anchor
 
-Representa una pista fijada en una posición concreta.
+Representa una pista anclada.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 anchor_id
-
 request_id
 track_id
-
 position
 ```
 
-### Justificación
-
-Soporta RF-16.
-
 ---
 
-## Setlist
+### Setlist
 
 Representa un setlist generado.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 setlist_id
-
 request_id
 
 created_at
@@ -592,36 +703,27 @@ created_at
 status
 ```
 
-### Justificación
-
-Entidad principal del resultado del sistema.
-
 ---
 
-## SetlistTrack
+### SetlistTrack
 
-Representa las pistas pertenecientes a un setlist.
+Representa una pista perteneciente a un setlist.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 setlist_id
 track_id
-
 position
 ```
 
-### Justificación
-
-Permite representar orden y composición del setlist.
-
 ---
 
-## Transition
+### Transition
 
-Representa una transición entre dos pistas.
+Representa una transición musical.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 transition_id
@@ -630,23 +732,18 @@ from_track_id
 to_track_id
 
 bpm_delta
-
 camelot_distance
 
 transition_score
 ```
 
-### Justificación
-
-Permite evaluar la calidad de la mezcla.
-
 ---
 
-## ReferenceMeasurement
+### ReferenceMeasurement
 
-Representa valores de referencia obtenidos desde Rekordbox.
+Representa datos procedentes de Rekordbox.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 reference_id
@@ -657,17 +754,13 @@ key_reference
 camelot_reference
 ```
 
-### Justificación
-
-Permite validar el sistema.
-
 ---
 
-## EvaluationReport
+### EvaluationReport
 
 Representa resultados experimentales agregados.
 
-### Campos mínimos
+Campos mínimos:
 
 ```text
 report_id
@@ -679,38 +772,73 @@ key_accuracy
 camelot_accuracy
 ```
 
-### Justificación
+## Estado
 
-Permite soportar los RNF de validación.
-
-## Pendiente de validación
-
-Conjunto completo de entidades del dominio.
+Pendiente de validación por tutor y cotutor.
 
 ---
 
-# OD-08 · Nuevos ADR potenciales
+# OD-08 · Nuevos ADRs ya creados
 
-## ADR-007
+## Estado
 
-Licencias y compatibilidad legal de dependencias.
+Resuelto.
 
-## ADR-008
+Los siguientes ADR ya existen:
 
-Lenguaje de programación, interfaz gráfica y empaquetado.
+- ADR-007 Licencias y compatibilidad legal.
+- ADR-008 Lenguaje, interfaz y empaquetado.
+- ADR-009 Evaluación y validación experimental.
+- ADR-010 Identificación permanente de pistas.
 
-## ADR-009
+Se mantienen en estado Propuesto hasta su validación.
 
-Conjunto de evaluación experimental y protocolo de validación.
+---
 
-## Problema
+# Preguntas prioritarias para la próxima reunión
 
-Estos temas aparecen referenciados en varios documentos, pero actualmente no disponen de una decisión arquitectónica formal asociada.
+## Alta prioridad
 
-## Propuesta inicial
+1. ¿Debe RF-29 convertirse en Must?
 
-Evaluar la necesidad de crear dichos ADR antes del inicio de la implementación.
+2. ¿Debe existir un parámetro explícito de salto máximo BPM?
 
-## Pendiente de validación
+3. ¿Es adecuada la estrategia de identificación en dos niveles?
 
-Tutor y cotutor.
+4. ¿Deben coexistir varios resultados por pista?
+
+5. ¿Debe mantenerse la entidad Library?
+
+6. ¿Las transiciones deben persistirse o recalcularse?
+
+7. ¿Es correcto el conjunto de entidades propuesto para el dominio?
+
+## Media prioridad
+
+8. ¿Son necesarios ADR-007 a ADR-010?
+
+9. ¿Es adecuada la estrategia de evaluación propuesta por ADR-009?
+
+10. ¿Existen restricciones institucionales respecto a las licencias de dependencias?
+
+---
+
+# Resultado esperado de la reunión
+
+Finalizar:
+
+- OD-01
+- OD-02
+- OD-03
+- OD-04
+- OD-05
+- OD-06
+- OD-07
+
+y obtener autorización para iniciar:
+
+```text
+docs/architecture/data-model.md
+```
+
+como siguiente entregable principal del proyecto.
