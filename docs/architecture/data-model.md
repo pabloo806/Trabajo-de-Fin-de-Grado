@@ -7,6 +7,8 @@ Este documento describe el modelo de dominio, el modelo conceptual y los princip
 Su objetivo es servir como puente entre:
 
 ```mermaid
+flowchart TB
+
 Requisitos
 ↓
 Casos de uso
@@ -14,6 +16,7 @@ Casos de uso
 Arquitectura
 ↓
 Implementación
+
 ```
 
 Antes de definir el modelo relacional definitivo y el esquema SQLite, es necesario comprender qué entidades forman parte del dominio y qué responsabilidades posee cada una.
