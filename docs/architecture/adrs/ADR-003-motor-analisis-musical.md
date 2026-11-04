@@ -1,4 +1,3 @@
-[ADR-003-motor-analisis-musical.md](https://github.com/user-attachments/files/34364334/ADR-003-motor-analisis-musical.md)
 # ADR-003: Motor de Análisis Musical
 
 ## Estado
