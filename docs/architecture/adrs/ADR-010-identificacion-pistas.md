@@ -205,7 +205,7 @@ Impacto en OD-07: la entidad propuesta `Track` tiene un único campo `fingerprin
 
 ## Casos de prueba previstos
 
-Casos para la prueba de concepto de identificación. Los identificadores son provisionales y deberán incorporarse al catálogo de pruebas de la matriz de trazabilidad.
+Casos para la prueba de concepto de identificación. Se han incorporado al catálogo de pruebas de la matriz de trazabilidad (sección 9.8).
 
 | ID | Descripción | Resultado esperado |
 |---|---|---|
@@ -248,7 +248,7 @@ La identificación en dos niveles reserva el coste elevado a las pistas nuevas, 
 | Requisitos no funcionales | RNF-04, RNF-15, RNF-16, RNF-17, RNF-21, RNF-22, RNF-23, RNF-25, RNF-26, RNF-27 |
 | Componentes | CMP-01 (importación) y CMP-03 (base de datos) |
 | Casos de uso | CU-01 y CU-02 |
-| Casos de prueba | T-CU01-05, T-CU02-01, T-CU02-02, T-RNF-04, T-ID-01 a T-ID-08 |
+| Casos de prueba | T-CU01-08 a T-CU01-10, T-CU02-01 a T-CU02-05, T-CU07-03, T-CU11-01, T-ARQ-01, T-ARQ-02, T-ARQ-04 a T-ARQ-06, T-ID-01 a T-ID-08 |
 | Decisiones abiertas | OD-03, OD-07 |
 | Riesgos | R-08, R-10 |
 
