@@ -314,6 +314,7 @@ Vocabulario canónico, común al SRS (sección 7.0) y al glosario (sección 8). 
 | `TrackRepository` | Persistir pistas, ubicaciones y resultados de análisis | `SQLiteTrackRepository` | RF-07 a RF-11b | Previsto (ADR-004) |
 | `SetlistRepository` | Persistir setlists, solicitudes y su histórico | `SQLiteSetlistRepository` | RF-10 | Previsto (ADR-004) |
 | `StatisticsRepository` | Consultas agregadas para el panel | `SQLiteStatisticsRepository` | RF-24 a RF-27 | Previsto |
+| `EvaluationRepository` | Persistir valores de referencia de Rekordbox e informes de evaluación | `SQLiteEvaluationRepository` | RF-29, RF-29b | **[PROPUESTA]** |
 | `SetlistExporter` | Exportar setlists | `RekordboxXmlExporter`, `M3u8Exporter` | RF-21, RF-21b, RF-22 | Previsto (ADR-006) |
 | `ReferenceDataProvider` | Obtener valores de referencia de Rekordbox | Lector de XML de colección, lector de CSV | RF-29b | Previsto |
 
@@ -338,6 +339,7 @@ Puertos (en Aplicación)
 ├── TrackRepository ········ SQLiteTrackRepository
 ├── SetlistRepository ······ SQLiteSetlistRepository
 ├── StatisticsRepository ··· SQLiteStatisticsRepository
+├── EvaluationRepository ··· SQLiteEvaluationRepository (propuesta)
 ├── SetlistExporter
 │   ├── RekordboxXmlExporter
 │   └── M3u8Exporter
@@ -427,7 +429,7 @@ Bloque reutilizable:
 | Cambio | Motivo |
 |---|---|
 | Vocabulario canónico de puertos: `AudioAnalyzer` y `SetlistExporter` en lugar de `AnalysisEngine` y `Exporter` | Unificación con SRS 7.0 y glosario |
-| Añadidos `LibraryScanner`, `MetadataReader`, `StatisticsRepository`, `ReferenceDataProvider` y `TrackIdentifier` | Puertos citados en el SRS y no recogidos en este ADR |
+| Añadidos `LibraryScanner`, `MetadataReader`, `StatisticsRepository`, `EvaluationRepository` (propuesta), `ReferenceDataProvider` y `TrackIdentifier` | Puertos citados en el SRS y no recogidos en este ADR |
 | Puertos ubicados en la capa de Aplicación; diagrama de dependencias corregido | El diagrama anterior mostraba una capa de puertos independiente y, en el README de arquitectura, una flecha del dominio a los puertos que invertía la regla de dependencia |
 | Eliminado `PostgreSQLAdapter` | H-26 y ADR-004 |
 | Añadido `MadmomAdapter` | ADR-003 |
