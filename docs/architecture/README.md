@@ -123,10 +123,9 @@ Vocabulario canónico del proyecto (SRS 7.0 y glosario, sección 8).
 | `TrackRepository` | Pistas, ubicaciones y resultados de análisis | `SQLiteTrackRepository` | Previsto (ADR-004) |
 | `SetlistRepository` | Setlists, solicitudes e histórico | `SQLiteSetlistRepository` | Previsto (ADR-004) |
 | `StatisticsRepository` | Consultas del panel | `SQLiteStatisticsRepository` | Previsto |
+| `EvaluationRepository` | Referencias de Rekordbox e informes de evaluación | `SQLiteEvaluationRepository` | **[PROPUESTA]** |
 | `SetlistExporter` | Exportar setlists | `RekordboxXmlExporter`, `M3u8Exporter` | Previsto (ADR-006) |
 | `ReferenceDataProvider` | Leer valores de referencia de Rekordbox | Lector de XML de colección, lector de CSV | Previsto |
-
-Pendiente: las referencias y los informes de evaluación no tienen aún un puerto de repositorio. Se propone `EvaluationRepository` **[PROPUESTA]**, que se incorporará en la consolidación de la documentación.
 
 ---
 
