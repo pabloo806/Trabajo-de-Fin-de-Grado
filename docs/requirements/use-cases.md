@@ -362,7 +362,7 @@ Sistema de archivos local.
    - Exactitud de BPM tolerando errores de octava (RNF-06).
    - Exactitud de tonalidad exacta (RNF-07).
    - Exactitud de tonalidad por compatibilidad Camelot (RNF-08).
-   - Desglose de errores (octava, relativa, quinta, otros) con intervalos de confianza (RNF-09).
+   - Desglose de errores (BPM: octava y otros; tonalidad: relativa, quinta, paralela y otros) con intervalos de confianza (RNF-09).
 7. El sistema muestra el informe de discrepancias, desglosado por motor.
 8. El sistema almacena el informe para su consulta posterior.
 
