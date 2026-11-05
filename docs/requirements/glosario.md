@@ -115,7 +115,7 @@
 | **Exactitud de BPM estricta** | Porcentaje de estimaciones de BPM dentro de la tolerancia establecida (±4 %) respecto a la referencia. | RNF-05. |
 | **Exactitud de BPM con tolerancia de octava** | Exactitud admitiendo errores de octava habituales. | RNF-06. |
 | **Exactitud de tonalidad** | Coincidencia de tonalidad respecto a la referencia, exacta o por compatibilidad Camelot. | RNF-07 y RNF-08. |
-| **Desglose de errores** (nuevo) | Clasificación de los errores de estimación por tipo (octava, relativa, quinta, otros). | RNF-09. |
+| **Desglose de errores** (nuevo) | Clasificación de los errores de estimación por tipo (BPM: octava y otros; tonalidad: relativa, quinta, paralela y otros). | RNF-09. |
 | **Intervalo de Wilson** (nuevo) | Intervalo de confianza para una proporción. | RNF-09. |
 | **Conjunto de evaluación** | Colección de pistas utilizada para medir el rendimiento del sistema. | ADR-009 y RF-29. |
 | **Benchmark** | Prueba diseñada para medir rendimiento o escalabilidad. | RNF-01, RNF-02, RNF-03 y RNF-18. |
@@ -132,7 +132,7 @@
 | **Regla de dependencia** | Las capas internas no dependen de las externas. | RNF-22. |
 | **Entidad de dominio** | Objeto con identidad y reglas de negocio propias. | `Track`, `Setlist`, `Transition`. |
 | **Caso de uso** | Operación de aplicación que satisface un objetivo del usuario. | Catálogo CU-01 a CU-11. |
-| **Puerto** (revisado) | Interfaz que define una dependencia externa. Pertenece a la capa de Aplicación. | `AudioAnalyzer`, `MetadataReader`, `LibraryScanner`, `TrackRepository`, `SetlistRepository`, `StatisticsRepository`, `SetlistExporter`, `ReferenceDataProvider` y, **[PROPUESTA · OD-03]**, `TrackIdentifier`. |
+| **Puerto** (revisado) | Interfaz que define una dependencia externa. Pertenece a la capa de Aplicación. | `AudioAnalyzer`, `MetadataReader`, `LibraryScanner`, `TrackRepository`, `SetlistRepository`, `StatisticsRepository`, `EvaluationRepository` **[PROPUESTA]**, `SetlistExporter`, `ReferenceDataProvider` y, **[PROPUESTA · OD-03]**, `TrackIdentifier`. |
 | **Adaptador** | Implementación concreta de un puerto. | Infrastructure Layer. |
 | **Repositorio** | Puerto encargado del almacenamiento y consulta de entidades. | `TrackRepository`, `SetlistRepository`. |
 | **Determinismo** | Misma entrada y misma semilla producen el mismo resultado. | RNF-11. |
