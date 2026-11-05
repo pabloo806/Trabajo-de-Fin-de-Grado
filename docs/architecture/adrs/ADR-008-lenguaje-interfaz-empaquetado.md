@@ -279,7 +279,7 @@ Python ya sostiene las decisiones de análisis y persistencia. Elegir un marco d
 | Requisitos funcionales | RF-11b, RF-20, RF-20b, RF-24 a RF-27 |
 | Requisitos no funcionales | RNF-13, RNF-14, RNF-19, RNF-20, RNF-22, RNF-24, RNF-26 |
 | Componentes | CMP-08 (interfaz de usuario) y CMP-09 (infraestructura transversal) |
-| Casos de prueba | T-RNF-13, T-RNF-14, T-RNF-19, T-RNF-20, T-RNF-22, T-RNF-24 |
+| Casos de prueba | T-USO-01, T-USO-03, T-ARQ-01, T-ARQ-03, T-ARQ-05, T-ARQ-07, T-ARQ-08, T-CU03-02, T-CU05-10, T-CU08-01, T-CU06-01, T-CU09-01 a T-CU09-03 |
 | Decisiones abiertas | OD-08 |
 
 ## Evidencias utilizadas
