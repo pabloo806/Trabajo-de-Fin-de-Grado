@@ -367,7 +367,7 @@ Además, proporciona una base sólida para la evaluación experimental descrita 
 | Requisitos funcionales | RF-10, RF-12 a RF-20 |
 | Requisitos no funcionales | RNF-03, RNF-10, RNF-11, RNF-18 |
 | Componentes | CMP-04 (generador de setlists) |
-| Casos de prueba | T-CU05-01 a T-CU05-06, T-RNF-03, T-RNF-10, T-RNF-11, T-RNF-18 |
+| Casos de prueba | T-CU04-01, T-CU05-01 a T-CU05-12 |
 | Decisiones abiertas | OD-02 (salto máximo), OD-06 (transiciones) |
 | Riesgos | R-07 |
 
