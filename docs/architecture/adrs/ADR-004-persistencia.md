@@ -277,7 +277,7 @@ SQLite admite un único escritor simultáneo. El análisis por lotes se puede pa
 
 La persistencia se accede mediante los puertos de repositorio definidos en ADR-002 (`TrackRepository`, `SetlistRepository`, `StatisticsRepository`). El dominio y la aplicación no importan el módulo `sqlite3` (RNF-22).
 
-Las referencias y los informes de evaluación no tienen hoy un puerto de repositorio propio en ADR-002. Se propone `EvaluationRepository` **[PROPUESTA]** y se incorporará en la segunda auditoría de consistencia.
+Las referencias y los informes de evaluación se acceden mediante el puerto `EvaluationRepository` **[PROPUESTA]**, incorporado a ADR-002.
 
 ## Decisión
 
@@ -328,7 +328,7 @@ La evaluación multicriterio muestra además que es la alternativa con la puntua
 | Requisitos funcionales | RF-07 a RF-11b, RF-24 a RF-27, RF-29, RF-29b |
 | Requisitos no funcionales | RNF-03, RNF-04, RNF-16, RNF-17, RNF-18, RNF-19, RNF-20, RNF-21, RNF-25, RNF-27 |
 | Componentes | CMP-03 (base de datos local) y CMP-09 (migraciones) |
-| Casos de prueba | T-CU01-05, T-CU02-01, T-CU02-02, T-CU03-01, T-CU06-01, T-RNF-04, T-RNF-17, T-RNF-27 |
+| Casos de prueba | T-CU01-06 a T-CU01-08, T-CU01-10, T-CU02-01 a T-CU02-05, T-CU03-01, T-CU03-02, T-CU05-11, T-CU05-12, T-CU06-01, T-CU07-03, T-CU09-01 a T-CU09-03, T-CU11-01, T-CU11-02, T-ARQ-04, T-ARQ-06 a T-ARQ-09 |
 | Decisiones abiertas | OD-03, OD-04, OD-05, OD-06, OD-07 |
 
 ## Evidencias utilizadas
@@ -388,7 +388,7 @@ Bloque reutilizable:
 | Principios para el diseño del esquema | Hacer verificables RF-09, RF-09c, RNF-04, RNF-16, RNF-17 y RNF-27 |
 | Gestión de la concurrencia del análisis por lotes | SQLite admite un único escritor |
 | Estado aclarado: tecnología aceptada, esquema no cerrado | Regla de que la persistencia no se cierra hasta validar `data-model.md` |
-| Propuesta de puerto `EvaluationRepository` | Las referencias y los informes no tenían puerto en ADR-002 |
+| Propuesta de puerto `EvaluationRepository`, incorporada a ADR-002 | Las referencias y los informes no tenían puerto |
 | Requisitos, trazabilidad, impactos y decisiones ADR-007 a ADR-010 | Formato obligatorio de ADR |
 
 Las puntuaciones y los totales no se modifican.
