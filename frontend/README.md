@@ -1,44 +1,7 @@
 # Frontend
 
-## Descripción
+Pendiente de implementación.
 
-Interfaz de usuario del sistema.
+La interfaz gráfica definitiva será determinada por ADR-008.
 
-Permitirá:
-
-- Gestionar la biblioteca musical.
-- Visualizar análisis realizados.
-- Configurar parámetros de generación.
-- Crear setlists.
-- Exportar resultados.
-
----
-
-## Tecnologías
-
-- React
-- TypeScript
-- Vite
-- Material UI
-
----
-
-## Módulos previstos
-
-### Biblioteca Musical
-
-Gestión y consulta de canciones.
-
-### Generador de Setlists
-
-Configuración de sesiones.
-
-### Resultados
-
-Visualización y exportación.
-
----
-
-## Estado
-
-🔵 No iniciado
+No asumir React como tecnología definitiva.
