@@ -314,7 +314,7 @@ La exportación adicional a M3U8 mejora la interoperabilidad sin introducir comp
 | Requisitos no funcionales | RNF-16, RNF-19, RNF-21, RNF-22, RNF-23, RNF-25 |
 | Componentes | CMP-05 (exportador Rekordbox) |
 | Casos de uso | CU-07 (exportar setlist a Rekordbox) |
-| Casos de prueba | T-CU07-01, T-CU07-02, T-CU07-03, T-CU07-04, T-RNF-16, T-RNF-19, T-RNF-21 |
+| Casos de prueba | T-CU07-01 a T-CU07-05, T-ARQ-01, T-ARQ-02, T-ARQ-04, T-ARQ-08, T-ARQ-09 |
 | Riesgos | R-02 |
 
 ## Evidencias utilizadas
