@@ -453,7 +453,7 @@ Además, encaja con la arquitectura definida en ADR-002.
 | Requisitos funcionales | RF-03 a RF-07, RF-29, RF-29b |
 | Requisitos no funcionales | RNF-01, RNF-02, RNF-05 a RNF-09, RNF-15, RNF-19, RNF-20, RNF-22, RNF-23, RNF-26 |
 | Componentes | CMP-02 (motor de análisis) y CMP-01 (para `MetadataReader`) |
-| Casos de prueba | T-CU01-03, T-CU01-04, T-CU01-05, T-RNF-01, T-RNF-05, T-RNF-23, T-RNF-26 |
+| Casos de prueba | T-CU01-03 a T-CU01-06, T-CU01-09, T-CU01-11, T-CU11-02 a T-CU11-04, T-ARQ-01, T-ARQ-02, T-ARQ-05, T-ARQ-07, T-ARQ-08 |
 | Decisiones abiertas | OD-04 (multi-motor) |
 | Riesgos | R-01, R-08, R-10 |
 
