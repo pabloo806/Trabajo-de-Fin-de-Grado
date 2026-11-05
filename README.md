@@ -1,14 +1,15 @@
 <div align="center">
 
-# 🎧 Generador Inteligente de Setlists para DJs
+# 🎧 SetlistGen · Generador Inteligente de Setlists para DJs
 
-![Estado](https://img.shields.io/badge/Estado-Análisis%20de%20Requisitos-blue)
+![Estado](https://img.shields.io/badge/Estado-Diseño_del_Modelo_de_Datos-blue)
 ![Proyecto](https://img.shields.io/badge/Proyecto-TFG-success)
-![Backend](https://img.shields.io/badge/Backend-Python%20%7C%20FastAPI-green)
-![Frontend](https://img.shields.io/badge/Frontend-React%20%7C%20TypeScript-blue)
-![Database](https://img.shields.io/badge/Database-SQLite-orange)
+![Lenguaje](https://img.shields.io/badge/Lenguaje-Python-green)
+![Arquitectura](https://img.shields.io/badge/Arquitectura-Clean_Architecture-informational)
+![Persistencia](https://img.shields.io/badge/Base_de_Datos-SQLite-orange)
+![Licencia](https://img.shields.io/badge/Licencia-MIT-lightgrey)
 
-**Trabajo Fin de Grado · Ingeniería en Sistemas de Información**
+**Trabajo Fin de Grado · Grado en Ingeniería en Sistemas de Información · Universidad de Alcalá**
 
 </div>
 
@@ -16,9 +17,21 @@
 
 # 📖 Descripción
 
-Este proyecto tiene como objetivo el desarrollo de una aplicación capaz de analizar automáticamente una biblioteca musical local y generar setlists optimizados para DJs mediante técnicas de análisis musical, compatibilidad armónica y selección inteligente de canciones.
+SetlistGen es una aplicación de escritorio orientada a asistir a DJs en la preparación de sesiones musicales.
 
-La herramienta busca reducir el tiempo necesario para preparar sesiones musicales, facilitando la creación de sets coherentes y compatibles para su posterior uso en software profesional como Rekordbox.
+El sistema analiza automáticamente una biblioteca musical local, calcula características musicales relevantes y genera propuestas de setlists compatibles con técnicas de mezcla armónica y restricciones configuradas por el usuario.
+
+A partir de una colección de audio local, el sistema:
+
+1. Importa y cataloga pistas musicales.
+2. Extrae metadatos desde las etiquetas existentes.
+3. Estima BPM y tonalidad mediante análisis de audio.
+4. Calcula la notación Camelot.
+5. Almacena la información en una base de datos local.
+6. Genera setlists automáticamente a partir de restricciones definidas por el DJ.
+7. Exporta los resultados para su uso en Rekordbox.
+
+Todo el procesamiento se realiza localmente.
 
 ---
 
@@ -26,266 +39,252 @@ La herramienta busca reducir el tiempo necesario para preparar sesiones musicale
 
 ## Objetivo General
 
-Desarrollar una aplicación capaz de generar automáticamente setlists para DJs a partir de una biblioteca musical local.
+Diseñar e implementar un sistema que reduzca el tiempo necesario para preparar sesiones musicales mediante la generación automática de setlists compatibles con criterios de mezcla utilizados por DJs.
 
 ## Objetivos Específicos
 
-- ✅ Importar bibliotecas musicales.
-- ✅ Extraer metadatos automáticamente.
-- ✅ Detectar BPM.
-- ✅ Detectar tonalidad musical.
-- ✅ Almacenar información musical estructurada.
-- ✅ Aplicar criterios de mezcla armónica.
-- ✅ Generar setlists automáticamente.
-- ✅ Exportar resultados compatibles con Rekordbox.
+| ID | Objetivo |
+|----|-----------|
+| O1 | Importar bibliotecas musicales locales |
+| O2 | Extraer metadatos de las pistas |
+| O3 | Estimar BPM y tonalidad |
+| O4 | Calcular la notación Camelot |
+| O5 | Mantener una base de datos musical local |
+| O6 | Generar setlists automáticamente |
+| O7 | Evaluar los resultados frente a Rekordbox |
 
 ---
 
-# 🏗️ Arquitectura General
+# 🏛️ Arquitectura
+
+La arquitectura del sistema se basa en:
+
+- Clean Architecture.
+- Ports & Adapters.
+- Dominio desacoplado de tecnologías concretas.
+- Persistencia local.
+- Procesamiento completamente offline.
+
+La documentación arquitectónica se encuentra en:
+
+```text
+docs/architecture/
+```
+
+Incluye:
+
+- ADR-001 Distribución del sistema
+- ADR-002 Arquitectura general
+- ADR-003 Motor de análisis musical
+- ADR-004 Persistencia
+- ADR-005 Generación de setlists
+- ADR-006 Exportación Rekordbox
+- ADR-007 Licencias
+- ADR-008 Lenguaje e interfaz
+- ADR-009 Evaluación y validación
+- ADR-010 Identificación de pistas
+
+---
+
+## Arquitectura General
 
 ```mermaid
-flowchart TD
+flowchart LR
 
-    UI[React UI]
-    API[FastAPI API]
+    AUDIO["Biblioteca de Audio"]
 
-    ANALYSIS[Music Analysis<br/>BPM Detection<br/>Key Detection]
-    GENERATOR[Setlist Generator]
-    DB[(PostgreSQL)]
+    IMPORT["Importación"]
 
-    UI --> API
+    ANALYSIS["Análisis Musical"]
 
-    API --> ANALYSIS
-    API --> GENERATOR
+    DB[("SQLite")]
 
+    GENERATOR["Generador de Setlists"]
+
+    EXPORT["Exportadores"]
+
+    REKORDBOX["Rekordbox"]
+
+    AUDIO --> IMPORT
+    IMPORT --> ANALYSIS
     ANALYSIS --> DB
-    GENERATOR --> DB
+
+    DB --> GENERATOR
+
+    GENERATOR --> EXPORT
+
+    EXPORT --> REKORDBOX
 ```
 
 ---
 
 # 🛠️ Stack Tecnológico
 
-## Backend
+## Tecnologías aceptadas
 
-- Python
-- FastAPI
-- SQLAlchemy
-- Librosa
-- NumPy
+| Área | Tecnología |
+|--------|------------|
+| Lenguaje principal | Python |
+| Arquitectura | Clean Architecture |
+| Persistencia | SQLite |
+| Testing | pytest |
+| Control de versiones | Git |
+| Gestión | GitHub Projects |
+| Coordinación | Microsoft Teams |
 
-## Frontend
+## Tecnologías propuestas y pendientes de validación
 
-- React
-- TypeScript
-- Vite
-- Material UI
+| Área | Alternativa principal |
+|--------|----------------------|
+| Interfaz gráfica | PySide6 |
+| Motor MIR | Essentia |
+| Motores complementarios | Librosa, Madmom |
 
-## Base de Datos
+---
 
-- PostgreSQL
+# 📚 Estado Arquitectónico
 
-## Testing
+## ADR aceptados
 
-- Pytest
+✅ ADR-001 Distribución
 
-## Control de Versiones
+✅ ADR-002 Arquitectura
 
-- Git
-- GitHub
+✅ ADR-003 Motor de análisis
+
+✅ ADR-004 Persistencia
+
+✅ ADR-005 Generación de setlists
+
+✅ ADR-006 Exportación
+
+## ADR propuestos
+
+🔄 ADR-007 Licencias
+
+🔄 ADR-008 Lenguaje, interfaz y empaquetado
+
+🔄 ADR-009 Evaluación y validación
+
+🔄 ADR-010 Identificación de pistas
+
+---
+
+# 📂 Documentación
+
+## Requisitos
+
+- `docs/requirements/requirements.md`
+- `docs/requirements/use-cases.md`
+- `docs/requirements/traceability-matrix.md`
+- `docs/requirements/glosario.md`
+
+## Arquitectura
+
+- `docs/architecture/README.md`
+- `docs/architecture/adrs/`
 
 ## Gestión
 
-- GitHub Projects
-- Microsoft Teams
-
-## Entorno de Desarrollo
-
-- Visual Studio Code
-- Claude Sonnet
-
----
-
-# 📁 Estructura del Proyecto
-
-```mermaid
-mindmap
-  root((TFG))
-    backend
-    frontend
-    database
-    tests
-    scripts
-    docs
-      project-management
-      requirements
-      architecture
-      testing
-      memory
-    README.md
-    .gitignore
-```
-
----
-
-# 📚 Documentación
-
-La documentación del proyecto se organiza en las siguientes áreas:
-
-## Gestión de Proyecto
-
-- Project Roadmap
-- Registro de Decisiones
-- Registro de Reuniones
-- Objetivos del TFG
-- Stack Tecnológico
-
-## Análisis
-
-- Requisitos Funcionales
-- Requisitos No Funcionales
-- Actores
-- Casos de Uso
-- Matriz de Trazabilidad
-
-## Diseño
-
-- Arquitectura Software
-- Modelo de Datos
-- Diseño de API
-- ADRs (Architecture Decision Records)
-
-## Validación
-
-- Plan de Pruebas
-- Casos de Prueba
-- Validación Experimental
+- `docs/project-management/audit-review.md`
+- `docs/project-management/open-decisions.md`
 
 ## Memoria
 
-- Documentación progresiva para la memoria del TFG.
+- `docs/memory/`
 
 ---
 
-# 📋 Roadmap
-
-## Fase 0 · Preparación
-
-- [x] Configuración GitHub
-- [x] Configuración Teams
-- [x] Configuración Claude
-- [x] Estructura documental
-- [x] Kanban del proyecto
-
-## Fase 1 · Análisis
-
-- [ ] Requisitos funcionales
-- [ ] Requisitos no funcionales
-- [ ] Actores
-- [ ] Casos de uso
-
-## Fase 2 · Diseño
-
-- [ ] Arquitectura software
-- [ ] Modelo de datos
-- [ ] Diseño de API
-
-## Fase 3 · Infraestructura
-
-- [ ] Backend
-- [ ] Frontend
-- [ ] Base de datos
-
-## Fase 4 · Desarrollo Core
-
-- [ ] Importación musical
-- [ ] Extracción de metadatos
-- [ ] Detección BPM
-- [ ] Detección de tonalidad
-- [ ] Generación de setlists
-
-## Fase 5 · Interfaz de Usuario
-
-- [ ] Gestión de biblioteca
-- [ ] Generador de sesiones
-
-## Fase 6 · Validación
-
-- [ ] Plan de pruebas
-- [ ] Validación experimental
-
-## Fase 7 · Memoria y Defensa
-
-- [ ] Memoria final
-- [ ] Presentación
-- [ ] Defensa
-
----
-
-# 📈 Estado Actual
+# 📈 Estado del Proyecto
 
 | Área | Estado |
 |--------|--------|
-| Gestión del Proyecto | ✅ Completada |
-| Análisis | 🔄 En progreso |
-| Diseño | ⏳ Pendiente |
-| Backend | ⏳ Pendiente |
-| Frontend | ⏳ Pendiente |
-| Testing | ⏳ Pendiente |
-| Memoria | 🔄 En preparación |
+| Anteproyecto | ✅ Completado |
+| Requisitos | ✅ Completado |
+| Casos de Uso | ✅ Completado |
+| Trazabilidad | ✅ Completada |
+| Glosario | ✅ Completado |
+| Arquitectura | ✅ Completada |
+| ADRs | ✅ Consolidados |
+| Auditoría técnica | ✅ Completada |
+| Modelo de dominio | 🔄 Pendiente |
+| Modelo de datos | 🔄 Pendiente |
+| Persistencia SQLite | 🔄 Pendiente |
+| Implementación | ⏳ Pendiente |
+| Validación experimental | ⏳ Pendiente |
+| Defensa | ⏳ Pendiente |
+
+---
+
+# 🚧 Próximo Hito
+
+Diseñar:
+
+```text
+docs/architecture/data-model.md
+```
+
+incluyendo:
+
+- Modelo de dominio.
+- Modelo conceptual.
+- MER.
+- Modelo relacional.
+- Persistencia SQLite.
 
 ---
 
 # 👨‍💻 Metodología
 
-El proyecto sigue un enfoque iterativo basado en buenas prácticas de Ingeniería del Software:
+El proyecto sigue un enfoque iterativo basado en:
 
-- Clean Architecture
-- Clean Code
-- SOLID
-- DRY
-- KISS
-- Git Flow
-- Desarrollo incremental
-- Documentación continua
+- Ingeniería de requisitos.
+- Arquitectura dirigida por ADR.
+- Clean Architecture.
+- SOLID.
+- DRY.
+- KISS.
+- Documentación continua.
+- Validación progresiva.
 
 ---
 
 # 🎓 Información Académica
 
-**Alumno:** Pablo Hernández Borregón
-
-**Titulación:** Ingeniería en Sistemas de Información
-
-**Trabajo:** Trabajo Fin de Grado
-
-**Curso:** 2026/2027
-
----
-
-# 🤝 Herramientas de Colaboración
-
-- GitHub → Desarrollo y control de versiones.
-- GitHub Projects → Gestión de tareas.
-- Microsoft Teams → Coordinación y seguimiento.
-- Claude Sonnet → Asistencia técnica y metodológica.
+| Campo | Valor |
+|--------|--------|
+| Alumno | Pablo Hernández Borregón |
+| Titulación | Grado en Ingeniería en Sistemas de Información |
+| Universidad | Universidad de Alcalá |
+| Escuela | Escuela Politécnica Superior |
+| Curso | 2026/2027 |
 
 ---
 
-# 🚀 Estado del Proyecto
+# 🤖 Uso de IA
 
-```text
-Preparación del entorno ✅
-Análisis de requisitos 🔄
-```
+Durante el proyecto se han utilizado asistentes de inteligencia artificial generativa como apoyo en:
 
-Actualmente el proyecto se encuentra en la fase de análisis y definición de requisitos.
+- revisión documental,
+- análisis de diseño,
+- evaluación de alternativas,
+- estructuración de documentación.
+
+Todas las decisiones finales, implementaciones y contenidos del TFG son responsabilidad del autor.
+
+---
+
+# 🔒 Privacidad
+
+- El audio nunca abandona el equipo del usuario.
+- No se utilizan servicios cloud.
+- El repositorio no contiene archivos musicales protegidos por derechos de autor.
+- Rekordbox se utiliza únicamente como herramienta de referencia y destino de exportación.
 
 ---
 
 # 📄 Licencia
 
-Proyecto desarrollado con fines exclusivamente académicos como Trabajo Fin de Grado.
+El código fuente del repositorio se distribuye bajo licencia MIT.
 
-</div>
-
+Las dependencias de terceros mantienen sus propias licencias y su compatibilidad se documenta mediante ADR-007.
