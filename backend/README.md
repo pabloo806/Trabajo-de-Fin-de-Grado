@@ -1,43 +1,9 @@
 # Backend
 
-## Descripción
+Pendiente de implementación.
 
-Esta carpeta contiene toda la lógica de negocio del sistema.
+La arquitectura definitiva se encuentra definida en:
 
-El backend será responsable de:
+docs/architecture/
 
-- Gestión de canciones.
-- Extracción de metadatos.
-- Detección de BPM.
-- Detección de tonalidad.
-- Generación automática de setlists.
-- Exposición de la API REST.
-
----
-
-## Tecnologías
-
-- Python
-- FastAPI
-- SQLAlchemy
-- Librosa
-
----
-
-## Estructura prevista
-
-backend/
-│
-├── api/
-├── services/
-├── domain/
-├── repositories/
-├── models/
-├── database/
-└── tests/
-
----
-
-## Estado
-
-🔵 No iniciado
+La estructura final dependerá de ADR-008.
