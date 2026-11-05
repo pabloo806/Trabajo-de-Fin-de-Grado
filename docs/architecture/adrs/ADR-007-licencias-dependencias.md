@@ -284,7 +284,7 @@ La política evita decidir a priori una librería y traslada la decisión de lic
 |---|---|
 | Requisitos no funcionales | RNF-19, RNF-20, RNF-22, RNF-23, RNF-25, RNF-26 |
 | Componentes | CMP-09 (infraestructura transversal), CMP-02 (adaptadores de análisis) |
-| Casos de prueba | T-RNF-26 (inventario y compatibilidad), T-RNF-24 (comprobaciones en integración continua) |
+| Casos de prueba | T-ARQ-05 (inventario de licencias), T-ARQ-03 (comprobaciones en integración continua), T-ARQ-01, T-ARQ-02, T-ARQ-04, T-ARQ-07, T-ARQ-08 |
 | Decisiones abiertas | OD-08 |
 | Riesgos | R-08 |
 
