@@ -133,7 +133,7 @@ Las propuestas que dependen de una decisión abierta (`open-decisions.md`) se id
 
 # 6. Relación ADR → Requisitos → Componentes
 
-| ADR | Decisión | Estado | Requisitos | Componentes |
+| ADR | Decisión | Estado | Requisitos principales | Componentes |
 |---|---|---|---|---|
 | ADR-001 | Aplicación de escritorio | Aceptado | RNF-19, RNF-20, RNF-25 | CMP-08, CMP-09 |
 | ADR-002 | Clean Architecture, puertos y adaptadores | Aceptado | RNF-21, RNF-22, RNF-23, RNF-24 | Todos |
@@ -145,6 +145,8 @@ Las propuestas que dependen de una decisión abierta (`open-decisions.md`) se id
 | ADR-008 | Lenguaje, interfaz gráfica y empaquetado | Propuesto | RNF-13, RNF-14, RNF-19, RNF-20 | CMP-08, CMP-09 |
 | ADR-009 | Dataset y protocolo de evaluación | Propuesto | RF-29, RF-29b, RNF-05 a RNF-09, RNF-12 | CMP-07 |
 | ADR-010 | Identificación permanente de pistas (OD-03) | Propuesto | RF-09, RF-09b, RF-09c, RNF-04 | CMP-01, CMP-03 |
+
+La columna recoge los requisitos principales de cada decisión. La lista completa, con los requisitos secundarios, figura en la sección «Trazabilidad» de cada ADR.
 
 ---
 
@@ -292,7 +294,20 @@ Tipos: **U** unitaria · **I** integración · **P** propiedades del dominio · 
 | T-USO-02 | Cuestionario a al menos 3 DJs sobre la coherencia de los setlists | M | RNF-12 |
 | T-USO-03 | Progreso en operaciones de más de 5 s y mensajes de error con causa y acción sugerida | M, I | RNF-14 |
 
-**Total: 59 casos de prueba.** Cada RF y cada RNF tiene al menos uno. Los casos manuales (RF-23, RNF-12, RNF-13, RNF-19, RNF-20) no pueden automatizarse y se registran como evidencia en la memoria.
+### 9.8 Identificación de pistas (prueba de concepto, ADR-010)
+
+| ID | Descripción | Tipo | Requisitos |
+|---|---|---|---|
+| T-ID-01 | Renombrar y mover una pista: misma pista, ubicación actualizada, sin reanálisis | I | RF-09, RF-09c |
+| T-ID-02 | Editar las etiquetas de una pista: misma pista, sin reanálisis | I | RF-09, RF-09b |
+| T-ID-03 | Convertir una pista a otro formato sin pérdida: resultado según el alcance de identidad decidido | I | RF-09 |
+| T-ID-04 | Recodificar una pista con otra tasa de bits: resultado según el alcance de identidad decidido | I | RF-09 |
+| T-ID-05 | Dos versiones distintas de una misma obra: pistas distintas, sin fusión | I | RF-09 |
+| T-ID-06 | Dos ubicaciones del mismo fichero: una pista duplicada | I | RF-09c |
+| T-ID-07 | Fichero ilegible: marca de fallo y el lote continúa | I | RF-09, RNF-15 |
+| T-ID-08 | Reescaneo de 5 000 pistas sin cambios y tras mover la carpeta completa: tiempo dentro del objetivo y 0 reanálisis | B | RF-09b, RF-09c, RNF-04 |
+
+**Total: 67 casos de prueba (59 del catálogo base y 8 de identificación).** Cada RF y cada RNF tiene al menos uno. Los casos manuales (RF-23, RNF-12, RNF-13, RNF-19, RNF-20) no pueden automatizarse y se registran como evidencia en la memoria.
 
 ---
 
@@ -310,7 +325,7 @@ Tipos: **U** unitaria · **I** integración · **P** propiedades del dominio · 
 | Componentes | 9 |
 | Actores | 3 |
 | ADR | 10 (6 aceptados, 4 propuestos) |
-| Casos de prueba | 59 |
+| Casos de prueba | 67 |
 | Issues GitHub | 20 (sin verificar en esta versión) |
 
 ## Comprobaciones de cobertura
@@ -346,7 +361,7 @@ flowchart LR
 
     GH[Issues GitHub]
 
-    TEST[Casos de Prueba<br/>59]
+    TEST[Casos de Prueba<br/>67]
 
     OBJ --> RF
 
@@ -468,4 +483,4 @@ Quedan pendientes, y se indican expresamente, la verificación del mapeo con Git
 |---|---|---|
 | 1.0 | — | Versión inicial |
 | 2.0 | 2026-10-19 | Matriz de objetivos, requisitos funcionales, casos de uso, componentes e issues |
-| 3.0 | 2026-10-30 | Alineación con SRS v4.0 y use-cases v1.1: 36 RF y 27 RNF; nueva matriz de RNF; relación con ADR-001 a ADR-010; catálogo de 59 casos de prueba; CU-11 crítico; CU-02 con RF-01, RF-02, RF-08, RF-09 y RF-09c; aclaración de CMP-03 y CMP-09; corrección de los diagramas de cobertura; columna de OD; sección de dependencias; corrección del resumen (v2.0 indicaba 29 RF y 26 RNF) y del título (carácter extra en «Proyecto») |
+| 3.0 | 2026-10-30 | Alineación con SRS v4.0 y use-cases v1.1: 36 RF y 27 RNF; nueva matriz de RNF; relación con ADR-001 a ADR-010; catálogo de 67 casos de prueba (incluye T-ID-01 a T-ID-08, de ADR-010); CU-11 crítico; CU-02 con RF-01, RF-02, RF-08, RF-09 y RF-09c; aclaración de CMP-03 y CMP-09; corrección de los diagramas de cobertura; columna de OD; sección de dependencias; corrección del resumen (v2.0 indicaba 29 RF y 26 RNF) y del título (carácter extra en «Proyecto») |
