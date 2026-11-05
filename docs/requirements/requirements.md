@@ -255,7 +255,7 @@ Referencia: valores de Rekordbox sobre las mismas pistas (RF-29b). Las métricas
 | RNF-06 | Exactitud de BPM tolerando errores de octava | ≥ 92 % admitiendo factores 2, 1/2, 3 y 1/3 (P) | RF-29 | Must | — |
 | RNF-07 | Exactitud de tonalidad exacta | ≥ 65 % de coincidencia de tónica y modo (P) | RF-29 | Must | — |
 | RNF-08 | Exactitud de tonalidad en términos de compatibilidad | ≥ 80 % con código Camelot idéntico o mezclable con el de referencia (P) | RF-29 | Must | — |
-| RNF-09 | Transparencia de errores | Se informa del desglose de errores (octava, relativa, quinta, otros) con intervalos de confianza | Informe de evaluación | Must | — |
+| RNF-09 | Transparencia de errores | Se informa del desglose de errores (BPM: octava y otros; tonalidad: relativa, quinta, paralela y otros) con intervalos de confianza | Informe de evaluación | Must | — |
 
 ### 4.3 Corrección del resultado
 | ID | Requisito | Métrica y umbral | Verificación | MoSCoW | Δ |
@@ -430,6 +430,7 @@ RNF-12 (valoración por DJs) y RNF-13 (eficiencia de uso) están condicionados a
   - `TrackRepository`
   - `SetlistRepository`
   - `StatisticsRepository`
+  - **[PROPUESTA]** `EvaluationRepository` (valores de referencia e informes de evaluación, RF-29 y RF-29b).
   - `SetlistExporter`
   - `ReferenceDataProvider`
   - **[PROPUESTA · OD-03]** `TrackIdentifier` (estrategia de identificación permanente de pistas).
@@ -465,7 +466,7 @@ Resumen de la columna **Capa** de las secciones 3 y 4. Cuando un requisito inter
 | Aplicación | RF-01, RF-04, RF-05, RF-09b, RF-10, RF-11, RF-11b, RF-12, RF-13, RF-13b, RF-15, RF-16, RF-19, RF-29, RNF-09 |
 | Infraestructura | RF-02, RF-03, RF-08, RF-21, RF-21b, RF-22, RF-23, RF-28, RF-29b, RNF-01, RNF-02, RNF-04, RNF-05, RNF-06, RNF-07, RNF-08, RNF-15, RNF-16, RNF-17, RNF-19, RNF-20, RNF-27 |
 | Presentación | RF-20, RF-20b, RF-24, RF-25, RF-26, RF-27, RNF-13, RNF-14 |
-| Transversal (verificación en CI y revisión) | RNF-22, RNF-23, RNF-24, RNF-25, RNF-26 |
+| Transversal (verificación en CI, revisión o evaluación con usuarios) | RNF-12, RNF-22, RNF-23, RNF-24, RNF-25, RNF-26 |
 
 ### 7.2 Mapa de Clean Architecture
 
@@ -588,7 +589,7 @@ flowchart TB
 | 1.0 | 2026-10-09 | Versión inicial de la especificación de requisitos | P. Hernández |
 | 2.0 | 2026-10-15 | Consolidación de la especificación de requisitos previa al diseño arquitectónico. Revisión y ampliación de requisitos funcionales y no funcionales, actualización de trazabilidad, diagramas, priorización MoSCoW e implicaciones arquitectónicas. | P. Hernández |
 | 3.0 | 2026-10-16 | Revisión final de la especificación. Corrección y renumeración de requisitos no funcionales, actualización de la trazabilidad entre objetivos, RF y RNF, ajuste del resumen MoSCoW, refinamiento de las implicaciones arquitectónicas basadas en Clean Architecture y actualización de los mapas de requisitos funcionales y no funcionales. | P. Hernández |
-| 4.0 | 2026-10-30 | Consolidación de la línea base de diseño tras la auditoría técnica (H-01, H-03, H-04, H-07, H-08, H-17, H-19, H-26) y `open-decisions.md`. Alineación con ADR-001 a ADR-006 y referencias a ADR-007 a ADR-010. **Nuevos:** RF-09c, RF-13b, RF-21b, RF-29b, RNF-27. **Modificados:** RF-03, RF-07 (a Must), RF-09, RF-10, RF-14, RF-17, RF-19, RF-20b, RF-28, RF-29 (a Must), RNF-02, RNF-10, RNF-11, RNF-18, RNF-26. Vocabulario canónico de puertos (7.0), trazabilidad que cubre todos los RF y RNF, capas ampliadas, cabecera de versión corregida, fuentes inexistentes retiradas y correcciones de referencias a ADR. Los cambios dependientes de OD se marcan como propuesta. | P. Hernández |
+| 4.0 | 2026-10-30 | Consolidación de la línea base de diseño tras la auditoría técnica (H-01, H-03, H-04, H-07, H-08, H-17, H-19, H-26) y `open-decisions.md`. Alineación con ADR-001 a ADR-006 y referencias a ADR-007 a ADR-010. **Nuevos:** RF-09c, RF-13b, RF-21b, RF-29b, RNF-27. **Modificados:** RF-03, RF-07 (a Must), RF-09, RF-10, RF-14, RF-17, RF-19, RF-20b, RF-28, RF-29 (a Must), RNF-02, RNF-09, RNF-10, RNF-11, RNF-18, RNF-26. Vocabulario canónico de puertos (7.0), trazabilidad que cubre todos los RF y RNF, capas ampliadas, cabecera de versión corregida, fuentes inexistentes retiradas y correcciones de referencias a ADR. Los cambios dependientes de OD se marcan como propuesta. | P. Hernández |
 
 ## 9. Cambios pendientes de validación (propuestas dependientes de decisiones abiertas)
 
