@@ -148,7 +148,7 @@ La existencia de BPM y tonalidad en el XML de colección es un supuesto sin veri
 | BPM con octava | Idem, admitiendo los factores 2, 1/2, 3 y 1/3 | RNF-06 |
 | Tonalidad exacta | Coincidencia de tónica y modo | RNF-07 |
 | Tonalidad por compatibilidad | Código Camelot idéntico o mezclable con el de referencia según la regla básica | RNF-08 |
-| Desglose de errores | Octava, relativa, quinta y otros | RNF-09 |
+| Desglose de errores | BPM: octava y otros. Tonalidad: relativa, quinta, paralela y otros | RNF-09 |
 | Intervalo de confianza | Intervalo de Wilson al 95 % para cada proporción | RNF-09 |
 
 Todas las métricas se calculan **por cada motor** y por estrato, y se almacenan como informe de evaluación con el motor y la versión (RF-07, RF-29).
@@ -250,7 +250,7 @@ La combinación responde a O7 y reconoce los límites del conjunto de partida en
 | Requisitos no funcionales | RNF-01, RNF-02, RNF-03, RNF-05 a RNF-13, RNF-18 |
 | Componentes | CMP-07 (evaluación) y CMP-04 (generador) |
 | Casos de uso | CU-11 y CU-07 |
-| Casos de prueba | T-RNF-05, T-CU11-01, T-CU11-02, T-RNF-10, T-RNF-11, T-RNF-03, T-RNF-18, T-RNF-12, T-RNF-13, T-CU07-04 |
+| Casos de prueba | T-CU11-01 a T-CU11-05, T-CU05-02, T-CU05-03, T-CU05-08, T-CU05-11, T-CU05-12, T-CU01-11, T-CU07-05, T-USO-01, T-USO-02 |
 | Decisiones abiertas | OD-01, OD-04, OD-08 |
 | Riesgos | R-01, R-04, R-06, R-09 |
 
