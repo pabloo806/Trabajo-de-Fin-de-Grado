@@ -10,19 +10,15 @@ La tecnología de persistencia aceptada es:
 SQLite
 ```
 
-de acuerdo con:
+según ADR-004.
 
-- ADR-004 Persistencia.
-- ADR-002 Arquitectura General.
-- ADR-001 Forma de Distribución del Sistema.
+Actualmente no existe todavía un esquema físico definitivo. El proyecto se encuentra en fase de diseño del dominio y del modelo de datos.
 
-La definición conceptual y lógica del modelo de datos se desarrolla en:
+La fuente de verdad para el diseño de persistencia será:
 
 ```text
 docs/architecture/data-model.md
 ```
-
-y constituye la fuente de verdad para cualquier implementación física futura.
 
 ---
 
@@ -30,21 +26,16 @@ y constituye la fuente de verdad para cualquier implementación física futura.
 
 🔄 Diseño en progreso.
 
-Actualmente el proyecto se encuentra en la fase:
+Situación del proyecto:
 
 ```text
-Modelo de Dominio
-↓
-Modelo Conceptual
-↓
-Modelo Entidad-Relación
-↓
-Modelo Relacional
-↓
-Diseño Físico SQLite
+Análisis ✅
+Arquitectura ✅
+Modelo de Dominio 🔄
+Modelo de Datos 🔄
+Persistencia SQLite ⏳
+Implementación ⏳
 ```
-
-Todavía no existe un esquema físico definitivo.
 
 ---
 
@@ -55,119 +46,55 @@ La persistencia deberá permitir:
 - Mantener una identidad estable para las pistas musicales.
 - Evitar reanálisis innecesarios.
 - Gestionar múltiples motores de análisis.
-- Mantener histórico completo de análisis.
-- Mantener histórico completo de generación de setlists.
-- Soportar comparación frente a Rekordbox.
-- Garantizar trazabilidad de resultados.
-- Garantizar reproducibilidad de la generación.
-- Mantener compatibilidad con los requisitos RF y RNF definidos en el SRS.
+- Mantener trazabilidad de resultados.
+- Mantener histórico de generación de setlists.
+- Permitir evaluación frente a Rekordbox.
+- Garantizar reproducibilidad de los resultados.
 
 ---
 
-# Entidades Candidatas
+# Entidades Actualmente Propuestas
 
-Las entidades actualmente identificadas durante la fase de diseño son:
+Estas entidades proceden del SRS v4.0, casos de uso, glosario y ADRs consolidados.
 
-## Track
+## Entidades principales
 
-Representa una pista musical única dentro del sistema.
-
----
-
-## TrackLocation
-
-Representa una ubicación física concreta de una pista.
-
-Permite gestionar:
-
-- pistas movidas,
-- pistas duplicadas,
-- pistas ausentes.
-
----
-
-## TrackMetadata
-
-Representa los metadatos obtenidos desde etiquetas.
+- Track
+- TrackLocation
+- TrackMetadata
+- AnalysisRun
+- AnalysisResult
+- GenerationRequest
+- GenreSegment
+- Anchor
+- Setlist
+- SetlistTrack
+- Transition
+- ReferenceMeasurement
+- EvaluationReport
 
 ---
 
-## AnalysisRun
+# Decisiones Abiertas
 
-Representa una ejecución concreta de un motor MIR.
+Las siguientes decisiones afectan directamente al diseño de persistencia:
 
----
+## OD-03 · Identificación permanente de pistas
 
-## AnalysisResult
+Pendiente de validación.
 
-Representa el resultado producido por un motor de análisis.
-
----
-
-## GenerationRequest
-
-Representa una solicitud de generación de setlist.
-
----
-
-## GenreSegment
-
-Representa restricciones temporales de género.
-
----
-
-## Anchor
-
-Representa una pista anclada en una posición determinada.
-
----
-
-## Setlist
-
-Representa un setlist generado.
-
----
-
-## SetlistTrack
-
-Relaciona pistas y setlists.
-
----
-
-## Transition
-
-Representa la evaluación de una transición entre dos pistas.
-
-⚠️ Su persistencia sigue pendiente de validación (OD-06).
-
----
-
-## ReferenceMeasurement
-
-Representa los datos obtenidos desde Rekordbox para validación.
-
----
-
-## EvaluationReport
-
-Representa los resultados agregados del proceso de evaluación.
-
----
-
-# Decisiones Abiertas que Afectan a la Persistencia
-
-## OD-03 · Identidad Permanente de Pistas
-
-Puede modificar:
+Impacta sobre:
 
 - Track
 - TrackLocation
 
 ---
 
-## OD-04 · Persistencia Multi-Motor
+## OD-04 · Persistencia multi-motor
 
-Puede modificar:
+Pendiente de validación.
+
+Impacta sobre:
 
 - AnalysisRun
 - AnalysisResult
@@ -176,54 +103,59 @@ Puede modificar:
 
 ## OD-05 · Entidad Library
 
-Puede introducir o eliminar relaciones de agrupación de pistas.
+Pendiente de validación.
+
+Impacta sobre el modelo conceptual.
 
 ---
 
-## OD-06 · Persistencia de Transiciones
+## OD-06 · Persistencia de transiciones
 
-Puede modificar:
+Pendiente de validación.
+
+Impacta sobre:
 
 - Transition
 
 ---
 
-## OD-07 · Validación del Modelo de Dominio
+## OD-07 · Validación del modelo de dominio
 
-Puede afectar al conjunto definitivo de entidades.
+Pendiente de validación.
+
+Impacta sobre el conjunto final de entidades.
 
 ---
 
 # Principios de Diseño
 
-## P01 · Identidad independiente de la ruta
+## Identidad independiente de la ruta
 
-La identidad lógica de una pista no depende de:
+La identidad lógica de una pista no dependerá de:
 
-- nombre de fichero,
 - ruta,
-- carpeta.
+- carpeta,
+- nombre del fichero.
 
----
+## Persistencia histórica
 
-## P02 · Soporte Multi-Motor
+Los resultados históricos no se sobrescribirán.
 
-Una pista puede disponer de múltiples resultados de análisis.
+## Multi-motor
 
-Ejemplo:
+Una misma pista podrá disponer de múltiples resultados de análisis.
 
-```text
-Track
- ├── Essentia
- ├── Librosa
- └── Madmom
-```
+## Reproducibilidad
 
----
+Todo setlist deberá poder reconstruirse a partir de:
 
-## P03 · Trazabilidad
+- parámetros,
+- semilla,
+- biblioteca.
 
-Todo resultado deberá registrar:
+## Trazabilidad
+
+Todo resultado almacenado deberá registrar:
 
 - motor,
 - versión,
@@ -232,57 +164,9 @@ Todo resultado deberá registrar:
 
 ---
 
-## P04 · Reproducibilidad
+# Contenido Futuro
 
-Todo setlist generado deberá poder reconstruirse mediante:
-
-- parámetros,
-- semilla,
-- biblioteca.
-
----
-
-## P05 · Persistencia Histórica
-
-Los análisis y setlists históricos no deben sobrescribirse.
-
----
-
-# Diseño Físico Previsto
-
-La estructura definitiva se generará a partir del documento:
-
-```text
-docs/architecture/data-model.md
-```
-
-e incluirá:
-
-```text
-PK
-FK
-UNIQUE
-CHECK
-Índices
-Restricciones de integridad
-```
-
-adaptadas a SQLite.
-
----
-
-# Migraciones
-
-Pendiente de diseño.
-
-La estrategia deberá cumplir:
-
-- RNF-17 Integridad de datos.
-- RNF-27 Migraciones de esquema.
-
----
-
-# Estructura Prevista
+Este directorio albergará:
 
 ```text
 database/
@@ -297,29 +181,24 @@ database/
 
 ---
 
-# Dependencias Documentales
+# Dependencias
 
-Este directorio depende directamente de:
+El diseño de persistencia depende de:
 
-```text
-requirements.md
-use-cases.md
-traceability-matrix.md
-glosario.md
-
-ADR-004
-ADR-005
-ADR-009
-ADR-010
-
-data-model.md
-```
+- requirements.md
+- use-cases.md
+- traceability-matrix.md
+- glosario.md
+- ADR-004
+- ADR-009
+- ADR-010
+- data-model.md
 
 ---
 
 # Próximo Hito
 
-Generar:
+Completar:
 
 ```text
 docs/architecture/data-model.md
@@ -334,4 +213,4 @@ incluyendo:
 - Justificación de entidades.
 - Diseño físico preliminar SQLite.
 
-Una vez validado dicho documento, podrá iniciarse la implementación del esquema SQLite definitivo.
+Una vez validado dicho documento comenzará la implementación del esquema SQLite definitivo.
