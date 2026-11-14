@@ -2,7 +2,7 @@
 
 > Destino en el repositorio: `docs/architecture/er-model.md`. Paso 4 del plan. Parte de `conceptual-model.md` v0.1 (CM-01 a CM-10 aprobadas) y precede al modelo relacional.
 
-**Versión:** 0.1 (provisional) · **Fecha:** 2026-11-10 · **Estado:** pendiente de validación por tutor y cotutor
+**Versión:** 0.1.2 (provisional) · **Fecha:** 2026-11-14 · **Estado:** pendiente de validación por tutor y cotutor
 
 > Nivel **lógico**: tipos universales, sin SQL ni tipos de SQLite. Lo marcado **[SUPUESTO · OD-xx]** o **[PROPUESTA]** puede cambiar. No se congela hasta validar OD-03 a OD-07 (R-13).
 
@@ -198,7 +198,7 @@ erDiagram
     }
 ```
 
-Dieciocho tablas, más `LIBRARY` condicionada a OD-05. `TRACK` es identidad pura: su único atributo es la clave.
+Diecinueve tablas, más `LIBRARY` condicionada a OD-05 (corregido en v0.1.1: la primera redacción decía dieciocho). `TRACK` es identidad pura: su único atributo es la clave.
 
 # 2. Diccionario de datos lógico
 
@@ -260,7 +260,7 @@ PK compuesta: refleja IN-07 (una huella por tipo y versión). **[SUPUESTO · OD-
 | bpm, bpm_failure_cause | Float, String | | Sí | Exactamente uno de los dos presente (IN-04) |
 | key_tonic, key_mode, key_failure_cause | Integer, String, String | | Sí | O la tonalidad completa, o la causa del fallo |
 | confidence | Float | | Sí | De 0 a 1 |
-| camelot_code | String | | Sí | **Derivado** de la tonalidad. Se decide en el paso 5 si se almacena (RF-11, RNF-03) |
+| camelot_code | String | | Sí | **Derivado** de la tonalidad. Se persiste como columna generada y almacenada (M-06, RF-11, RNF-03) |
 
 ## 2.3 Generación
 
@@ -315,7 +315,7 @@ La FK compuesta (setlist_id, from_position) apunta a `SETLIST_TRACK`. Origen y d
 
 ## 2.4 Evaluación
 
-**REFERENCE_MEASUREMENT**: `reference_id` UUID PK; `track_id` FK; `source` String; `rekordbox_version` String N; `bpm` Float N; `key_tonic` Integer N; `key_mode` String N. Al menos uno de BPM o tonalidad. Único previsto por (track_id, source, rekordbox_version).
+**REFERENCE_MEASUREMENT**: `reference_id` UUID PK; `track_id` FK; `source` String; `rekordbox_version` String (no nulo; `'unknown'` si no se conoce, M-05); `bpm` Float N; `key_tonic` Integer N; `key_mode` String N. Al menos uno de BPM o tonalidad. Único previsto por (track_id, source, rekordbox_version).
 
 **EVALUATION_REPORT** (CM-06)
 
@@ -398,7 +398,7 @@ SETLIST (setlist_id)
 | RI-03 | `failure_cause` presente si y solo si `status = failed` | Base de datos |
 | RI-04 | Una huella por (pista, tipo, versión) | Base de datos |
 | RI-05 | (setlist_id, track_id) único en `SETLIST_TRACK` y en `ANCHOR` | Base de datos |
-| RI-06 | Una ruta tiene como máximo una ubicación con estado distinto de `moved` | Base de datos (ver M-01) |
+| RI-06 | Una ruta normalizada tiene como máximo una ubicación **vigente** (`active` o `failed`). `absent` y `moved` son históricas | Base de datos (índice único parcial, M-01) |
 | RI-07 | Posiciones contiguas, n − 1 transiciones, segmentos sin solape y `original_position` solo si `edited` | **Dominio** (afecta a varias filas) |
 | RI-08 | La suma de errores y fallos coincide con el total menos los aciertos (IN-16) | **Dominio** |
 | RI-09 | Borrado: las hijas de composición se borran con su raíz; las referencias a `TRACK` y a `ANALYSIS_ENGINE` lo impiden | Base de datos |
@@ -427,17 +427,17 @@ Rutas de acceso críticas para los índices del paso 6: (kind, algorithm_version
 
 | ID | Gravedad | Problema | Propuesta |
 |---|---|---|---|
-| M-01 | **Alta** | Una ruta puede reaparecer en otra pista cuando la anterior quedó como `moved`: la ruta no es única globalmente. El dominio lo permite (`TrackIndex.by_path` devuelve la última) | Unicidad parcial (RI-06) o prohibir reutilizar la ruta mientras exista una ubicación `moved`. Decidir en el paso 5 |
-| M-02 | Media | CM-05 proponía "columnas simples" para la política armónica, pero es un conjunto de movimientos | Tabla hija `REQUEST_HARMONIC_MOVE` (sección 3.1). Ajuste menor a CM-05 |
-| M-03 | Media | El informe de importación (CU-01, paso 10) no se persiste. Solo quedan las causas de fallo por ubicación | Aceptable si el informe se calcula al momento. Si se quiere histórico, necesita una entidad de importación (OD-05) |
-| M-04 | Media | Con métricas como conteos (CM-06), un informe no se puede recalcular pista a pista | La trazabilidad por pista vive en el manifiesto del conjunto de ADR-009; confirmar |
-| M-05 | Baja | `rekordbox_version` nulo complica la unicidad (NULL en claves únicas) | Resolver en el paso 6 |
-| M-06 | Baja | `camelot_code` es derivado y está repetido en tres tablas | Decidir en el paso 5 entre almacenarlo y calcularlo; la instantánea de `SETLIST_TRACK` es la única copia necesaria |
-| M-07 | Baja | `APP_SETTING` como tabla de una fila es una convención | Alternativa: fichero de configuración fuera de la base de datos |
+| M-01 | **Alta** · *Resuelto* | Una ruta puede reaparecer en otra pista cuando la anterior quedó histórica: la ruta no es única globalmente | Unicidad parcial sobre las ubicaciones vigentes (RI-06). Aplicado en `database-schema.md` |
+| M-02 | Media · *Resuelto* | CM-05 proponía "columnas simples" para la política armónica, pero es un conjunto de movimientos | Tabla hija `REQUEST_HARMONIC_MOVE` (sección 3.1). Ajuste menor a CM-05 |
+| M-03 | Media · *Aceptado como limitación* | El informe de importación (CU-01, paso 10) no se persiste. Solo quedan las causas de fallo por ubicación | Aceptable si el informe se calcula al momento. Si se quiere histórico, necesita una entidad de importación (OD-05) |
+| M-04 | Media · *Aceptado como limitación* | Con métricas como conteos (CM-06), un informe no se puede recalcular pista a pista | La trazabilidad por pista vive en el manifiesto del conjunto de ADR-009; confirmar |
+| M-05 | Baja · *Resuelto* | `rekordbox_version` nulo complica la unicidad (NULL en claves únicas) | Valor `'unknown'` por defecto, no nulo |
+| M-06 | Baja · *Resuelto* | `camelot_code` es derivado | Persistido como columna generada en `ANALYSIS_RESULT`; copia congelada en `SETLIST_TRACK` |
+| M-07 | Baja · *Resuelto* | `APP_SETTING` como tabla de una fila es una convención | Se mantiene en la base (un único fichero, ADR-004) |
 
 # 8. Siguiente paso
 
-Paso 5, **modelo relacional**: esquemas con la notación formal, comprobación de formas normales (3FN o BCNF), índices lógicos y las decisiones M-01, M-05 y M-06. Después, el diseño físico en SQLite (paso 6).
+El modelo relacional y el diseño físico están en [`database-schema.md`](database-schema.md). Este documento queda como referencia del nivel lógico.
 
 Guardar este contenido para la memoria del TFG (capítulo 6, sección 6.3):
 

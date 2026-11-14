@@ -2,7 +2,7 @@
 
 > Destino en el repositorio: `docs/architecture/database-schema.md`. El DDL es `database/schema/schema.sql`. Pasos 5 y 6 del plan. Parte de `er-model.md` v0.1.
 
-**Versión:** 0.1 (provisional) · **Fecha:** 2026-11-12 · **Estado:** pendiente de validación por tutor y cotutor
+**Versión:** 0.1.1 (provisional) · **Fecha:** 2026-11-14 · **Estado:** pendiente de validación por tutor y cotutor
 
 > Es el esquema inicial de la **migración 1**. Se aplica con el supuesto de OD-03, OD-04 y OD-06 y sin la entidad `Library` (OD-05). Cada cambio posterior será una migración versionada (RNF-27), por lo que el riesgo R-13 queda acotado.
 
@@ -10,17 +10,17 @@
 
 | ID | Decisión | Aplicación |
 |---|---|---|
-| M-01 | Unicidad parcial de la ruta | Índice único sobre `path_normalized` para ubicaciones **vigentes** (`active` y `failed`). Ver ajuste abajo |
+| M-01 | Unicidad parcial de la ruta | Índice único sobre `path_normalized` para ubicaciones **vigentes** (`active` y `failed`). Ver más abajo |
 | M-02, M-03, M-04 | Aprobados | Tabla `request_harmonic_move`; el informe de importación no se persiste; trazabilidad por pista en el manifiesto de ADR-009 |
 | M-05 | `'unknown'` en lugar de nulo | `reference_measurement.rekordbox_version NOT NULL DEFAULT 'unknown'` |
 | M-06 | `camelot_code` persistido | **Columna generada y almacenada** (`GENERATED ALWAYS ... STORED`). Ver ajuste abajo |
 | M-07 | `APP_SETTING` en la base | Tabla de fila única (`settings_id = 1`) |
 
-**Ajuste a M-01.** Tu enunciado permitía dos redacciones y el SQL de ejemplo (`WHERE status NOT IN ('moved')`) no coincide con la primera. Adopto la primera, "ni `moved` ni `absent`", que equivale a `status IN ('active','failed')`. Con la segunda, el flujo CU-02 A3 se rompería: cuando el audio de una ruta cambia, la pista antigua queda `absent` en esa ruta y la nueva queda `active` en la misma. Una ubicación `failed` también es vigente: el fichero existe pero no se pudo leer, así que no puede compartir ruta con otra `active`.
+**Aplicación de M-01.** La decisión admitía dos redacciones y el ejemplo de SQL (`WHERE status NOT IN ('moved')`) no coincidía con la primera. Se aplica la primera, "ni `moved` ni `absent`", que equivale a `status IN ('active','failed')`. Con la segunda, el flujo CU-02 A3 se rompería: cuando el audio de una ruta cambia, la pista antigua queda `absent` en esa ruta y la nueva queda `active` en la misma. Una ubicación `failed` también es vigente: el fichero existe pero no se pudo leer, así que no puede compartir ruta con otra `active`.
 
-**Ajuste a M-06.** En lugar de una columna ordinaria que la aplicación debe mantener, `camelot_code` es una columna generada y almacenada: ocupa espacio y se indexa igual, pero no puede divergir de `key_tonic` y `key_mode`. Se comprobó que coincide con `MusicalKey.to_camelot()` del dominio en las 24 tonalidades. Si se prefiere una columna ordinaria, basta con quitar la cláusula `GENERATED`.
+**Aplicación de M-06.** En lugar de una columna ordinaria que la aplicación debe mantener, `camelot_code` es una columna generada y almacenada: ocupa espacio y se indexa igual, pero no puede divergir de `key_tonic` y `key_mode`. Se comprobó que coincide con `MusicalKey.to_camelot()` del dominio en las 24 tonalidades. Si se prefiere una columna ordinaria, basta con quitar la cláusula `GENERATED`.
 
-**Decisión mía: `Library` queda fuera de la migración 1.** OD-05 no está validada. La migración 2 condicional (sección 7) la añade sin reconstruir tablas.
+**`Library` queda fuera de la migración 1.** OD-05 no está validada. La migración 2 condicional (sección 7) la añade sin reconstruir tablas.
 
 # 2. Modelo relacional (paso 5)
 
@@ -479,12 +479,12 @@ COMMIT;
 | ID | Gravedad | Problema | Propuesta |
 |---|---|---|---|
 | N-40 | Media | `modified_at` se compara por igualdad en `TrackRecognitionService` (nivel 1a). Un sistema de ficheros con resolución de nanosegundos o de dos segundos puede dar falsos "modificado" | Normalizar en el adaptador a una resolución fija (p. ej. microsegundos) antes de comparar y guardar |
-| N-41 | Media | `path_normalized` ignora mayúsculas (`casefold`), lo que en sistemas sensibles puede unir rutas distintas y chocar con `ux_track_location_current_path` | Confirmar en la prueba de importación (R-02, N-37) |
+| N-41 | Baja · *Duplicado de N-37* | `path_normalized` ignora mayúsculas (`casefold`), lo que en sistemas sensibles puede unir rutas distintas y chocar con `ux_track_location_current_path` | Se sigue en N-37 de `audit-review.md` |
 | N-42 | Baja | Orden por título sin tratar tildes ni mayúsculas | Decidir `COLLATE` propia al implementar RF-11b |
 | N-43 | Baja | El dominio usa `datetime` sin zona horaria; el esquema espera UTC | Exigir `datetime` con zona UTC en el repositorio |
 | N-44 | Baja | `ix_analysis_result_engine_bpm` y `..._camelot` se crearon sin medir su utilidad real | Revisar tras el benchmark de RNF-03 |
 | N-45 | Media | El recuento de tablas del MER decía dieciocho y son diecinueve | Corregido en `er-model.md` |
-| N-46 | Media | ADR-004 y `database/README.md` citan `data-model.md` como entregable único | Ver "Actualización documental" |
+| N-46 | Media | ADR-004 citaba `data-model.md` como entregable único | Resuelto: `data-model.md` es el índice de la serie |
 
 # 9. Impacto y siguiente paso
 

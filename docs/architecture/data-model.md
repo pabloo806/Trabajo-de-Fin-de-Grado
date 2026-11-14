@@ -2,7 +2,7 @@
 
 > Destino en el repositorio: `docs/architecture/data-model.md`. Resuelve el hallazgo N-46: este documento es el **índice** del diseño de datos y lo que ADR-004 llama `data-model.md`. El detalle vive en cuatro documentos enlazados.
 
-**Versión:** 1.0 (índice) · **Fecha:** 2026-11-14 · **Estado:** diseño **provisional**, pendiente de validación por tutor y cotutor
+**Versión:** 1.0.1 (índice) · **Fecha:** 2026-11-14 · **Estado:** diseño **provisional**, pendiente de validación por tutor y cotutor
 **Alineado con:** SRS v4.0, casos de uso v1.1, glosario v2.1, ADR-004 y ADR-010, `open-decisions.md` v3.1.
 
 > Todo el diseño parte de supuestos sobre OD-03 a OD-07 que **ningún tutor ha validado**. La persistencia **no se considera cerrada** (ADR-004, riesgo R-13) hasta que se validen y se apruebe `database-schema.md`.
@@ -19,8 +19,8 @@ flowchart TB
     ADR["ADR-004 · SQLite y principios del esquema<br/>ADR-010 · identificación de pistas"]
     DM["domain-model.md v0.2<br/>agregados, invariantes, servicios"]
     CM["conceptual-model.md v0.1<br/>entidades y relaciones"]
-    ER["er-model.md v0.1.1<br/>MER lógico, tipos universales"]
-    DB["database-schema.md v0.1<br/>relacional y físico SQLite"]
+    ER["er-model.md v0.1.2<br/>MER lógico, tipos universales"]
+    DB["database-schema.md v0.1.1<br/>relacional y físico SQLite"]
     SQL["migrations/0001_initial.sql<br/>esquema inicial ejecutable"]
     OD["OD-03 a OD-07<br/>supuestos sin validar"]
 
@@ -39,8 +39,8 @@ flowchart TB
 |---|---|---|---|---|
 | 1. Dominio | [`domain-model.md`](domain-model.md) | Qué reglas y agregados tiene el negocio, con independencia de la tecnología | 0.2 | Provisional. Código ejecutable de especificación |
 | 2. Conceptual | [`conceptual-model.md`](conceptual-model.md) | Qué se persiste y cómo se relaciona | 0.1 | Provisional. CM-01 a CM-10 aprobadas por el autor |
-| 3. MER | [`er-model.md`](er-model.md) | Tablas, claves, cardinalidades y tipos lógicos | 0.1.1 | Provisional. M-01 a M-07 resueltas |
-| 4. Relacional y físico | [`database-schema.md`](database-schema.md) | Esquemas formales, formas normales y DDL de SQLite | 0.1 | Provisional. Verificado en SQLite 3.45.1 |
+| 3. MER | [`er-model.md`](er-model.md) | Tablas, claves, cardinalidades y tipos lógicos | 0.1.2 | Provisional. M-01 a M-07 resueltas |
+| 4. Relacional y físico | [`database-schema.md`](database-schema.md) | Esquemas formales, formas normales y DDL de SQLite | 0.1.1 | Provisional. Verificado en SQLite 3.45.1 |
 | Artefacto ejecutable | `src/setlistgen/infrastructure/persistence/migrations/0001_initial.sql` | El esquema inicial | 1 | Provisional |
 
 Si hay discrepancia entre niveles, prevalece el nivel **inferior en número** (el dominio manda sobre la base de datos) y se corrige el superior.
@@ -131,7 +131,7 @@ Resumen de los que condicionan el diseño de datos. El detalle está en cada doc
 | N-36 | Media | Coste real del nivel 1b (lectura de ficheros) sin medir | `domain-model.md` |
 | N-38 | Media | La asociación de referencias por ruta depende de la hipótesis H-17 | `domain-model.md` |
 | N-40 | Media | Resolución de `modified_at` entre sistemas de ficheros | `database-schema.md` |
-| N-41 | Media | Normalización de rutas ignora mayúsculas | `database-schema.md` |
+| N-37 | Baja | La normalización de rutas ignora mayúsculas y asume separadores de Windows en el dominio (RNF-21) | `domain-model.md` |
 | M-03 | Media | El informe de importación no se persiste | `er-model.md` |
 | M-04 | Media | Un informe de evaluación no se recalcula pista a pista | `er-model.md` |
 
@@ -140,3 +140,4 @@ Resumen de los que condicionan el diseño de datos. El detalle está en cada doc
 | Versión | Fecha | Cambio |
 |---|---|---|
 | 1.0 | 2026-11-14 | Primera versión como índice maestro (resuelve N-46). Enlaza dominio v0.2, conceptual v0.1, MER v0.1.1 y esquema v0.1 |
+| 1.0.1 | 2026-11-14 | Referencias de versión: MER v0.1.2 y esquema v0.1.1 (auditoría v3.2: N-54, N-55) |

@@ -2,7 +2,7 @@
 
 > Destino en el repositorio: `docs/architecture/README.md`.
 
-**Versión:** 3.0 · **Fecha:** 2026-11-14 · **Alineado con:** SRS v4.0, casos de uso v1.1, matriz v3.0, glosario v2.1, ADR-001 a ADR-010, `domain-model.md` v0.2, `conceptual-model.md` v0.1, `er-model.md` v0.1.1 y `database-schema.md` v0.1.
+**Versión:** 3.0.1 · **Fecha:** 2026-11-14 · **Alineado con:** SRS v4.0, casos de uso v1.1, matriz v3.0, glosario v2.1, ADR-001 a ADR-010, `domain-model.md` v0.2, `conceptual-model.md` v0.1, `er-model.md` v0.1.2 y `database-schema.md` v0.1.1.
 
 ## Descripción
 
@@ -35,13 +35,13 @@ SetlistGen es una aplicación de escritorio en Python que analiza una biblioteca
 
 | Documento | Contenido | Versión | Estado |
 |---|---|---|---|
-| [`data-model.md`](data-model.md) | **Índice maestro** de la serie de datos y estado de los supuestos | 1.0 | Provisional |
+| [`data-model.md`](data-model.md) | **Índice maestro** de la serie de datos y estado de los supuestos | 1.0.1 | Provisional |
 | [`domain-model.md`](domain-model.md) | Agregados, invariantes, servicios y código de especificación del dominio | 0.2 | Provisional |
 | [`conceptual-model.md`](conceptual-model.md) | Entidades y relaciones persistentes | 0.1 | Provisional |
-| [`er-model.md`](er-model.md) | Modelo entidad-relación lógico | 0.1.1 | Provisional |
-| [`database-schema.md`](database-schema.md) | Modelo relacional y diseño físico SQLite | 0.1 | Provisional |
-| [`open-decisions.md`](../project-management/open-decisions.md) | Decisiones abiertas OD-01 a OD-10 | 3.1 | Para la reunión con tutores |
-| [`audit-review.md`](../project-management/audit-review.md) | Auditoría técnica y hallazgos | 3.1 | Pendiente de añadir N-31 a N-46 |
+| [`er-model.md`](er-model.md) | Modelo entidad-relación lógico | 0.1.2 | Provisional |
+| [`database-schema.md`](database-schema.md) | Modelo relacional y diseño físico SQLite | 0.1.1 | Provisional |
+| [`open-decisions.md`](../project-management/open-decisions.md) | Decisiones abiertas OD-01 a OD-10 y decisiones derivadas del diseño | 3.2 | Para la reunión con tutores |
+| [`audit-review.md`](../project-management/audit-review.md) | Auditoría técnica y hallazgos | 3.2 | Actualizado antes de la reunión con tutores |
 
 ## 1.3 Fuentes de análisis
 
@@ -328,4 +328,5 @@ El detalle y las cuestiones para la reunión están en `open-decisions.md`.
 |---|---|---|
 | 1.0 | 2026-10-28 | README de arquitectura inicial |
 | 2.0 | 2026-10-30 | Alineación con la línea base documental |
+| 3.0.1 | 2026-11-14 | Referencias de versión: MER v0.1.2, esquema v0.1.1, auditoría y decisiones abiertas v3.2 |
 | 3.0 | 2026-11-14 | Diseño detallado completado de forma provisional. Enlaces a `data-model.md` y a los cuatro documentos de modelado. Puerto `AnalysisResultRepository` (N-32) y alcance reducido de `TrackRepository`. Contrato `SetlistGenerator`. Servicios de dominio. Estructura de repositorio propuesta (N-25) con correspondencia desde la actual. Estado y supuestos por OD |
