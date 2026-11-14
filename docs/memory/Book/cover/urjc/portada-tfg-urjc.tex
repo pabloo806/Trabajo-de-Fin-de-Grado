@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: portada institucional URJC.
+%
+% Uso: mantenimiento de la plantilla; normalmente no debes modificarlo.
+% Se incluye según el perfil seleccionado; no se compila por separado.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begingroup
+\ifthenelse{\NOT\equal{\myCoTutorFullName}{}\AND\equal{\myAcademicTutorGender}{female}\AND\equal{\myCoTutorGender}{female}}{\renewcommand{\wordTutorOrTutores}{tutoras}}{}
+\thispagestyle{empty}
+
+% To add background watermark
+\BgThispage
+
+% Nice example of tikz
+% \begin{tikzpicture}[remember picture,overlay]
+%   \node [xshift=1cm,yshift=1cm] at (current page.south west)
+%   [text width=7cm,fill=red!20,rounded corners,above right]
+%   {
+%   This is an absolutely positioned text in the
+%   lower left corner. No shipout-hackery is used.
+% };
+% \end{tikzpicture}
+
+\begin{tikzpicture}[remember picture,overlay]
+  \node[yshift=-\paperheight] at (current page.north west)
+  {
+    \begin{tikzpicture}[remember picture, overlay]
+      \draw[fill=headingPortadaTFGURJC,headingPortadaTFGURJC] (0,0) rectangle (\paperwidth,\paperheight);
+      % \node [yshift=3cm, xshift=0.5\paperwidth, font=\Huge, text centered, midway] {\color{textoHeadingPortadaTFGURJC}\textbf{\myUniversity}};
+      % \node [yshift=\paperheight-9.5cm, xshift=0.5\paperwidth, font=\Large, text centered, midway] {\color{textoHeadingPortadaTFGURJC}\textbf{\mySchool}};
+      % \node [yshift=\paperheight-12.5cm, xshift=0.5\paperwidth, font=\Large, text centered, midway] {\color{textoHeadingPortadaTFGURJC}\textbf{\myDegreefull}};
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
+
+\large
+\vspace{0.5cm}
+\begin{center}
+
+	\centerline{\includegraphics[height=2.8cm]{urjc/URJC-logo-Monocromo-Blanco.png}}
+	\vspace{5mm}
+  % titulación a la que se opta
+  \color{textoHeadingPortadaTFGURJC}
+
+  \Large\textbf{\mySchool}
+  \vspace{10mm}
+
+  \Large\textbf{\MakeUppercase{\myDegreefull}}
+
+  \vspace{15mm}
+
+  \LARGE\textbf{\myWorkTypeFull}
+
+  \vspace{5mm}
+
+  \LARGE{\MakeUppercase{\myBookTitle}}
+
+  \vspace{3cm}
+
+  \ifthenelse{\equal{\myLanguage}{english}}
+  {
+    \textbf{Author:}  \myAuthorFullName
+  }
+  {
+    \textbf{Autor:}  \myAuthorFullName
+  }
+
+  \vspace{0.5cm}
+
+  % If also director: add corresponding line (mybookDirectors IS NOT DEFINED AS FOR ME (JMG)
+  % \ifthenelse{\equal{\myLanguage}{english}}
+  % {
+  % \textbf{\expandafter\makefirstuc\expandafter{\wordAdvisorOrAdvisors}:} \myAdvisors
+  % }
+  %   {
+  %   \textbf{\expandafter\makefirstuc\expandafter{\wordTutorOrTutores}:}  \myAdvisors
+  % %   \textbf{\expandafter\makefirstuc\expandafter{\wordDirectorOrDirectores}:}  \mybookdirectors
+  % }
+
+  %   ---
+  \ifthenelse{\equal{\myFlagSplittedAdvisors}{true}}
+  {
+    \ifthenelse{\equal{\myLanguage}{english}}
+    {
+      % \expandafter\makefirstuc\expandafter{\wordAdvisorOrAdvisors}: \myAdvisors
+      \textbf{\expandafter\makefirstuc\expandafter{\wordAdvisor}:} \myAcademicTutorFullName{}
+
+      \ifthenelse{\equal{\myCoTutorFullName}{}}
+      {
+      }
+      {
+        \textbf{\expandafter\makefirstuc\expandafter{\wordCoAdvisor}:} \myCoTutorFullName{}
+      }
+
+    }
+    {%
+      % \expandafter\makefirstuc\expandafter{\wordDirectorOrDirectores}: \myAdvisors
+      % \expandafter\makefirstuc\expandafter{\wordTutorOrTutores}: \myAdvisors
+      \textbf{\expandafter\makefirstuc\expandafter{\wordTutorOrTutora}:}    \myAcademicTutorFullName{}
+
+      \ifthenelse{\equal{\myCoTutorFullName}{}}
+      {
+      }
+      {
+        \textbf{\expandafter\makefirstuc\expandafter{\wordCoTutorOrCoTutora}:} \myCoTutorFullName{}
+      }
+    }
+  }
+  {
+    \ifthenelse{\equal{\myLanguage}{english}}
+    {
+      \textbf{\expandafter\makefirstuc\expandafter{\wordAdvisorOrAdvisors}:} \myAdvisors
+    }
+    {
+      \textbf{\expandafter\makefirstuc\expandafter{\wordTutorOrTutores}:} \myAdvisors
+    }
+  }
+
+
+  % ---
+
+
+\end{center}
+
+\begin{bottomparagraph}
+  \begin{center}
+    \color{textoHeadingPortadaTFGURJC}
+    \ifthenelse{\equal{\myLanguage}{english}}
+    {\huge{Academic year \myThesisAcademicYear}}
+    {\huge{Curso académico \myThesisAcademicYear}}
+  \end{center}
+\end{bottomparagraph}
+
+% \newpage
+\clearemptydoublepage
+
+
+\endgroup
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:

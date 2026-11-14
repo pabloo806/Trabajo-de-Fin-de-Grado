@@ -1,0 +1,559 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: configuración dependiente del idioma y del documento.
+%
+% Uso: mantenimiento de la plantilla; normalmente no debes modificarlo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% 
+% You should not need to edit this file. Yes, I know the name is not a
+% valid word... :-)
+% 
+% Here we define \myDegreefull, \myWorkType and \myWorkTypeFull 
+% that will be used by other modules. The decision is based on the
+% \myDegree variable set by the user.
+% 
+% Unsupported degree identifiers produce an explicit registry error.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% Validate the user-facing document structure and expose a simple conditional
+% for Book/book.tex.
+\newif\ifstandarddocument
+\ifthenelse{\equal{\myDocumentStructure}{standard}}
+{
+  \standarddocumenttrue
+}
+{
+  \ifthenelse{\equal{\myDocumentStructure}{compendium}}
+  {
+    \standarddocumentfalse
+  }
+  {
+    \PackageError{UAH-template}
+      {Unknown document structure '\myDocumentStructure'}
+      {Use 'standard' or 'compendium' in Config/myconfig.tex.}
+  }
+}
+
+% Fail early when a boolean user option contains an unsupported value.
+\newcommand{\ValidateBooleanOption}[2]{%
+  \ifthenelse{\equal{#1}{true}}%
+    {}%
+    {\ifthenelse{\equal{#1}{false}}%
+      {}%
+      {\PackageError{UAH-template}
+        {Invalid value '#1' for #2}
+        {Use exactly 'true' or 'false' in Config/myconfig.tex.}}}%
+}
+\ValidateBooleanOption{\myIncludeSampleLetter}{\string\myIncludeSampleLetter}
+\ValidateBooleanOption{\myIncludeDedication}{\string\myIncludeDedication}
+\ValidateBooleanOption{\myIncludeAcknowledgements}{\string\myIncludeAcknowledgements}
+\ValidateBooleanOption{\myIncludeListOfFigures}{\string\myIncludeListOfFigures}
+\ValidateBooleanOption{\myIncludeListOfTables}{\string\myIncludeListOfTables}
+\ValidateBooleanOption{\myIncludeListOfAcronyms}{\string\myIncludeListOfAcronyms}
+\ValidateBooleanOption{\myIncludeListOfSymbols}{\string\myIncludeListOfSymbols}
+\ValidateBooleanOption{\myIncludeListOfCode}{\string\myIncludeListOfCode}
+\ValidateBooleanOption{\myIncludeListOfAlgorithms}{\string\myIncludeListOfAlgorithms}
+\ValidateBooleanOption{\myIncludeListOfVideos}{\string\myIncludeListOfVideos}
+\ValidateBooleanOption{\myAcademicTutorIsPhD}{\string\myAcademicTutorIsPhD}
+\ValidateBooleanOption{\myCoTutorIsPhD}{\string\myCoTutorIsPhD}
+
+% Select the degree before defining text that depends on its institution.
+\providecommand{\myConfigDirectory}{../Config}
+\input{\myConfigDirectory/degree-registry.tex}
+\input{\myConfigDirectory/institutions.tex}
+\input{\myConfigDirectory/layout-profiles.tex}
+\input{\myConfigDirectory/degrees.tex}
+\DegreeRegistrySelect{\myDegree}
+
+% A thesis by compendium is only valid for a doctoral programme.
+\ifthenelse{\equal{\myDocumentStructure}{compendium}}
+{
+  \ifthenelse{\equal{\myWorkType}{PhD}}
+  {}
+  {
+    \PackageError{UAH-template}
+      {The compendium structure requires a PhD programme}
+      {Set \string\myDegree\space to a doctoral programme, or select the standard document structure.}
+  }
+}
+{}
+
+\InstitutionRegistryLoadStyle
+
+% Separate adviser departments from their institutions. Undefined optional
+% fields are empty; department-only fields never fall back to an institution.
+\providecommand{\myAcademicTutorDepartment}{}
+\providecommand{\myAcademicTutorDepartmentEnglish}{}
+\providecommand{\myAcademicTutorInstitution}{}
+\providecommand{\myAcademicTutorInstitutionEnglish}{}
+\providecommand{\myAcademicCotutorDepartment}{}
+\providecommand{\myAcademicCotutorDepartmentEnglish}{}
+\providecommand{\myAcademicCotutorInstitution}{}
+\providecommand{\myAcademicCotutorInstitutionEnglish}{}
+\newcommand{\DocumentDepartment}{%
+  \ifthenelse{\equal{\myAcademicTutorDepartment}{}}
+    {\myAcademicCotutorDepartment}{\myAcademicTutorDepartment}}
+\newcommand{\DocumentDepartmentEnglish}{%
+  \ifthenelse{\equal{\myAcademicTutorDepartmentEnglish}{}}
+    {\myAcademicCotutorDepartmentEnglish}{\myAcademicTutorDepartmentEnglish}}
+% Deprecated compatibility names: no longer editable fields in myconfig.tex.
+\providecommand{\myDepartment}{}
+\renewcommand{\myDepartment}{\DocumentDepartment}
+\providecommand{\myDepartmentEnglish}{}
+\renewcommand{\myDepartmentEnglish}{\DocumentDepartmentEnglish}
+
+% Affiliation fields display both values, without dangling commas when empty.
+\newcommand{\FormatAdviserAffiliation}[2]{%
+  \ifthenelse{\equal{#1}{}}{#2}{%
+    #1\ifthenelse{\equal{#2}{}}{}{, #2}}}
+\newcommand{\AcademicTutorAffiliation}{%
+  \FormatAdviserAffiliation{\myAcademicTutorDepartment}{\myAcademicTutorInstitution}}
+\newcommand{\AcademicTutorAffiliationEnglish}{%
+  \FormatAdviserAffiliation{\myAcademicTutorDepartmentEnglish}{\myAcademicTutorInstitutionEnglish}}
+\newcommand{\AcademicCotutorAffiliation}{%
+  \FormatAdviserAffiliation{\myAcademicCotutorDepartment}{\myAcademicCotutorInstitution}}
+\newcommand{\AcademicCotutorAffiliationEnglish}{%
+  \FormatAdviserAffiliation{\myAcademicCotutorDepartmentEnglish}{\myAcademicCotutorInstitutionEnglish}}
+
+\ifthenelse{\equal{\myLanguage}{spanish}}
+{
+  \usepackage[english, spanish, es-lcroman]{babel}
+  \newcommand{\myFullAffiliation}{Grupo de investigación \myResearchGroup \\ \DocumentDepartment \\ \myUniversity}
+  \newcommand{\myBookTitle}{\myBookTitleSpanish}
+  \newcommand{\mypdflang}{es}
+  \newcommand{\myPresentedBy}{Presentado por}
+  \newcommand{\myAdvisedBy}{Dirigido por}
+  \newcommand{\myDefenseDateFull}{a \myThesisDefenseDate}
+} 
+{
+  \usepackage[spanish, english]{babel}
+  \newcommand{\myFullAffiliation}{\myResearchGroup Research Group \\ \DocumentDepartmentEnglish \\ \myUniversityEnglish}
+  \newcommand{\myBookTitle}{\myBookTitleEnglish}
+  \newcommand{\mypdflang}{en}
+  \newcommand{\myPresentedBy}{Presented by}
+  \newcommand{\myAdvisedBy}{Advised by}
+  \newcommand{\myDefenseDateFull}{\myThesisdefenseDateEnglish}
+}
+
+\ifthenelse{\equal{\myLanguage}{spanish}}
+{
+  \newcommand{\andOrYDon}{y}
+  % From https://tex.stackexchange.com/questions/132248/test-if-the-first-character-of-a-string-is-a
+  \StrLeft{\myCoTutorFullName{}}{1}[\firstchar]%
+  \IfStrEq{\firstchar}{I}{\newcommand{\andOrY}{e}}{\newcommand{\andOrY}{y}}%
+
+}
+{
+  \newcommand{\andOrYDon}{and}
+  \newcommand{\andOrY}{and}
+}
+
+% Gender issues
+\ifthenelse{\equal{\myAcademicTutorGender}{male}}     
+{                                                       
+  \newcommand{\wordDonOrDonaTutor}{D.}
+
+  \ifthenelse{\equal{\myAcademicTutorIsPhD}{true}}
+  {
+  \newcommand{\wordDrOrDraTutor}{Dr.}
+  }
+  {
+  \newcommand{\wordDrOrDraTutor}{}
+  }
+}
+{
+  \newcommand{\wordDonOrDonaTutor}{Dª.}
+
+  \ifthenelse{\equal{\myAcademicTutorIsPhD}{true}}
+  {
+  \newcommand{\wordDrOrDraTutor}{Dra.}
+  }
+  {
+  \newcommand{\wordDrOrDraTutor}{}
+  }
+}
+
+\ifthenelse{\equal{\myCoTutorGender}{male}}     
+{                                                       
+  \newcommand{\wordDonOrDonaCoTutor}{D.}
+
+  \ifthenelse{\equal{\myCoTutorIsPhD}{true}}
+  {
+  \newcommand{\wordDrOrDraCoTutor}{Dr.}
+  }
+  {
+  \newcommand{\wordDrOrDraCoTutor}{}
+  }
+
+}
+{
+  \newcommand{\wordDonOrDonaCoTutor}{Dª.}
+
+  \ifthenelse{\equal{\myCoTutorIsPhD}{true}}
+  {
+  \newcommand{\wordDrOrDraCoTutor}{Dra.}
+  }
+  {
+  \newcommand{\wordDrOrDraCoTutor}{}
+  }
+}
+
+\ifthenelse{\equal{\myAuthorGender}{male}}     
+{                                                       
+  \newcommand{\wordDonOrDonaAutor}{D.}
+}
+{
+  \newcommand{\wordDonOrDonaAutor}{Dª.}
+}
+
+% Independent of department secretary; older configurations omit this field.
+\providecommand{\myTribunalSecretaryGender}{female}
+\ifthenelse{\equal{\myTribunalSecretaryGender}{male}}
+{
+  \newcommand{\wordTribunalSecretarioOrSecretaria}{Secretario}
+}
+{
+  \newcommand{\wordTribunalSecretarioOrSecretaria}{Secretaria}
+}
+
+\ifthenelse{\equal{\myTribunalPresidentGender}{male}}
+{
+  \newcommand{\wordPresidenteOrPresidenta}{Presidente}
+}
+{
+  \newcommand{\wordPresidenteOrPresidenta}{Presidenta}
+}
+
+\ifthenelse{\equal{\myTribunalFirstSpokespersonGender}{male}}
+{
+  \newcommand{\wordVocalPrimeroOrPrimera}{Vocal}
+  \newcommand{\wordNumberVocalPrimeroOrPrimera}{1º}
+}
+{
+  \newcommand{\wordVocalPrimeroOrPrimera}{Vocal}
+  \newcommand{\wordNumberVocalPrimeroOrPrimera}{1ª}
+}
+
+\ifthenelse{\equal{\myTribunalSecondSpokespersonGender}{male}}
+{
+  \newcommand{\wordVocalSegundoOrSegunda}{Vocal}
+  \newcommand{\wordNumberVocalSegundoOrSegunda}{2º}
+}
+{
+  \newcommand{\wordVocalSegundoOrSegunda}{Vocal}
+  \newcommand{\wordNumberVocalSegundoOrSegunda}{2ª}
+}
+
+\ifthenelse{\equal{\myAcademicTutorGender}{male}}
+{                                                       
+  \newcommand{\wordDirectorOrdirectora}{director}
+  \newcommand{\wordDirectorElOrLa}{el}
+  \newcommand{\wordTutorOrTutora}{tutor}
+  \newcommand{\wordAcademicoOrAcademica}{académico}
+  \newcommand{\wordTutorDelOrDeLa}{del}
+}
+{
+  \newcommand{\wordDirectorOrdirectora}{directora}
+  \newcommand{\wordDirectorElOrLa}{la}
+  \newcommand{\wordTutorOrTutora}{tutora}
+  \newcommand{\wordAcademicoOrAcademica}{académica}
+  \newcommand{\wordTutorDelOrDeLa}{de la}
+}
+\ifthenelse{\equal{\myLanguage}{spanish}}
+{
+\newcommand{\wordDirectorOrDirectoraTitle}{\expandafter\makefirstuc\expandafter{\wordDirectorOrdirectora}}
+\newcommand{\wordTutorOrTutoraTitle}{\expandafter\makefirstuc\expandafter{\wordTutorOrTutora}}
+}
+{
+\newcommand{\wordDirectorOrDirectoraTitle}{Advisor}
+\newcommand{\wordTutorOrTutoraTitle}{Advisor}
+}
+
+\ifthenelse{\equal{\myCoTutorGender}{male}}
+{                                                       
+  \newcommand{\wordCoDirectorOrCoDirectora}{codirector}
+  \newcommand{\wordCoDirectorElOrLa}{el}
+  \newcommand{\wordCoTutorOrCoTutora}{cotutor}
+  \newcommand{\wordCoTutorDelOrDeLa}{del}
+}
+{
+  \newcommand{\wordCoDirectorOrCoDirectora}{codirectora}
+  \newcommand{\wordCoDirectorElOrLa}{la}
+  \newcommand{\wordCoTutorOrCoTutora}{cotutora}
+  \newcommand{\wordCoTutorDelOrDeLa}{de la}
+}
+\ifthenelse{\equal{\myLanguage}{spanish}}
+{
+\newcommand{\wordCoDirectorOrCoDirectoraTitle}{\expandafter\makefirstuc\expandafter{\wordCoDirectorOrCoDirectora}}
+\newcommand{\wordCoTutorOrCoTutoraTitle}{\expandafter\makefirstuc\expandafter{\wordCoTutorOrCoTutora}}
+}
+{
+\newcommand{\wordCoDirectorOrCoDirectoraTitle}{Coadvisor}
+\newcommand{\wordCoTutorOrCoTutoraTitle}{Coadvisor}
+}
+
+\ifthenelse{\equal{\myDepartmentSecretaryGender}{male}}     
+{                                                       
+  \newcommand{\wordSecretarioOrSecretaria}{Secretario}
+}
+{
+  \newcommand{\wordSecretarioOrSecretaria}{Secretaria}
+}
+
+
+% Set name of advisors and define words depending on singular/plural
+\ifthenelse{\equal{\myCoTutorFullName}{}}
+{
+  \newcommand{\myAdvisors}{\myAcademicTutorFullName{}}
+  \newcommand{\myAdvisorsWithDonOrDona}{\wordDonOrDonaTutor{} \myAcademicTutorFullName{}}
+  \newcommand{\myAdvisorsConDrOrDra}{\wordDrOrDraTutor{} \myAcademicTutorFullName{}}
+  \ifthenelse{\equal{\myAcademicTutorGender}{male}}     
+  {                                                       
+    \newcommand{\wordTutorOrTutores}{tutor}
+  }
+  {
+    \newcommand{\wordTutorOrTutores}{tutora}
+  }
+  \newcommand{\wordDirectorOrDirectores}{\wordDirectorOrdirectora}
+  \newcommand{\wordAdvisorOrAdvisors}{advisor}
+  \newcommand{\wordAdvisor}{advisor}
+  \newcommand{\wordCoAdvisor}{co-advisor}
+  \newcommand{\wordDaOrDan}{da}
+  \newcommand{\wordEmiteOrEmiten}{emite}
+  \newcommand{\wordElOrLos}{El}
+  \newcommand{\wordSuOrSus}{su}
+  \ifthenelse{\equal{\myAcademicTutorGender}{male}}
+  {
+    \newcommand{\wordDelOrDeLos}{del}
+  }
+  {
+    \newcommand{\wordDelOrDeLos}{de la}
+  }
+    \newcommand{\wordHagoOrHacemos}{hago}
+  }
+  {
+    \newcommand{\myAdvisors}{\myAcademicTutorFullName{} \andOrY{} \myCoTutorFullName{}}
+    \newcommand{\myAdvisorsWithDonOrDona}{\wordDonOrDonaTutor{} \myAcademicTutorFullName{} \andOrYDon{} \wordDonOrDonaCoTutor{} \myCoTutorFullName{}}
+    \newcommand{\myAdvisorsConDrOrDra}{\wordDrOrDraTutor{} \myAcademicTutorFullName{}\\\wordDrOrDraCoTutor{} \myCoTutorFullName{}}
+
+    \newcommand{\wordDirectorOrDirectores}{directores}
+    \newcommand{\wordAdvisorOrAdvisors}{advisors}
+    \newcommand{\wordAdvisor}{advisor}
+    \newcommand{\wordCoAdvisor}{co-advisor}
+    \newcommand{\wordDaOrDan}{dan}
+    \newcommand{\wordEmiteOrEmiten}{emiten}
+    \newcommand{\wordTutorOrTutores}{tutores}
+    \newcommand{\wordElOrLos}{Los}
+    \newcommand{\wordSuOrSus}{Su}
+    \newcommand{\wordDelOrDeLos}{de los}
+    \newcommand{\wordHagoOrHacemos}{hacemos}
+  }
+
+% Set Autor/Autora field
+\ifthenelse{\equal{\myAuthorGender}{male}}     
+{
+  \newcommand{\wordAutorOrAutora}{autor}
+  \newcommand{\wordAutorElOrLa}{el}
+  \newcommand{\wordAutorAlOrALa}{al}                
+  \newcommand{\wordAutorDelOrDeLa}{del}                
+  \newcommand{\wordAutorDonOrDona}{D}                
+  \newcommand{\wordAutorNotificadoOrNotificada}{notificado}                
+  \newcommand{\wordAutorAdscritoOrAdscrita}{adscrito}                
+  \newcommand{\wordAlumnoOrAlumna}{alumno}
+  % This is silly, but makefirstuc does not work properly...
+  \newcommand{\wordAlumnoOrAlumnaUpcaseFirt}{Alumno}  
+}                                               
+{
+  \newcommand{\wordAutorOrAutora}{autora}
+  \newcommand{\wordAutorElOrLa}{la}                
+  \newcommand{\wordAutorAlOrALa}{a la}                
+  \newcommand{\wordAutorDelOrDeLa}{de la}                
+  \newcommand{\wordAutorDonOrDona}{Dª}                
+  \newcommand{\wordAutorNotificadoOrNotificada}{notificada}    
+  \newcommand{\wordAutorAdscritoOrAdscrita}{adscrita}                
+  \newcommand{\wordAlumnoOrAlumna}{alumna}
+  % This is silly, but makefirstuc does not work properly...
+  \newcommand{\wordAlumnoOrAlumnaUpcaseFirt}{Alumna}
+}
+\ifthenelse{\equal{\myLanguage}{spanish}}
+{
+\newcommand{\wordAutorOrAutoraTitle}{\expandafter\makefirstuc\expandafter{\wordAutorOrAutora}}
+}
+{
+\newcommand{\wordAutorOrAutoraTitle}{Author}
+}
+
+\ifthenelse{\equal{\myResearchVicerrectorGender}{male}}     
+{                                                       
+  \newcommand{\wordVicerrectorOrVicerrectora}{Vicerrector}
+}                                               
+{
+  \newcommand{\wordVicerrectorOrVicerrectora}{Vicerrectora}
+}
+
+% This is to write or not signed by cotutor/cotutora
+\ifthenelse{\equal{\myCoTutorFullName}{}}
+{
+  \newcommand{\okCoTutorOrCotutora}{}
+  \newcommand{\signedByCoTutorOrCoTutora}{}
+}
+{
+  \newcommand{\okCoTutorOrCotutora}{y \wordCoTutorDelOrDeLa{} \wordCoTutorOrCoTutora{}}
+  \newcommand{\signedByCoTutorOrCoTutora}{\MakeUppercase{\wordCoTutorOrCoTutora} (si procede): \mySecondAdvisorFullName}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now open publishing options
+\ifthenelse{\equal{\myAuthorizationOpenPublishing}{Yes}}
+{
+\newcommand{\boxAuthorizeOpenPublishing}{$\XBox$}
+\newcommand{\boxDoNotAuthorizeOpenPublishing}{$\Box$}
+
+\ifthenelse{\equal{\myAuthorizationOpenPublishingEmbargoMonths}{0}}
+{
+\newcommand{\boxEmbargoZeroMonths}{$\XBox$}
+}
+{
+\newcommand{\boxEmbargoZeroMonths}{$\Box$}
+}
+
+\ifthenelse{\equal{\myAuthorizationOpenPublishingEmbargoMonths}{6}}
+{
+\newcommand{\boxEmbargoSixMonths}{$\XBox$}
+}
+{
+\newcommand{\boxEmbargoSixMonths}{$\Box$}
+}
+
+\ifthenelse{\equal{\myAuthorizationOpenPublishingEmbargoMonths}{12}}
+{
+\newcommand{\boxEmbargoTwelveMonths}{$\XBox$}
+}
+{
+\newcommand{\boxEmbargoTwelveMonths}{$\Box$}
+}
+
+\ifthenelse{\equal{\myAuthorizationOpenPublishingEmbargoMonths}{18}}
+{
+\newcommand{\boxEmbargoEighteenMonths}{$\XBox$}
+}
+{
+\newcommand{\boxEmbargoEighteenMonths}{$\Box$}
+}
+
+\ifthenelse{\equal{\myAuthorizationOpenPublishingEmbargoMonths}{24}}
+{
+\newcommand{\boxEmbargoTwentyfourMonths}{$\XBox$}
+}
+{
+\newcommand{\boxEmbargoTwentyfourMonths}{$\Box$}
+}
+}
+{
+\newcommand{\boxAuthorizeOpenPublishing}{$\Box$}
+\newcommand{\boxEmbargoZeroMonths}{$\Box$}
+\newcommand{\boxEmbargoSixMonths}{$\Box$}
+\newcommand{\boxEmbargoTwelveMonths}{$\Box$}
+\newcommand{\boxEmbargoEighteenMonths}{$\Box$}
+\newcommand{\boxEmbargoTwentyfourMonths}{$\Box$}
+\newcommand{\boxDoNotAuthorizeOpenPublishing}{$\XBox$}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% BEGIN Definition of the pdf document information data
+
+\newcommand{\contactauthor}{\myAuthorFullName~\textless\href{mailto:\myAuthorEmail}{\myAuthorEmail}\textgreater}
+
+% Set keywords for pdf information
+\ifthenelse{\equal{\myLanguage}{english}}
+{
+  \newcommand{\keywordsforpdf}{\myThesisKeywordsEnglish}
+}
+{
+  \newcommand{\keywordsforpdf}{\myThesisKeywords}
+}
+
+\newcommand{\underscoreSpacingFour}{\_\_\_\_}
+\newcommand{\spacingFour}{~~~~}
+
+% \makeatletter%
+%   \hypersetup{%
+%     pdfinfo={%
+%     Title={\@title},%
+%     Author={\@author},%
+%     Subject={subject},%
+%     Producer={pdfTeX},%
+%     Creator={\@author},%
+%     Keywords={Apunts},%
+%     },%
+
+% }
+\hypersetup
+{
+  pdftitle={\myBookTitle},
+  pdfauthor={\myAuthorFullName~\textless\href{mailto:\myAuthorEmail}{\myAuthorEmail}\textgreater},
+  pdfsubject={\myDegreefull, \myWorkTypeFull},
+  pdfkeywords={\keywordsforpdf},
+  pdfcreator={\LaTeX with hyperref package},
+  pdfcopyright={\myCopyrightStatement},
+  pdflicenseurl={\myLicenseURL},
+  pdflang={\mypdflang},
+  % pdfproducer={rubber},
+  pdffitwindow={true},
+  % This can be set in myconfig.tex
+  urlcolor=\myurlcolor,
+  linkcolor=\mylinkcolor,
+  citecolor=\mycitecolor,
+  pdfstartview=Fit,
+  pdfpagemode=UseOutlines,
+  pdfinfo={
+    License={\myLicenseURL},
+    Language={\mypdflang},
+    Copyright={\myCopyrightStatement},
+  },
+  keeppdfinfo %keep info entries
+}
+
+% Added conflicting options of tocloft with subfigure, fixing by adding subfigure option
+%\usepackage[subfigure]{tocloft}
+
+\usepackage{tocloft}
+\renewcommand{\cftpartfont}{\large\bfseries\scshape}
+\renewcommand{\cftpartpresnum}{\partname\space}
+\renewcommand{\cftpartaftersnum}{\quad}
+\setlength{\cftpartnumwidth}{7em}
+\setlength{\cftbeforefigskip}{6pt} % Default is around 4pt
+
+
+\ifthenelse{\equal{\myLanguage}{english}}
+{
+  \newlistof{videos}{vdo}{List of videos}
+\newcommand{\videoLink}[2]{%
+  \refstepcounter{videos}%
+  \phantomsection%
+  \addcontentsline{vdo}{videos}{\protect\numberline{\thechapter.\thevideos}#1 (\href{#2}{link to video})}\href{#2}{#1}}
+}
+{
+  \newlistof{videos}{vdo}{Índice de vídeos}
+\newcommand{\videoLink}[2]{%
+  \refstepcounter{videos}%
+  \phantomsection%
+  \addcontentsline{vdo}{videos}{\protect\numberline{\thechapter.\thevideos}#1 (\href{#2}{enlace al vídeo})}\href{#2}{#1}}
+}
+
+
+% \newcommand{\videoLink}[3]{%
+% \refstepcounter{videos}%
+% \phantomsection%
+% \addcontentsline{vdo}{videos}{\protect\numberline{\thechapter.\thevideos}#1 (#3)}%
+% \href{#2}{#1}%
+% }
+% END Definition of the pdf document information data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:

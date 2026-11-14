@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: solicitud de prórroga del TFM.
+%
+% Normativa de TFM:
+% EPS-UAH: anexo IV; aprobada el 31/10/2025 y el 30/01/2026.
+%
+% Uso: configura Config/myconfig.tex y compila este fichero por separado.
+% Normalmente no necesitas modificarlo, salvo para completar datos
+% específicos del formulario.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,a4paper,oneside]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN Preamble and configuration section
+%
+\input{../Config/preamble.tex}    % DO NOT TOUCH THIS LINE. You can edit
+                                  % the file to modify some default settings
+
+\input{../Config/myconfig.tex}    % DO NOT TOUCH THIS LINE, but EDIT THIS FILE
+                                  % to set your specific settings.
+
+\input{../Config/postamble.tex}   % DO NOT TOUCH THIS LINE.
+%
+% END Preamble and configuration section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{SOLICITUD DE PRÓRROGA DE TFM}
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Let's start with the real stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+{\Large
+\maketitle
+
+\thispagestyle{empty}
+
+\wordDonOrDonaAutor{} \myAuthorFullName{}, solicita la prórroga para realizar el
+Trabajo Fin de Máster Universitario:
+
+\vspace{0.5cm}
+
+``\myBookTitle'',
+
+\vspace{0.5cm}
+
+\noindent durante el curso académico \myThesisAcademicYear{} con la autorización de
+\wordDonOrDonaTutor{} \myAcademicTutorFullName{}, \wordDirectorOrdirectora{} del TFM%
+\ifthenelse{\equal{\myCoTutorFullName}{}}%
+  {.}%
+  {, y de \wordDonOrDonaCoTutor{} \myCoTutorFullName{},
+   \wordCoDirectorOrCoDirectora{} del TFM.}
+
+\vspace{2cm}
+
+Firmado:
+
+\vspace{4cm}
+
+\begin{minipage}[t]{0.58\textwidth}
+\centering
+\wordDirectorOrDirectoraTitle{}%
+\ifthenelse{\equal{\myCoTutorFullName}{}}{}{ y \wordCoDirectorOrCoDirectora}
+\end{minipage}%
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+Estudiante
+\end{minipage}
+
+}
+\end{document}

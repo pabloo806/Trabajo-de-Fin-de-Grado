@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: ajustes de idioma al comenzar el documento.
+%
+% Uso: mantenimiento de la plantilla; normalmente no debes modificarlo.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% You should not need to modify this file, unless you want to add
+% language specific definitions.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifthenelse{\equal{\myLanguage}{english}}
+{
+  \selectlanguage{english}
+
+  \newcommand{\xUseSpanish}{~}    
+  \newcommand{\xUseEnglish}{X}  
+
+  \floatname{codefloat}{Listing}
+  \renewcommand{\lstlistingname}{Listing}
+
+  %% \DeclareFloatingEnvironment[
+  %%       fileext=lox,
+  %%       listname={Source code listing},
+  %%       name=Code,
+  %%       placement=p,
+  %%       within=section,
+  %%       chapterlistsgaps=off,
+  %%       ]{sourcecode}
+}
+{
+  \selectlanguage{spanish}
+
+  \newcommand{\xUseSpanish}{X}    
+  \newcommand{\xUseEnglish}{~}  
+  \renewcommand{\tablename}{Tabla}
+  \renewcommand{\listtablename}{Índice de tablas}
+
+  \floatname{codefloat}{Listado}
+  \renewcommand{\lstlistingname}{Listado}
+
+
+  %% \DeclareFloatingEnvironment[
+  %%       fileext=lox,
+  %%       listname={Lista de código fuente},
+  %%       name=Código,
+  %%       placement=p,
+  %%       within=section,
+  %%       chapterlistsgaps=off,
+  %%       ]{sourcecode}
+}
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:
+
+

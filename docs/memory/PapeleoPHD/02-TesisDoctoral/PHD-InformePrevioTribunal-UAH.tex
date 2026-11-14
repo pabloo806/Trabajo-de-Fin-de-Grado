@@ -1,0 +1,56 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informe de valoración previo a la defensa de la tesis doctoral
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt,a4paper,oneside]{article}
+\input{../Config/preamble.tex}
+\input{../Config/myconfig.tex}
+\InputIfFileExists{../Config/myconfig-phd.tex}{}{}
+\input{../Config/postamble.tex}
+\input{phd-form-layout.tex}
+
+\providecommand{\myTribunalReportMemberFullName}{}
+\providecommand{\myTribunalReportOriginality}{}
+\providecommand{\myTribunalReportObjectives}{}
+\providecommand{\myTribunalReportMethodology}{}
+\providecommand{\myTribunalReportStructure}{}
+\providecommand{\myTribunalReportResults}{}
+\providecommand{\myTribunalReportActivities}{}
+\providecommand{\myTribunalReportDecision}{}
+\providecommand{\myTribunalReportAssessment}{}
+
+\newcommand{\RatingRow}[2]{#1 & \PhDChoice{#2}{Excelente}{} & \PhDChoice{#2}{Muy buena}{} & \PhDChoice{#2}{Suficiente}{} & \PhDChoice{#2}{Deficiente}{}\\\hline}
+
+\begin{document}
+\fontsize{9}{10.8}\selectfont
+\PhDLegacyHeader{INFORME DE VALORACIÓN\\PREVIO A LA DEFENSA DE LA TESIS DOCTORAL}
+\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}
+\textbf{Autor de la tesis doctoral:} \PhDUnderline{12.3cm}{\myAuthorFullName}\\[0.24cm]
+\textbf{Título de la tesis:} \PhDUnderline{13.5cm}{\myBookTitle}\\[0.24cm]
+\textbf{Miembro que emite el informe:} \PhDUnderline{11.7cm}{\myTribunalReportMemberFullName}
+\end{minipage}}
+
+\PhDSectionBar{VALORACIÓN DE LA TESIS}
+\begin{tabularx}{\linewidth}{|>{\bfseries\columncolor{PhDFormGray}}X|*{4}{>{\centering\arraybackslash}p{2.25cm}|}}
+\hline & \cellcolor{PhDFormGray}\textbf{Excelente} & \cellcolor{PhDFormGray}\textbf{Muy buena} & \cellcolor{PhDFormGray}\textbf{Suficiente} & \cellcolor{PhDFormGray}\textbf{Deficiente}\\\hline
+\RatingRow{Originalidad}{\myTribunalReportOriginality}
+\RatingRow{Objetivos}{\myTribunalReportObjectives}
+\RatingRow{Metodología}{\myTribunalReportMethodology}
+\RatingRow{Estructura}{\myTribunalReportStructure}
+\RatingRow{Resultados}{\myTribunalReportResults}
+\RatingRow{Valoración del Documento de actividades}{\myTribunalReportActivities}
+\end{tabularx}
+\begin{center}\scriptsize\textit{(Ponga una cruz en la casilla correspondiente)}\end{center}
+
+\PhDSectionBar{DECISIÓN GLOBAL}
+\begin{center}\PhDChoice{\myTribunalReportDecision}{Apruebo}{\textbf{Apruebo la tesis}}\hspace{2.5cm}\PhDChoice{\myTribunalReportDecision}{Desapruebo}{\textbf{Desapruebo la tesis}}\end{center}
+\textit{Si no se aprueba, en el informe siguiente debe justificarse e indicarse qué modificaciones deberían introducirse en la Tesis.}
+
+\PhDSectionBar{INFORME RAZONADO}
+\textit{(Puede utilizar hojas adicionales, si así lo desea)}\\[0.08cm]
+\PhDResponseBox{4.2cm}{\myTribunalReportAssessment}
+
+\vfill
+\begin{center}En \PhDUnderline{3.0cm}{Alcalá de Henares}, a \PhDUnderline{6.2cm}{\myPaperworkDate}\\[1.0cm]
+Fdo.: \PhDUnderline{7.0cm}{\myTribunalReportMemberFullName}\end{center}
+\PhDDocumentFooter{}{Pág 1 de 1}
+\end{document}

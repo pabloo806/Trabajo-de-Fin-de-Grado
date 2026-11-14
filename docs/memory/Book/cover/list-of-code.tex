@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Función: listado de código fuente.
+%
+% Uso: inclusión automática; normalmente no debes modificarlo.
+% No se compila por separado.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{linkcolor=\myothertoclinkcolor}
+\begin{thesislisttitlestyle}
+\ifthenelse{\equal{\myLanguage}{english}}
+{
+  \listof{codefloat}{List of source code listings}
+  \addcontentsline{toc}{chapter}{List of source code listings}
+}
+{
+  \listof{codefloat}{Índice de listados de código fuente}
+  \addcontentsline{toc}{chapter}{Índice de listados de código fuente}
+}
+\end{thesislisttitlestyle}
+\hypersetup{linkcolor=\mylinkcolor}
+
+%%% Local Variables:
+%%% TeX-master: "../book"
+%%% End:
