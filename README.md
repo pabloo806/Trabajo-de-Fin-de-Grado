@@ -207,8 +207,8 @@ flowchart LR
 | Arquitectura | ✅ Completada |
 | ADRs | ✅ Consolidados |
 | Auditoría técnica | ✅ Completada |
-| Modelo de dominio | 🔄 Pendiente |
-| Modelo de datos | 🔄 Pendiente |
+| Modelo de dominio | ✅ Completado |
+| Modelo de datos | ✅ Completado |
 | Persistencia SQLite | 🔄 Pendiente |
 | Implementación | ⏳ Pendiente |
 | Validación experimental | ⏳ Pendiente |
