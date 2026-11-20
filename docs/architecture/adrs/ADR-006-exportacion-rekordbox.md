@@ -1,96 +1,86 @@
-# ADR-006: Exportación e Integración con Rekordbox
+# ADR-006: Exportación a Rekordbox
 
 ## Estado
 
-Aceptado (revisado el 2026-10-30). La **estrategia** (XML como formato principal y M3U8 como complemento) está aceptada. Su **verificación** depende de la prueba de importación en Rekordbox (riesgo R-02, RF-23), que todavía no se ha realizado.
+**Propuesto — Ampliación opcional.** Se implementa únicamente si hay margen de tiempo tras completar el núcleo funcional: análisis de la biblioteca, generación y edición de setlists y guardado en SQLite.
 
 ## Fecha
 
-2026-10-28 (decisión original) · 2026-10-30 (revisión de alineación con la línea base documental)
-
-## Requisitos relacionados
-
-| Requisito | Relación |
-|---|---|
-| RF-21 | Exportación del setlist en XML compatible con Rekordbox |
-| RF-21b | Exportación complementaria en M3U8 |
-| RF-22 | Rutas de las pistas resueltas, con aviso explícito si alguna no lo está |
-| RF-23 | Verificación manual de que Rekordbox carga la lista con sus pistas resueltas |
-| RF-09c | Aviso de pistas ausentes al exportar |
-| RF-28 | Exportación de datos del panel (M3U), con relación indirecta |
-| RF-29b | Lectura del XML de colección como fuente de referencia (puerto distinto) |
-| RNF-16 | Rutas con espacios, tildes, Unicode y rutas largas en ambos sistemas |
-| RNF-19 | Windows y macOS |
-| RNF-21 | El dominio no depende del formato de rutas del sistema operativo |
-| RNF-22, RNF-23 | Exportador accesible mediante un puerto sustituible |
-| RNF-25 | El sistema no envía datos fuera del equipo |
-
-Riesgo asociado: R-02 (el fichero exportado no se carga correctamente en Rekordbox). Hallazgos atendidos: N-02 (M3U8 sin requisito) y N-16 (decisiones aceptadas antes de la prueba de concepto).
+2026-11-20 (reescritura completa tras el replanteamiento del alcance y la verificación directa en Rekordbox).
 
 ## Contexto
 
-Uno de los objetivos principales de SetlistGen es integrarse en el flujo de trabajo real de un DJ.
+Uno de los usos previstos de SetlistGen es llevar el setlist generado a Rekordbox, que es la herramienta con la que el DJ prepara y ejecuta su sesión.
 
-Para ello, los setlists generados deben poder utilizarse posteriormente en Rekordbox, que es la herramienta de referencia utilizada durante la actuación.
+Condicionantes:
 
-El anteproyecto establece que el setlist se exporta en un formato importable por Rekordbox, citando XML o M3U/M3U8.
+- SQLite **no almacena ficheros de audio**. Guarda únicamente la **ruta local** de cada pista junto con sus descriptores (título, duración, BPM, tonalidad, género).
+- La exportación es una funcionalidad secundaria: el núcleo funcional no depende de ella.
+- El sistema no debe modificar la base de datos interna de Rekordbox ni depender de interfaces privadas.
+- Se ha verificado directamente en Rekordbox que **no admite importar setlists en formato `.xml`**. Solo importa listas `.m3u` y `.m3u8`.
 
-El sistema no debe:
-
-- Modificar la base de datos interna de Rekordbox.
-- Depender de APIs privadas.
-- Requerir acceso a Internet.
-- Comprometer la portabilidad del sistema.
-
-Por tanto, la integración debe realizarse mediante formatos de intercambio soportados por Rekordbox.
+La verificación invalida la decisión original, que adoptaba el XML de Rekordbox como formato principal.
 
 ## Problema
 
-Determinar el mecanismo de exportación de setlists para garantizar la integración con Rekordbox.
+Determinar cómo se entrega un setlist a Rekordbox partiendo únicamente de las rutas locales almacenadas, sin formatos que Rekordbox no admita y sin acceder a su base de datos interna.
 
 ## Alternativas consideradas
 
-### A1. XML de Rekordbox
+### A1. Copia en carpeta local (`mkdir` + `copy`)
 
-Exportación utilizando el formato XML compatible con Rekordbox.
-
-#### Ventajas
-
-- Preserva la estructura de playlists.
-- Permite transmitir metadatos asociados.
-- Integración directa con el flujo de importación de Rekordbox.
-- Formato diseñado específicamente para intercambio con Rekordbox.
-- Compatible con las necesidades del proyecto.
-
-#### Inconvenientes
-
-- Formato más complejo.
-- Requiere respetar una estructura concreta.
-- Necesidad de mapear correctamente las rutas de las pistas.
-
----
-
-### A2. M3U8
-
-Exportación mediante listas de reproducción en formato M3U8.
+La aplicación crea una carpeta y copia en ella los ficheros de audio del setlist, en orden, a partir de las rutas guardadas en SQLite. El DJ abre la carpeta desde el explorador de Rekordbox sin importar ningún fichero especial.
 
 #### Ventajas
 
-- Muy sencillo de generar.
-- Fácil de inspeccionar manualmente.
-- Compatible con numerosos reproductores.
+- Resultado autocontenido: no depende de que las pistas permanezcan en su ubicación original.
+- Sin formato intermedio ni importación.
+- Implementación directa con la biblioteca estándar.
+- Útil para llevar el setlist a otro equipo o memoria USB.
 
 #### Inconvenientes
 
-- No transporta información adicional relevante.
-- Menor integración con Rekordbox.
-- Dependencia exclusiva de las rutas de los archivos.
+- Ocupa espacio en disco y la copia puede tardar con setlists largos o ficheros WAV y FLAC.
+- Duplica ficheros de audio.
+- El orden del setlist solo se refleja en el nombre de los ficheros.
 
 ---
 
-### A3. Escritura directa sobre la base de datos de Rekordbox
+### A2. Lista `.m3u` / `.m3u8`
 
-Modificación directa de la base de datos interna de la aplicación.
+Generación de una lista de reproducción estándar en UTF-8 que apunta a las rutas locales almacenadas en SQLite, importable de forma nativa en Rekordbox.
+
+#### Ventajas
+
+- Formato estándar y de texto plano, fácil de generar e inspeccionar.
+- Importación nativa en Rekordbox, verificada.
+- No copia ni duplica audio.
+- Compatible con otros reproductores.
+
+#### Inconvenientes
+
+- Depende de que las rutas sigan siendo válidas en el momento de importar.
+- No transporta atributos analíticos (BPM, tonalidad).
+- Las rutas con tildes, espacios o diferencias entre Windows y macOS requieren cuidado.
+
+---
+
+### A3. XML de Rekordbox (descartada)
+
+Exportación en el formato XML de colección de Rekordbox.
+
+#### Ventajas
+
+- Estructura rica de listas y metadatos asociados.
+
+#### Inconvenientes
+
+- **Descartada por incompatibilidad funcional:** Rekordbox no admite importar setlists en `.xml`.
+- Formato complejo y dependiente de la versión de la aplicación.
+
+---
+
+### A4. Escritura directa en la base de datos interna de Rekordbox (descartada)
 
 #### Ventajas
 
@@ -98,17 +88,16 @@ Modificación directa de la base de datos interna de la aplicación.
 
 #### Inconvenientes
 
-- Dependencia de una estructura interna no documentada.
-- Riesgo elevado de incompatibilidades.
-- Acoplamiento a una versión concreta de Rekordbox.
-- Solución incompatible con el alcance del proyecto (SRS, sección 2.5).
+- Estructura propietaria no documentada.
+- Riesgo elevado de corromper la biblioteca del DJ y de incompatibilidades entre versiones.
+- Fuera del alcance del proyecto.
 
 ---
 
 ## Criterios de evaluación
 
 | Criterio | Peso |
-|-----------|------:|
+|---|---:|
 | Compatibilidad con Rekordbox | 5 |
 | Robustez | 5 |
 | Facilidad de implementación | 4 |
@@ -117,10 +106,12 @@ Modificación directa de la base de datos interna de la aplicación.
 | Portabilidad | 4 |
 | Riesgo tecnológico | 5 |
 
+Suma de pesos: 32. Puntuación máxima posible: 160.
+
 ### Escala de valoración
 
 | Valor | Significado |
-|--------|-------------|
+|---|---|
 | 1 | Muy deficiente |
 | 2 | Deficiente |
 | 3 | Aceptable |
@@ -129,15 +120,8 @@ Modificación directa de la base de datos interna de la aplicación.
 
 ### Método de cálculo
 
-La puntuación ponderada de cada criterio se calcula como:
-
 ```text
 Puntuación ponderada = Valoración × Peso
-```
-
-La puntuación total de cada alternativa se calcula como:
-
-```text
 Total = Σ (Valoración × Peso)
 ```
 
@@ -145,238 +129,195 @@ Total = Σ (Valoración × Peso)
 
 ## Evaluación de alternativas
 
-### XML de Rekordbox
+La valoración es **provisional**. En A1 se otorga un 4 en compatibilidad porque la apertura de la carpeta desde el explorador de Rekordbox aún no se ha probado con una biblioteca real.
+
+### A1. Copia en carpeta local
 
 | Criterio | Peso | Valoración | Resultado |
-|-----------|------:|-----------:|----------:|
-| Compatibilidad con Rekordbox | 5 | 5 | 25 |
-| Robustez | 5 | 5 | 25 |
-| Facilidad de implementación | 4 | 3 | 12 |
-| Facilidad de uso para el DJ | 5 | 5 | 25 |
-| Mantenibilidad | 4 | 4 | 16 |
-| Portabilidad | 4 | 5 | 20 |
-| Riesgo tecnológico | 5 | 5 | 25 |
-
-**Total: 148**
-
----
-
-### M3U8
-
-| Criterio | Peso | Valoración | Resultado |
-|-----------|------:|-----------:|----------:|
-| Compatibilidad con Rekordbox | 5 | 3 | 15 |
+|---|---:|---:|---:|
+| Compatibilidad con Rekordbox | 5 | 4 | 20 |
 | Robustez | 5 | 4 | 20 |
 | Facilidad de implementación | 4 | 5 | 20 |
-| Facilidad de uso para el DJ | 5 | 3 | 15 |
+| Facilidad de uso para el DJ | 5 | 5 | 25 |
 | Mantenibilidad | 4 | 5 | 20 |
 | Portabilidad | 4 | 5 | 20 |
 | Riesgo tecnológico | 5 | 5 | 25 |
 
-**Total: 135**
+**Total: 150**
 
----
-
-### Escritura directa sobre la base de datos
+### A2. Lista `.m3u` / `.m3u8`
 
 | Criterio | Peso | Valoración | Resultado |
-|-----------|------:|-----------:|----------:|
+|---|---:|---:|---:|
+| Compatibilidad con Rekordbox | 5 | 5 | 25 |
+| Robustez | 5 | 3 | 15 |
+| Facilidad de implementación | 4 | 5 | 20 |
+| Facilidad de uso para el DJ | 5 | 4 | 20 |
+| Mantenibilidad | 4 | 5 | 20 |
+| Portabilidad | 4 | 4 | 16 |
+| Riesgo tecnológico | 5 | 4 | 20 |
+
+**Total: 136**
+
+### A3. XML de Rekordbox (descartada)
+
+| Criterio | Peso | Valoración | Resultado |
+|---|---:|---:|---:|
+| Compatibilidad con Rekordbox | 5 | 1 | 5 |
+| Robustez | 5 | 2 | 10 |
+| Facilidad de implementación | 4 | 2 | 8 |
+| Facilidad de uso para el DJ | 5 | 1 | 5 |
+| Mantenibilidad | 4 | 3 | 12 |
+| Portabilidad | 4 | 4 | 16 |
+| Riesgo tecnológico | 5 | 1 | 5 |
+
+**Total: 61**
+
+### A4. Escritura directa en la base de datos de Rekordbox (descartada)
+
+| Criterio | Peso | Valoración | Resultado |
+|---|---:|---:|---:|
 | Compatibilidad con Rekordbox | 5 | 2 | 10 |
 | Robustez | 5 | 1 | 5 |
 | Facilidad de implementación | 4 | 1 | 4 |
-| Facilidad de uso para el DJ | 5 | 5 | 25 |
+| Facilidad de uso para el DJ | 5 | 3 | 15 |
 | Mantenibilidad | 4 | 1 | 4 |
 | Portabilidad | 4 | 1 | 4 |
 | Riesgo tecnológico | 5 | 1 | 5 |
 
-**Total: 57**
+**Total: 47**
 
-Los tres totales se han verificado y no se modifican en esta revisión.
+### Resumen
+
+| Alternativa | Total | Estado |
+|---|---:|---|
+| A1. Copia en carpeta local | 150 | Adoptada |
+| A2. Lista `.m3u` / `.m3u8` | 136 | Adoptada |
+| A3. XML de Rekordbox | 61 | Descartada |
+| A4. Escritura en la base de Rekordbox | 47 | Descartada |
+
+La diferencia entre A1 y A2 (150 frente a 136) es moderada y ambas son simples y complementarias, por lo que no se excluyen entre sí.
 
 ---
 
 ## Comparación funcional
 
-| Característica | XML Rekordbox | M3U8 |
-|---------------|---------------|------|
-| Importación directa en Rekordbox | Sí | Parcial |
-| Estructura de playlists | Sí | Limitada |
-| Metadatos asociados | Sí | No |
-| Compatibilidad con otros reproductores | Limitada | Muy alta |
-| Complejidad de implementación | Media | Baja |
-| Formato principal recomendado | Sí | No |
-
-Las filas de esta tabla proceden de la valoración original y se confirman o corrigen en la prueba de importación.
-
-## Estrategia adoptada
-
-SetlistGen implementará dos formatos de exportación:
-
-### Exportación principal
-
-```text
-XML Rekordbox
-```
-
-Destinada a la integración completa con Rekordbox (RF-21).
-
-### Exportación secundaria
-
-```text
-M3U8
-```
-
-Destinada a interoperabilidad y uso en otros reproductores (RF-21b).
+| Característica | A1. Carpeta | A2. `.m3u` / `.m3u8` |
+|---|---|---|
+| Acceso desde Rekordbox | Abrir la carpeta en el explorador | Importar la lista |
+| Duplica ficheros de audio | Sí | No |
+| Depende de que las rutas originales sigan existiendo | Solo en el momento de exportar | En el momento de exportar y de importar |
+| Orden del setlist | Prefijo numérico en el nombre de fichero | Orden de las líneas |
+| Portable a otro equipo | Sí | No (rutas absolutas locales) |
+| Espacio en disco | Alto | Despreciable |
+| Complejidad de implementación | Baja | Baja |
+| Compatibilidad con otros reproductores | Parcial | Muy alta |
 
 ## Decisión
 
-Se adopta el formato XML de Rekordbox como mecanismo principal de integración.
-
-Además, se proporcionará exportación adicional en formato M3U8 como característica complementaria.
-
-No se realizará ninguna modificación directa de la base de datos interna de Rekordbox.
-
-Ambos formatos se generan mediante el puerto `SetlistExporter` (ADR-002), con los adaptadores `RekordboxXmlExporter` y `M3u8Exporter`.
+1. La exportación queda **fuera del núcleo mínimo viable** y se trata como ampliación opcional.
+2. Si se implementa, se adoptan **A1 (copia en carpeta local)** y **A2 (lista `.m3u` / `.m3u8`)** como mecanismos complementarios, ofrecidos a través del puerto opcional `IExportacion`. En implementación se prioriza el que resulte más directo según el margen de tiempo disponible.
+3. Se descartan definitivamente **A3 (XML)** y **A4 (escritura en la base de Rekordbox)**.
+4. El exportador solo **lee** el setlist y las rutas guardadas. No modifica el setlist ni ningún otro dato de la aplicación.
 
 ## Diseño previsto
 
-### Responsabilidades
+### Puerto
+
+`IExportacion` pertenece a la capa de aplicación y recibe un setlist ya guardado y un destino elegido por el DJ. Devuelve un informe con las pistas exportadas y las no localizables. La infraestructura aporta dos adaptadores independientes: uno para la copia en carpeta y otro para la lista `.m3u` / `.m3u8`. Ambos viven en `src/setlistgen/infrastructure/export/`.
+
+### Comportamiento común
 
 | Aspecto | Diseño |
 |---|---|
-| Entrada | Un setlist generado o editado, con el orden y los descriptores de sus pistas |
-| Rutas | El dominio maneja la ubicación de la pista sin formato de sistema operativo. La conversión a la representación que espera cada formato se realiza en el adaptador (RNF-21) |
-| Salida | Un fichero en disco; el setlist original no se modifica (CU-07) |
-| Pistas ausentes o sin ruta resoluble | Se avisa de forma explícita y el DJ elige entre cancelar y continuar. Si continúa, las pistas se mantienen con su última ubicación conocida **[Cuestión abierta · verificar en la prueba de importación]** (RF-22, RF-09c) |
-| Setlist editado a mano | Se exporta con su orden actual, avisando de las transiciones que incumplen restricciones (CU-07, A3) |
+| Entrada | Setlist guardado: pistas en orden con su ruta local |
+| Verificación previa | Se comprueba en disco que cada ruta existe y es legible antes de escribir nada |
+| Rutas rotas o ausentes | Se avisa con la lista de pistas afectadas y el DJ elige entre cancelar y continuar. Si continúa, se exportan las localizables y el informe indica las omitidas |
+| Setlist original | No se modifica. La exportación no tiene efectos sobre SQLite |
+| Fallos de escritura | Se informa de la causa (permisos, disco lleno, destino inexistente) y no se deja un resultado incompleto sin avisar |
 
-### Estructura del XML
+### A1. Adaptador de copia en carpeta local
 
-Según la documentación del formato [4], el documento tiene un elemento raíz `DJ_PLAYLISTS` con dos secciones: `COLLECTION`, que lista las pistas con un identificador y atributos descriptivos, entre ellos su ubicación, y `PLAYLISTS`, que contiene un árbol de nodos que referencian las pistas por identificador o por ubicación. El detalle de los atributos y su dependencia de la versión de Rekordbox se confirma en la prueba de importación.
+1. Se crea la carpeta de destino con el nombre del setlist (se pide confirmación si ya existe).
+2. Se comprueba que hay espacio libre suficiente estimado a partir del tamaño de los ficheros.
+3. Se copian los ficheros en el orden del setlist con un prefijo numérico (`01 - nombre.mp3`, `02 - …`) para que el orden se conserve al listar.
+4. Si dos pistas comparten nombre de fichero, el prefijo numérico evita colisiones.
+5. La copia conserva el contenido y las fechas del fichero original.
 
-### M3U8
+### A2. Adaptador de lista `.m3u` / `.m3u8`
 
-Fichero de texto en codificación UTF-8 con una ruta por pista, en el orden del setlist (RF-21b). La inclusión de cabecera y de información ampliada por pista, y el uso de rutas absolutas, son decisiones de diseño que se fijan al implementar.
+1. El fichero se escribe en **UTF-8**. Es la variante `.m3u8`, necesaria para tildes, espacios y caracteres Unicode.
+2. Cada línea es la ruta absoluta de una pista, en el orden del setlist. Opcionalmente se añade la cabecera estándar y, por pista, una línea con la duración y el título.
+3. Las rutas se escriben con el separador propio del sistema operativo en el que se ejecuta la aplicación. La conversión es responsabilidad exclusiva del adaptador y no del dominio.
+4. Si se ofrece la extensión `.m3u`, se documenta que puede perder caracteres no ASCII. Se recomienda `.m3u8`.
 
-### Dependencias
+### Pruebas previstas
 
-No se adopta una librería de terceros para el acceso a Rekordbox. La documentación de pyrekordbox se utiliza únicamente como descripción del formato XML [4]. Si en el futuro se utilizara alguna dependencia de este tipo, deberá pasar la revisión de ADR-007 y no podrá acceder a la base de datos interna de Rekordbox.
-
-### Relación con la lectura de referencia
-
-La lectura del XML de colección que el DJ exporta desde Rekordbox (RF-29b) es una operación de entrada, con un puerto distinto (`ReferenceDataProvider`). Ambos adaptadores pueden compartir conocimiento del formato XML dentro de la infraestructura, sin compartir interfaz.
-
-## Cuestiones abiertas para la prueba de importación
-
-Estas cuestiones no se resuelven con la documentación y requieren probar Rekordbox con ficheros reales. Su resultado puede modificar la estrategia de rutas o la valoración del XML.
-
-| Cuestión | Requisito | Riesgo |
-|---|---|---|
-| ¿Qué representación de ruta espera Rekordbox en Windows y en macOS (separadores, unidad, prefijo y codificación de caracteres especiales)? | RF-22, RNF-16, RNF-19 | R-02 |
-| ¿Cómo se comporta la importación con espacios, tildes, caracteres Unicode y rutas largas? | RNF-16 | R-02 |
-| ¿Existe un esquema formal para validar el XML, o la validación es solo estructural y por importación? | RF-21 | R-02 |
-| ¿Qué atributos de pista conviene incluir (por ejemplo BPM y tonalidad estimados) sin interferir con el análisis propio de Rekordbox? | RF-21 | R-02 |
-| ¿Cómo se carga una pista con ubicación inexistente y qué advierte Rekordbox? | RF-22, RF-09c | R-02 |
-| ¿Varía el comportamiento entre versiones de Rekordbox? Se registra la versión usada en cada prueba | RF-23 | R-02 |
-| ¿Importa Rekordbox correctamente un M3U8 con rutas absolutas en ambos sistemas? | RF-21b | R-02 |
+- Setlist con pistas cuyas rutas contienen espacios, tildes y caracteres Unicode.
+- Setlist con una pista movida o eliminada tras guardarlo.
+- Destino sin permisos de escritura y disco con espacio insuficiente.
+- Importación manual de la lista en Rekordbox y apertura de la carpeta copiada, registrando la versión de Rekordbox usada y el sistema operativo.
 
 ## Justificación
 
-El XML de Rekordbox proporciona la mejor integración posible respetando las restricciones del proyecto.
-
-Permite intercambiar playlists de forma segura, reproducible y desacoplada de la implementación interna de Rekordbox.
-
-La exportación adicional a M3U8 mejora la interoperabilidad sin introducir complejidad significativa.
+Las dos vías aprovechan el hecho de que SQLite ya guarda las rutas locales, de modo que no necesitan nuevos datos ni dependencias. La copia en carpeta es la más robusta, porque el resultado es independiente de las rutas originales. La lista `.m3u8` es la más ligera y la única que Rekordbox importa de forma nativa. Ambas evitan formatos propietarios y cualquier acoplamiento con la base de datos de Rekordbox.
 
 ## Consecuencias
 
 ### Positivas
 
-- Integración completa con Rekordbox.
-- Ausencia de dependencias privadas.
-- Solución robusta frente a cambios internos.
-- Mayor interoperabilidad mediante M3U8.
-- Fácil validación experimental.
+- Base de datos ligera: solo rutas y descriptores, sin binarios de audio.
+- Cero dependencia de formatos propietarios o complejos.
+- Flujo natural para el DJ: abrir una carpeta o importar una lista estándar.
+- Coste de implementación bajo para una funcionalidad opcional.
+- Nunca se pone en riesgo la biblioteca de Rekordbox del DJ.
 
 ### Negativas
 
-- Necesidad de implementar el generador XML.
-- Validación manual de importación durante las pruebas (RF-23), con dependencia de la versión de Rekordbox instalada.
-- Gestión correcta de rutas multiplataforma (RNF-16, RNF-19).
-- La valoración del XML parte de la documentación del formato, no de pruebas propias, hasta que se realice la prueba de importación.
-- Si la prueba demuestra que el XML no resuelve las rutas de forma fiable, el M3U8 pasaría a ser el formato principal, con revisión de este ADR y de RF-21.
-
-## Trazabilidad
-
-| Elemento | Referencias |
-|---|---|
-| Requisitos funcionales | RF-09c, RF-21, RF-21b, RF-22, RF-23 |
-| Requisitos no funcionales | RNF-16, RNF-19, RNF-21, RNF-22, RNF-23, RNF-25 |
-| Componentes | CMP-05 (exportador Rekordbox) |
-| Casos de uso | CU-07 (exportar setlist a Rekordbox) |
-| Casos de prueba | T-CU07-01 a T-CU07-05, T-ARQ-01, T-ARQ-02, T-ARQ-04, T-ARQ-08, T-ARQ-09 |
-| Riesgos | R-02 |
+- **Rutas rotas:** si el DJ mueve o renombra canciones en disco antes de exportar, las pistas no se localizan. Se mitiga con la verificación previa y el aviso.
+- La copia en carpeta duplica ficheros y puede tardar con setlists largos.
+- La lista `.m3u8` no transporta BPM ni tonalidad: Rekordbox usa su propio análisis.
+- El comportamiento de Rekordbox puede variar entre versiones y solo se comprueba de forma manual.
+- Al ser una ampliación, puede quedar sin implementar si el tiempo no alcanza. En ese caso el DJ debe llevar el setlist a mano.
 
 ## Evidencias utilizadas
 
-- Requisitos de exportación a Rekordbox (RF-21, RF-21b, RF-22, RF-23).
-- Objetivos de integración del proyecto (O5) y su formulación en el anteproyecto.
-- Restricciones de funcionamiento local (RNF-25).
-- Necesidad de mantener independencia frente a software propietario.
-- Documentación del formato XML de Rekordbox [4] y del formato M3U/M3U8 (memoria, secciones 3.6.1 y 3.6.2).
+- Verificación directa en Rekordbox: solo se admiten listas `.m3u` y `.m3u8`; no se admite la importación de setlists en `.xml`.
+- Decisión de guardar únicamente la ruta local y los descriptores básicos de cada pista en SQLite.
+- Estado del arte sobre la integración con Rekordbox y formatos de lista (memoria, capítulos 2 y 3).
+- ADR-002: aislamiento de la exportación tras un puerto de la capa de aplicación.
+- ADR-004: persistencia en SQLite sin ficheros de audio.
 
 ## Impacto en el proyecto
 
-- Fija el puerto `SetlistExporter` y sus dos adaptadores.
-- Hace de la prueba de importación en Rekordbox (tarea 2 del plan, hito H2) una condición para validar esta decisión.
-- Condiciona el tratamiento de rutas, que debe quedar en infraestructura.
-- Obliga a definir el conjunto de setlists de prueba para RF-23, incluidos nombres con caracteres especiales y ambos sistemas operativos.
+- El componente `Exportación` aparece como opcional en el diagrama de componentes.
+- Sus requisitos se marcan con la prioridad más baja en la Fase 2 y no condicionan la entrega del núcleo.
+- Elimina del alcance el generador y el lector de XML de Rekordbox, que reducían el esfuerzo disponible para el resto.
+- La estructura `src/setlistgen/infrastructure/export/` se mantiene vacía hasta decidir su implementación.
 
 ## Impacto en la memoria
 
 Guardar este contenido para la memoria del TFG.
 
-- **Capítulo 3, sección 3.6:** descripción del XML de Rekordbox y de M3U8, ya redactada. Debe mantenerse coherente con las cuestiones abiertas de la prueba de importación.
-- **Capítulo 4, secciones 4.4 y 4.6:** registrar que la estrategia se aceptó antes de la prueba de importación y que su verificación sigue pendiente.
-- **Capítulo 6, sección 6.6:** diseño de la exportación.
-- **Capítulo 7, sección 7.7:** implementación de los exportadores y de la conversión de rutas.
-- **Capítulo 8, sección 8.5:** verificación de la exportación con Rekordbox.
+- **Capítulo 4, secciones 4.4 y 4.6:** registrar como desviación justificada que la verificación empírica invalidó el XML como formato principal.
+- **Capítulo 6, sección 6.6:** diseño de la exportación opcional a partir de este ADR.
+- **Capítulo 7, sección 7.7:** implementación, si se lleva a cabo.
+- **Capítulo 8, sección 8.5:** verificación manual con Rekordbox, si se implementa.
 - **Apéndice B, sección B.2:** incluir este ADR.
 
 Bloque reutilizable:
 
-- **Contexto:** los setlists deben llegar a Rekordbox sin tocar su base de datos ni depender de interfaces privadas.
-- **Problema:** elegir el mecanismo de exportación.
-- **Alternativas:** XML de Rekordbox, M3U8 y escritura directa en la base de datos.
-- **Solución adoptada:** XML como formato principal y M3U8 como complemento, mediante el puerto `SetlistExporter`.
-- **Justificación:** mayor puntuación (148 frente a 135 y 57) y respeto de la restricción de no modificar la base de datos de Rekordbox.
-- **Ventajas:** integración con estructura de listas, intercambio seguro y desacoplado, e interoperabilidad con otros reproductores.
-- **Limitaciones:** generación de rutas multiplataforma delicada y validación manual dependiente de la versión de Rekordbox.
-- **Impacto:** exige una prueba de importación temprana y condiciona el tratamiento de rutas en infraestructura.
+- **Contexto:** el setlist debe llegar a Rekordbox partiendo solo de rutas locales almacenadas en SQLite.
+- **Problema:** elegir un mecanismo que Rekordbox admita sin tocar su base de datos.
+- **Alternativas:** copia en carpeta local, lista `.m3u`/`.m3u8`, XML de Rekordbox y escritura directa en su base de datos.
+- **Solución adoptada:** copia en carpeta y lista `.m3u8` como ampliación opcional tras el puerto `IExportacion`.
+- **Justificación:** mayor puntuación (150 y 136 frente a 61 y 47) y comprobación empírica de que Rekordbox no importa XML.
+- **Ventajas:** base de datos ligera, ausencia de formatos propietarios y flujo natural para el DJ.
+- **Limitaciones:** rutas rotas si el DJ mueve los ficheros, duplicación de audio en la copia y dependencia de la versión de Rekordbox.
+- **Impacto:** exportación fuera del núcleo mínimo y estructura de `src/` sin carga adicional.
 
 ## Decisiones relacionadas
 
-- ADR-001: Forma de Distribución del Sistema.
 - ADR-002: Arquitectura General del Sistema.
-- ADR-003: Motor de Análisis Musical.
 - ADR-004: Persistencia.
 - ADR-005: Algoritmo de Generación de Setlists.
-- ADR-007: Licencias y compatibilidad legal (propuesto).
-- ADR-008: Lenguaje, interfaz gráfica y empaquetado (propuesto).
-- ADR-009: Dataset y protocolo de evaluación (propuesto).
-- ADR-010: Identificación permanente de pistas (propuesto, OD-03).
-
-## Cambios respecto a la versión original (2026-10-28)
-
-| Cambio | Motivo |
-|---|---|
-| Estado aclarado: estrategia aceptada, verificación pendiente de la prueba de importación | Riesgo R-02 y hallazgo N-16 |
-| M3U8 respaldado por RF-21b | Hallazgo N-02: el SRS v3.0 no tenía requisito para M3U8 del setlist |
-| Puerto `SetlistExporter` con adaptadores `RekordboxXmlExporter` y `M3u8Exporter` | Vocabulario canónico (ADR-002) |
-| Diseño previsto: responsabilidades, rutas y pistas ausentes | RF-22, RF-09c y RNF-21 |
-| Tabla de cuestiones abiertas para la prueba de importación | Hacer verificable R-02 |
-| Decisión de no adoptar una librería de terceros para Rekordbox | Coherencia con la restricción de no acceder a la base de datos de Rekordbox y con ADR-007 |
-| Relación con la lectura de referencia (RF-29b) | Evitar mezclar los puertos de entrada y de salida |
-| Requisitos, trazabilidad, impactos y decisiones ADR-007 a ADR-010 | Formato obligatorio de ADR |
-
-Las puntuaciones y los totales no se modifican.
