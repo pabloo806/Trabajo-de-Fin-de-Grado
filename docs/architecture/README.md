@@ -2,50 +2,40 @@
 
 > Destino en el repositorio: `docs/architecture/README.md`.
 
-**Versión:** 3.0.1 · **Fecha:** 2026-11-14 · **Alineado con:** SRS v4.0, casos de uso v1.1, matriz v3.0, glosario v2.1, ADR-001 a ADR-010, `domain-model.md` v0.2, `conceptual-model.md` v0.1, `er-model.md` v0.1.2 y `database-schema.md` v0.1.1.
+**Versión:** 4.0.0 · **Fecha:** 2026-11-20 · **Alineado con:** Fase 1 (Arquitectura simplificada), Diagrama de Componentes UML v1.0 y ADR-001 a ADR-010.
 
 ## Descripción
 
-Este directorio contiene la arquitectura de SetlistGen, sus registros de decisiones (ADR) y el diseño detallado del dominio y de los datos.
+Este directorio recoge la arquitectura del sistema **SetlistGen**, sus registros de decisiones arquitectónicas (ADR) y los diagramas estructurales correspondientes.
 
-> **Estado.** La fase de **diseño detallado está completada de forma provisional**: dominio, modelo conceptual, MER y esquema SQLite existen y se han verificado en sus límites, pero se apoyan en supuestos (OD-03 a OD-07) que **ningún tutor ha validado**. No hay código en `src/` ni prueba de concepto. Los términos que dependen de una decisión abierta se marcan **[PROPUESTA · OD-xx]** o **[SUPUESTO · OD-xx]** y no la cierran.
+> **Estado del proyecto.** Tras la reunión de seguimiento con el tutor, la fase de arquitectura se ha reorientado hacia un **alcance realista y defendible** (actor único `DJ`, persistencia ligera en SQLite basada en rutas locales sin binarios de audio y exportación a Rekordbox como ampliación opcional). La capa de interfaz gráfica permanece en estado **Propuesto** (aplicación de escritorio en Python o interfaz web local) hasta cerrar el análisis de requisitos y el modelo de datos.
 
-SetlistGen es una aplicación de escritorio en Python que analiza una biblioteca musical local, genera setlists mediante satisfacción de restricciones con una función de coste y los exporta a Rekordbox. Todo el procesamiento es local (RNF-25).
+SetlistGen es una aplicación local en Python que analiza bibliotecas musicales del equipo del DJ, genera setlists mediante satisfacción de restricciones armónicas y temporales, permite editarlos libremente y los guarda en SQLite. Todo el procesamiento se ejecuta de forma 100 % local.
 
 ---
 
 # 1. Documentos de este directorio
 
-## 1.1 Decisiones arquitectónicas
+## 1.1 Decisiones arquitectónicas (ADRs)
 
-| ADR | Decisión | Estado |
+| ADR | Decisión y justificación resumida | Estado |
 |---|---|---|
-| [ADR-001](adrs/ADR-001-distribucion-sistema.md) | Aplicación de escritorio | Aceptado |
-| [ADR-002](adrs/ADR-002-arquitectura-general.md) | Clean Architecture con puertos y adaptadores | Aceptado (pendiente de incorporar `AnalysisResultRepository`) |
-| [ADR-003](adrs/ADR-003-motor-analisis-musical.md) | Puerto `AudioAnalyzer` con adaptadores intercambiables | Aceptado (librería pendiente de la prueba de concepto) |
-| [ADR-004](adrs/ADR-004-persistencia.md) | SQLite | Aceptado (esquema provisional, véase `data-model.md`) |
-| [ADR-005](adrs/ADR-005-generacion-setlists.md) | Restricciones con función de coste | Aceptado |
-| [ADR-006](adrs/ADR-006-exportacion-rekordbox.md) | XML de Rekordbox y M3U8 complementario | Aceptado (verificación pendiente) |
-| [ADR-007](adrs/ADR-007-licencias-dependencias.md) | Licencias y compatibilidad legal | Propuesto |
-| [ADR-008](adrs/ADR-008-lenguaje-interfaz-empaquetado.md) | Lenguaje, interfaz, empaquetado y estructura de paquetes | Propuesto |
-| [ADR-009](adrs/ADR-009-evaluacion-validacion.md) | Conjunto de evaluación y protocolo de validación | Propuesto |
-| [ADR-010](adrs/ADR-010-identificacion-pistas.md) | Identificación permanente de pistas (OD-03) | Propuesto |
+| [ADR-001](adrs/ADR-001-distribución-sistema.md) | **Ejecución 100 % local en el equipo del DJ.** Evita servidores externos y permite acceder directamente a las carpetas de audio del sistema de archivos. El formato de interfaz (escritorio Python o web local con backend Python) sigue abierto. | Simplificado · Interfaz Propuesta |
+| [ADR-002](adrs/ADR-002-arquitectura-general.md) | **Clean Architecture con puertos y adaptadores** (véase la sección 4). Permite sustituir el motor MIR, la interfaz o el exportador sin modificar las reglas de negocio del dominio. | Aceptado |
+| [ADR-003](adrs/ADR-003-motor-analisis-musical.md) | **Motor MIR desacoplado tras una interfaz (`IAnalizadorMIR`).** Essentia es el candidato principal y librosa permite contrastar resultados; la elección final depende de su precisión, licencia e instalación. | Aceptado · Librería pendiente |
+| [ADR-004](adrs/ADR-004-persistencia.md) | **SQLite** como único fichero local sin servidor. Almacena únicamente rutas locales y descriptores básicos (nunca ficheros MP3/WAV), siguiendo un modelo simplificado de 5-6 tablas. | Aceptado · Esquema en Fase 3 |
+| [ADR-005](adrs/ADR-005-generacion-setlists.md) | **Generación por restricciones (CSP)** según duración del evento, rango de BPM, compatibilidad armónica Camelot y no repetición de pistas, permitiendo edición posterior flexible por el DJ. | Aceptado · Alcance reducido |
+| [ADR-006](adrs/ADR-006-exportacion-rekordbox.md) | **Exportación opcional** mediante copia en carpeta local (`mkdir` + `copy`) o lista `.m3u` / `.m3u8`. Se descarta el XML tras verificar en Rekordbox que no importa setlists XML. | Propuesto · Ampliación opcional |
+| [ADR-007](adrs/ADR-007-licencias-dependencias.md) | **Licencia MIT y dependencias permisivas en el núcleo.** Cualquier librería con licencia restrictiva quedaría aislada como adaptador opcional. | Simplificado |
+| [ADR-008](adrs/ADR-008-lenguaje-interfaz-empaquetado.md) | **Python** como lenguaje principal. El empaquetado en ejecutable queda como mejora opcional; la entrega base se ejecuta desde el código fuente. | Simplificado · Interfaz Propuesta |
+| [ADR-009](adrs/ADR-009-evaluacion-validacion.md) | **Validación experimental sobre una muestra de la biblioteca real del autor**, contrastando el BPM y la tonalidad estimados frente a los valores de referencia de Rekordbox. | Simplificado |
+| [ADR-010](adrs/ADR-010-identificacion-pistas.md) | **Detección simple de pistas ya analizadas** consultando su ruta local en SQLite para evitar duplicados y re-análisis innecesarios (se descarta la identificación por huellas acústicas). | Simplificado |
 
-## 1.2 Diseño del dominio y de los datos
+## 1.2 Documentación relacionada
 
-| Documento | Contenido | Versión | Estado |
-|---|---|---|---|
-| [`data-model.md`](data-model.md) | **Índice maestro** de la serie de datos y estado de los supuestos | 1.0.1 | Provisional |
-| [`domain-model.md`](domain-model.md) | Agregados, invariantes, servicios y código de especificación del dominio | 0.2 | Provisional |
-| [`conceptual-model.md`](conceptual-model.md) | Entidades y relaciones persistentes | 0.1 | Provisional |
-| [`er-model.md`](er-model.md) | Modelo entidad-relación lógico | 0.1.2 | Provisional |
-| [`database-schema.md`](database-schema.md) | Modelo relacional y diseño físico SQLite | 0.1.1 | Provisional |
-| [`open-decisions.md`](../project-management/open-decisions.md) | Decisiones abiertas OD-01 a OD-10 y decisiones derivadas del diseño | 3.2 | Para la reunión con tutores |
-| [`audit-review.md`](../project-management/audit-review.md) | Auditoría técnica y hallazgos | 3.2 | Actualizado antes de la reunión con tutores |
-
-## 1.3 Fuentes de análisis
-
-[`requirements.md`](../requirements/requirements.md) (SRS v4.0), [`use-cases.md`](../requirements/use-cases.md) (v1.1), [`traceability-matrix.md`](../requirements/traceability-matrix.md) (v3.0) y [`glosario.md`](../requirements/glosario.md) (v2.1).
+* **Análisis de requisitos (Fase 2):** [`docs/requirements/README.md`](../requirements/README.md) (pendiente de reescritura simplificada).
+* **Modelo de datos (Fase 3):** Se documentará en un único fichero unificado (`docs/architecture/data-model.md`) tras cerrar los requisitos y casos de uso.
+* **Memoria LaTeX:** [`docs/memory/`](../memory/).
 
 ---
 
@@ -53,280 +43,110 @@ SetlistGen es una aplicación de escritorio en Python que analiza una biblioteca
 
 | Ámbito | Tecnología | Estado |
 |---|---|---|
-| Lenguaje | Python 3.10 o superior | Adoptado; versión definitiva en ADR-008 (propuesto) |
-| Persistencia | SQLite 3.37 o superior (tablas `STRICT`), modo `WAL` propuesto | Aceptado (ADR-004); esquema provisional |
-| Análisis musical | Essentia (principal previsto), librosa y madmom | Candidatos; selección tras la prueba de concepto (ADR-003) |
-| Lectura de etiquetas | Mutagen | Candidato |
-| Generación | Restricciones con función de coste; resolutor propio en el dominio | Aceptado (ADR-005) |
-| Exportación | XML de Rekordbox y M3U8 | Aceptado; verificación pendiente (ADR-006) |
-| Interfaz gráfica | PySide6 (alternativa: Tkinter) | Propuesto (ADR-008) |
-| Pruebas | pytest | Adoptado |
-
-Las licencias se revisan según ADR-007 (propuesto); varias hipótesis siguen sin verificar.
+| Lenguaje | Python 3.10 o superior | Adoptado (ADR-008) |
+| Persistencia | SQLite 3 (fichero local único) | Aceptado (ADR-004) |
+| Análisis musical (MIR) | Essentia (principal) / librosa (alternativa) | Candidatos tras interfaz `IAnalizadorMIR` (ADR-003) |
+| Lectura de etiquetas | Mutagen / biblioteca estándar | Candidato |
+| Generación de setlists | Motor propio de restricciones en el dominio | Aceptado (ADR-005) |
+| Exportación | Copia en carpeta local / lista `.m3u` o `.m3u8` | Propuesto · Ampliación opcional (ADR-006) |
+| Interfaz de usuario | Escritorio Python (PySide6 / Tkinter) o Web local (HTML/CSS + Python) | Propuesto · Pendiente de decisión |
+| Pruebas | `pytest` | Adoptado |
 
 ---
 
-# 3. Arquitectura resultante
+# 3. Diagrama de componentes del sistema (UML)
 
-Clean Architecture con puertos y adaptadores. Las dependencias apuntan siempre hacia el dominio. Los puertos pertenecen a la capa de Aplicación y los adaptadores de Infraestructura los implementan.
+## 3.1 Flujo de trabajo del actor único (DJ)
+
+El **DJ** es el único actor externo que interactúa con el sistema a través de la interfaz en tres etapas:
+
+1. **Selección y análisis de biblioteca:** elige una carpeta local de su ordenador, visualiza un resumen rápido (tamaño total, número de archivos, subcarpetas y tiempo estimado de análisis) y lanza el procesamiento. El analizador extrae metadatos, BPM y tonalidad mediante el motor MIR, comprobando previamente en SQLite si cada pista ya fue analizada para evitar duplicados.
+2. **Parametrización y generación:** introduce la duración objetivo del evento, el rango de BPM admisible y las reglas de compatibilidad armónica (código Camelot), y solicita la generación automática de una propuesta de setlist.
+3. **Edición flexible, guardado y exportación opcional:** reordena pistas (por ejemplo, de forma ascendente por BPM), fija una canción inicial o añade pistas manualmente aunque incumplan las restricciones, guarda el setlist definitivo en SQLite y, como ampliación opcional, lo exporta a una carpeta local o fichero `.m3u`/`.m3u8`.
+
+## 3.2 Responsabilidad de los componentes
+
+| Componente | Responsabilidad |
+|---|---|
+| **Interfaz de Usuario** | Gestiona la interacción del DJ en los tres pasos del flujo sin contener lógica de negocio. Formato pendiente de decisión (escritorio o web local). |
+| **Analizador de Bibliotecas** | Calcula estadísticas previas de la carpeta seleccionada y coordina la extracción de metadatos, BPM y tonalidad a través de `IAnalizadorMIR`, omitiendo pistas ya registradas en SQLite. |
+| **Generador de Setlists** | Selecciona y ordena las pistas compatibles según las restricciones indicadas y permite la edición manual flexible del setlist resultante. |
+| **Persistencia** | Gestiona la lectura y escritura en SQLite de bibliotecas, pistas (solo ruta local y descriptores, nunca audio) y setlists. |
+| **Exportación `<<opcional>>`** | Genera una copia ordenada de los ficheros de audio en una carpeta local o una lista `.m3u`/`.m3u8` a partir de las rutas guardadas (ADR-006). |
+
+## 3.3 Diagrama UML
+
+![Diagrama de Componentes - SetlistGen](diagrams/componentes.svg)
+
+* **Código fuente editable (PlantUML):** [`diagrams/componentes.puml`](diagrams/componentes.puml)
+
+---
+
+# 4. Arquitectura general y organización de `src/`
+
+SetlistGen adopta una **arquitectura limpia por capas con puertos y adaptadores** (ADR-002), donde las dependencias apuntan siempre hacia el núcleo de dominio:
+
+## 4.1 Reglas de dependencia entre capas
+
+| Capa | Responsabilidad | Puede importar | No puede importar |
+|---|---|---|---|
+| **Dominio** | Entidades (`Track`, `Library`, `Setlist`), rueda de Camelot y reglas de compatibilidad/coste | Biblioteca estándar de Python | Aplicación, infraestructura, presentación o librerías externas |
+| **Aplicación** | Casos de uso del DJ e interfaces/puertos (`IAnalizadorMIR`, `IRepositorio`, `IExportacion`) | Dominio | Infraestructura, presentación o librerías externas |
+| **Infraestructura** | Adaptadores concretos para SQLite, motor MIR y exportación | Aplicación, dominio y librerías externas | Presentación |
+| **Presentación** | Interfaz de usuario (escritorio o web local) | Aplicación y dominio (solo lectura para mostrar datos) | Infraestructura directamente |
+
+## 4.2 Estructura del paquete `src/setlistgen/`
+
+```text
+src/setlistgen/
+├── domain/                  Entidades y reglas de negocio (Camelot, compatibilidad, restricciones)
+├── application/
+│   ├── use_cases/           Acciones del DJ: analizar biblioteca, generar, editar y guardar setlist
+│   └── ports/               Interfaces que requiere la aplicación (IRepositorio, IAnalizadorMIR, IExportacion)
+├── infrastructure/
+│   ├── analysis/            Adaptador del Motor MIR (Essentia / librosa) y lectura de metadatos
+│   ├── persistence/         Implementación del repositorio en SQLite
+│   └── export/              Adaptadores opcionales (copia en carpeta local y lista .m3u / .m3u8)
+└── presentation/            Capa de interfaz de usuario (Propuesta: escritorio / web local)
+```
+
+### 4.2.1 Diagrama de organización y dependencias de `src/setlistgen/`
 
 ```mermaid
 flowchart TB
-
-    subgraph PRES["Presentación"]
-        UI["Interfaz de usuario"]
+    subgraph SRC["src/setlistgen/"]
+        direction TB
+        PRES["<b>presentation/</b><br/>Interfaz de usuario (Propuesta: Escritorio / Web local)"]
+        APP["<b>application/</b><br/>use_cases/ · ports/ (IRepositorio, IAnalizadorMIR, IExportacion)"]
+        DOM["<b>domain/</b><br/>Entidades (Track, Library, Setlist) y reglas Camelot"]
+        INF["<b>infrastructure/</b><br/>analysis/ · persistence/ · export/ (opcional)"]
     end
 
-    subgraph APP["Aplicación"]
-        UC["Casos de uso CU-01 a CU-11"]
-        PORTS["Puertos"]
-    end
-
-    subgraph DOM["Dominio"]
-        ENT["Agregados, entidades y objetos de valor"]
-        SRV["Servicios de dominio y contratos"]
-    end
-
-    subgraph INF["Infraestructura"]
-        AD["Adaptadores"]
-    end
-
-    BOOT["Bootstrap · composición de dependencias"]
-
-    UI --> UC
-    UC --> ENT
-    UC --> SRV
-    UC --> PORTS
-    AD -.implementa.-> PORTS
-    AD --> ENT
-    BOOT --> UI
-    BOOT --> UC
-    BOOT --> AD
-```
-
-## 3.1 Reglas de dependencia
-
-| Capa | Puede importar | No puede importar |
-|---|---|---|
-| Dominio | Biblioteca estándar | Aplicación, infraestructura, presentación, librerías de audio, de base de datos o de interfaz |
-| Aplicación | Dominio | Infraestructura, presentación, librerías externas |
-| Infraestructura | Aplicación, dominio, librerías externas | Presentación |
-| Presentación | Aplicación, dominio (solo para mostrar) | Infraestructura |
-| Bootstrap | Todas (es el único lugar donde se ensamblan) | — |
-
-La comprobación es automática en integración continua (RNF-22, T-ARQ-01). Está **verificada por inspección** sobre los diez módulos del dominio v0.2, que solo importan la biblioteca estándar; la comprobación automática aún no existe.
-
-## 3.2 Puertos
-
-Vocabulario canónico del proyecto (SRS 7.0 y glosario, sección 8).
-
-| Puerto | Responsabilidad | Adaptadores previstos | Estado |
-|---|---|---|---|
-| `LibraryScanner` | Recorrer carpetas y filtrar formatos | Sistema de archivos | Previsto |
-| `MetadataReader` | Leer etiquetas | Basado en Mutagen (candidato) | Previsto |
-| `AudioAnalyzer` | Estimar BPM y tonalidad | `EssentiaAdapter`, `LibrosaAdapter`, `MadmomAdapter` | Previsto (ADR-003) |
-| `TrackIdentifier` | Calcular las huellas de una pista | Según ADR-010 | **[PROPUESTA · OD-03]** |
-| `TrackRepository` | Agregado **Catálogo**: pistas, ubicaciones, metadatos y huellas | `SQLiteTrackRepository` | Previsto. **Alcance reducido** (N-32) |
-| `AnalysisResultRepository` | Agregado **Análisis**: resultados por pista y motor | `SQLiteAnalysisResultRepository` | **Confirmado (N-32)**; supuesto OD-04. Pendiente de reflejarse en ADR-002 |
-| `SetlistRepository` | Setlists, solicitudes, instantáneas e histórico | `SQLiteSetlistRepository` | Previsto (ADR-004) |
-| `StatisticsRepository` | Consultas del panel | `SQLiteStatisticsRepository` | Previsto |
-| `EvaluationRepository` | Referencias e informes de evaluación | `SQLiteEvaluationRepository` | **[PROPUESTA]** |
-| `SetlistExporter` | Exportar setlists | `RekordboxXmlExporter`, `M3u8Exporter` | Previsto (ADR-006) |
-| `ReferenceDataProvider` | Leer valores de referencia de Rekordbox | Lector de XML de colección, lector de CSV | Previsto |
-
-**Contrato del dominio, no puerto:** `SetlistGenerator.generate(candidates, request)` devuelve `Solution`, `Infeasible` o `LimitReached`. Es el resolutor propio de ADR-005 y reside en el dominio. Si se adoptara una librería externa de restricciones, pasaría a ser un puerto con revisión de ADR-005 y ADR-007.
-
-## 3.3 Dominio
-
-Cuatro agregados que se referencian solo por identidad (detalle en [`domain-model.md`](domain-model.md)).
-
-```mermaid
-flowchart LR
-    subgraph CAT["Catálogo"]
-        T["Track"]
-    end
-    subgraph ANA["Análisis"]
-        AR["AnalysisResult"]
-    end
-    subgraph GEN["Generación"]
-        S["Setlist · GenerationRequest · instantáneas"]
-    end
-    subgraph EVA["Evaluación"]
-        R["EvaluationReport · ReferenceMeasurement"]
-    end
-
-    AR -.->|"TrackId"| T
-    S -.->|"TrackId"| T
-    R -.->|"TrackId"| T
-```
-
-Servicios de dominio sin estado: `HarmonicCompatibilityService`, `TransitionEvaluatorService`, `SetlistValidatorService`, `SetlistAssemblyService`, `TrackRecognitionService`, `ReferenceMatchingService`, `EstimationErrorClassifier` y `EvaluationService`.
-
-## 3.4 Flujo principal
-
-```mermaid
-flowchart LR
-    AUDIO["Biblioteca musical"] --> IMPORT["Importación y metadatos"]
-    IMPORT --> IDENT["Reconocimiento de pistas<br/>(dos niveles)"]
-    IDENT --> ANALYSIS["Análisis musical<br/>(motor activo)"]
-    ANALYSIS --> DB[("SQLite")]
-    DB --> CAND["Selección de candidatas"]
-    CAND --> GEN["Generador"]
-    GEN --> SETLIST["Setlist"]
-    SETLIST --> EXPORT["Exportación<br/>XML · M3U8"]
-    EXPORT --> RB["Rekordbox"]
-    RB -.exporta.-> REF["XML de colección<br/>(referencia)"]
-    REF --> EVAL["Evaluación<br/>por motor"]
-    DB --> EVAL
-```
-
-## 3.5 Uso previsto de las librerías MIR
-
-Reparto candidato. La selección depende de la prueba de concepto, de ADR-007 y de ADR-009.
-
-| Funcionalidad | Tecnología candidata |
-|---|---|
-| Lectura de etiquetas | Mutagen |
-| Lectura de audio, STFT y espectrogramas | Librosa |
-| Cromagramas | Librosa o Essentia |
-| BPM | Essentia o Madmom |
-| Tonalidad | Essentia |
-| Beat tracking | Madmom |
-| Código Camelot | Implementación propia en el dominio (RF-06) |
-
+    PRES --> APP
+    INF -.->|implementa puertos| APP
+    INF --> DOM
+    APP --> DOM
+``` 
 ---
 
-# 4. Estructura del repositorio (propuesta)
+# 5. Estado actual y próximos hitos
 
-**Propuesta de ADR-008 (OD-08), que el diseño detallado confirma como conveniente.** No hay código que migrar, así que el coste de adoptarla es mínimo. Resuelve el hallazgo N-25.
-
-```text
-setlistgen/
-├── src/setlistgen/                  Paquete de la aplicación
-│   ├── domain/                      Dominio puro (solo biblioteca estándar)
-│   ├── application/
-│   │   ├── use_cases/               CU-01 a CU-11
-│   │   └── ports/                   Puertos (Protocol)
-│   ├── infrastructure/
-│   │   ├── analysis/                Adaptadores de AudioAnalyzer
-│   │   ├── metadata/                Adaptador de MetadataReader
-│   │   ├── scanning/                Adaptador de LibraryScanner
-│   │   ├── identification/          Adaptador de TrackIdentifier
-│   │   ├── persistence/
-│   │   │   ├── migrations/          0001_initial.sql y siguientes
-│   │   │   │   └── pending/         Migraciones condicionales (OD-05)
-│   │   │   └── repositories/        Repositorios SQLite
-│   │   ├── export/                  Exportadores XML y M3U8
-│   │   └── reference/               Lectores de referencia
-│   ├── presentation/                Interfaz gráfica
-│   └── bootstrap/                   Composición y punto de entrada
-├── tests/
-│   ├── unit/{domain,application}/
-│   ├── integration/{persistence,infrastructure}/
-│   ├── architecture/                Regla de dependencia (T-ARQ-01)
-│   ├── performance/                 Benchmarks (RNF-01 a RNF-04, RNF-18)
-│   └── fixtures/                    Datos de prueba, sin audio con derechos
-├── scripts/                         Utilidades y comprobaciones documentales
-├── docs/
-│   ├── requirements/  architecture/  project-management/  testing/  memory/
-├── .github/workflows/               Integración continua (pendiente)
-├── pyproject.toml                   Diseño `src`, `requires-python >= 3.10`, datos de paquete `*.sql`
-├── README.md  LICENSE  .gitignore
-```
-
-| Decisión | Motivo |
-|---|---|
-| Diseño `src/` con un único paquete | Evita importar sin instalar y es el que ADR-008 propone |
-| `backend/`, `frontend/`, `database/` desaparecen | Son de una arquitectura cliente-servidor descartada (ADR-001, ADR-004). Sus contenidos pasan a `src/setlistgen/` |
-| Migraciones **dentro del paquete** | La aplicación las lee en ejecución y deben viajar con cualquier empaquetado (ADR-008). Una carpeta `database/` externa exigiría rutas relativas frágiles |
-| `migrations/pending/` | Una migración condicional no debe aplicarse sola: el aplicador ignora esa carpeta |
-| `tests/architecture/` propia | La regla de dependencia es una prueba de primera clase (RNF-22) |
-| `tests` refleja `src` | Criterio de ADR-008 |
-| Datos de prueba sin audio | ADR-007 y ADR-009: el repositorio no contiene obras |
-
-## 4.1 Correspondencia con la estructura actual
-
-| Actual | Propuesta |
-|---|---|
-| `backend/README.md` | `src/setlistgen/README.md` |
-| `database/README.md` | `src/setlistgen/infrastructure/persistence/README.md` |
-| `database/schema/schema.sql` (previsto) | `src/setlistgen/infrastructure/persistence/migrations/0001_initial.sql` |
-| `frontend/README.md` | `src/setlistgen/presentation/README.md` (conservar el contenido sobre principios y funcionalidades) |
-| `tests/README.md`, `scripts/README.md` | Se mantienen; actualizar la estructura interna |
-
-```bash
-git switch develop && git switch -c feature/reorganizar-repositorio
-mkdir -p src/setlistgen/{domain,application/{use_cases,ports},presentation,bootstrap}
-mkdir -p src/setlistgen/infrastructure/{analysis,metadata,scanning,identification,export,reference}
-mkdir -p src/setlistgen/infrastructure/persistence/{migrations/pending,repositories}
-mkdir -p tests/{unit/{domain,application},integration/{persistence,infrastructure},architecture,performance,fixtures}
-git mv backend/README.md src/setlistgen/README.md
-git mv database/README.md src/setlistgen/infrastructure/persistence/README.md
-git mv frontend/README.md src/setlistgen/presentation/README.md
-git commit -m "refactor: reorganiza el repositorio según ADR-008 (propuesto)"
-```
-
-Git no versiona carpetas vacías: añadir un `.gitkeep` a las que aún no tengan ficheros.
-
-Falta actualizar también `README.md`, `docs/README.md`, `tests/README.md` y `scripts/README.md` con esta estructura. Se recomienda hacerlo **en la misma rama** y después de que los tutores validen OD-08, o antes de escribir el primer código si no hay respuesta a tiempo.
-
----
-
-# 5. Estado actual
-
-## Completado (de forma provisional donde se indica)
-
-- Anteproyecto, SRS v4.0, casos de uso v1.1, matriz v3.0 y glosario v2.1.
-- ADR-001 a ADR-006 aceptados. ADR-007 a ADR-010 redactados como propuestos.
-- Dominio v0.2, modelo conceptual v0.1, MER v0.1.1 y esquema SQLite v0.1 (**provisionales**).
-- Comprobaciones: dominio contra los 11 casos de uso; esquema ejecutado en SQLite 3.45.1.
-- Capítulos 1 a 4 de la memoria.
+## Completado
+* **Fase 1 (Arquitectura):** Definición de la arquitectura simplificada, Diagrama de Componentes UML v1.0 y actualización de `ADR-006`.
+* **Memoria base:** Anteproyecto y capítulos 1 a 4 redactados en `docs/memory/`.
 
 ## Pendiente
-
-- Validación por tutor y cotutor de OD-01 a OD-10 y de ADR-007 a ADR-010.
-- Prueba de concepto: análisis (exactitud, instalación, licencias), importación en Rekordbox, identificación (coste del nivel 1b), interfaz y empaquetado.
-- Reorganización del repositorio y actualización de ADR-002 y ADR-004.
-- Diseño de los repositorios y del coordinador de escritura (H-37).
-- Implementación, pruebas y validación experimental.
-- Actualizar la memoria (capítulos 4 a 9 y apéndices).
+* **Fase 2:** Redacción de requisitos simplificados (`requirements.md`), casos de uso centrados en el actor único DJ (`use-cases.md`), matriz de trazabilidad directa y diagramas de secuencia UML de los flujos críticos.
+* **Fase 3:** Documento único de modelo de datos (diccionario de datos, MER, modelo relacional y script DDL SQLite de ~5-6 tablas).
+* **Fase 4:** Prueba de concepto MIR, implementación del núcleo funcional en `src/setlistgen/`, pruebas y actualización final de la memoria LaTeX.
 
 ---
 
-# 6. Decisiones abiertas y supuestos aplicados
-
-| OD | Supuesto en el diseño | Documento |
-|---|---|---|
-| OD-01 | RF-29 es Must | SRS v4.0 |
-| OD-02 | Salto máximo de BPM configurable, 5 por defecto (P) | `domain-model.md` |
-| OD-03 | Identificación en dos niveles; huellas por pista | `domain-model.md`, ADR-010 |
-| OD-04 | Varios resultados por pista y motor activo; `AnalysisResultRepository` | `domain-model.md`, `er-model.md` |
-| OD-05 | `Library` fuera de la migración 1; migración 2 condicional preparada | `database-schema.md` |
-| OD-06 | Instantánea de descriptores y transiciones | `domain-model.md`, `database-schema.md` |
-| OD-07 | Entidades de `domain-model.md` | `conceptual-model.md` |
-| OD-08 | ADR-007 a ADR-010 sin validar; estructura de repositorio de ADR-008 | — |
-
-El detalle y las cuestiones para la reunión están en `open-decisions.md`.
-
-# 7. Riesgos principales
-
-| Riesgo | Referencia |
-|---|---|
-| El fichero exportado no se carga en Rekordbox | R-02 |
-| Exactitud insuficiente de BPM y tonalidad | R-01 |
-| Licencias incompatibles | R-08 |
-| Decisiones tecnológicas tardías | R-10 |
-| La instalación de librerías MIR o la versión de SQLite del sistema fallan | R-11 |
-| La identificación incumple RNF-04 o fusiona pistas | R-12 |
-| El modelo de datos se congela antes de validar | R-13 |
-
----
-
-# 8. Control de cambios
+# 6. Control de cambios
 
 | Versión | Fecha | Cambio |
 |---|---|---|
-| 1.0 | 2026-10-28 | README de arquitectura inicial |
-| 2.0 | 2026-10-30 | Alineación con la línea base documental |
-| 3.0.1 | 2026-11-14 | Referencias de versión: MER v0.1.2, esquema v0.1.1, auditoría y decisiones abiertas v3.2 |
-| 3.0 | 2026-11-14 | Diseño detallado completado de forma provisional. Enlaces a `data-model.md` y a los cuatro documentos de modelado. Puerto `AnalysisResultRepository` (N-32) y alcance reducido de `TrackRepository`. Contrato `SetlistGenerator`. Servicios de dominio. Estructura de repositorio propuesta (N-25) con correspondencia desde la actual. Estado y supuestos por OD |
+| 1.0 | 2026-10-28 | README de arquitectura inicial. |
+| 2.0 | 2026-10-30 | Alineación con la línea base documental. |
+| 3.0.1 | 2026-11-14 | Diseño detallado previo (20 tablas, 4 agregados; archivado en la rama `develop`). |
+| 4.0.0 | 2026-11-20 | Reorientación a arquitectura simplificada tras reunión con el tutor: actor único `DJ`, diagrama de componentes UML v1.0, resumen de ADR-001 a ADR-010 (con ADR-006 actualizado a exportación opcional por carpeta/`.m3u8`) y estructura mínima de `src/setlistgen/`. |
