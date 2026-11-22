@@ -14,8 +14,8 @@ Toda la documentación incluida constituye la línea base de requisitos utilizad
 |------------|------------|
 | requirements.md | Especificación de requisitos del sistema |
 | use-cases.md | Casos de uso |
-| traceability-matrix.md | Matriz de trazabilidad |
-| glosario.md | Vocabulario común del proyecto |
+
+
 
 ---
 
