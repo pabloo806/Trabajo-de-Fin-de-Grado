@@ -8,22 +8,45 @@
 
 2026-11-20 (reescritura completa tras el replanteamiento del alcance y la verificación directa en Rekordbox).
 
+## Requisitos relacionados
+
+| Requisito | Relación |
+|---|---|
+| RF-21 | Exportación del setlist en XML compatible con Rekordbox |
+| RF-21b | Exportación complementaria en M3U8 |
+| RF-22 | Rutas de las pistas resueltas, con aviso explícito si alguna no lo está |
+| RF-23 | Verificación manual de que Rekordbox carga la lista con sus pistas resueltas |
+| RF-09c | Aviso de pistas ausentes al exportar |
+| RF-28 | Exportación de datos del panel (M3U), con relación indirecta |
+| RF-29b | Lectura del XML de colección como fuente de referencia (puerto distinto) |
+| RNF-16 | Rutas con espacios, tildes, Unicode y rutas largas en ambos sistemas |
+| RNF-19 | Windows y macOS |
+| RNF-21 | El dominio no depende del formato de rutas del sistema operativo |
+| RNF-22, RNF-23 | Exportador accesible mediante un puerto sustituible |
+| RNF-25 | El sistema no envía datos fuera del equipo |
+
+Riesgo asociado: R-02 (el fichero exportado no se carga correctamente en Rekordbox). Hallazgos atendidos: N-02 (M3U8 sin requisito) y N-16 (decisiones aceptadas antes de la prueba de concepto).
+
 ## Contexto
 
-Uno de los usos previstos de SetlistGen es llevar el setlist generado a Rekordbox, que es la herramienta con la que el DJ prepara y ejecuta su sesión.
+Uno de los objetivos principales de SetlistGen es integrarse en el flujo de trabajo real de un DJ.
 
-Condicionantes:
+Para ello, los setlists generados deben poder utilizarse posteriormente en Rekordbox, que es la herramienta de referencia utilizada durante la actuación.
 
-- SQLite **no almacena ficheros de audio**. Guarda únicamente la **ruta local** de cada pista junto con sus descriptores (título, duración, BPM, tonalidad, género).
-- La exportación es una funcionalidad secundaria: el núcleo funcional no depende de ella.
-- El sistema no debe modificar la base de datos interna de Rekordbox ni depender de interfaces privadas.
-- Se ha verificado directamente en Rekordbox que **no admite importar setlists en formato `.xml`**. Solo importa listas `.m3u` y `.m3u8`.
+El anteproyecto establece que el setlist se exporta en un formato importable por Rekordbox, citando XML o M3U/M3U8.
 
-La verificación invalida la decisión original, que adoptaba el XML de Rekordbox como formato principal.
+El sistema no debe:
+
+- Modificar la base de datos interna de Rekordbox.
+- Depender de APIs privadas.
+- Requerir acceso a Internet.
+- Comprometer la portabilidad del sistema.
+
+Por tanto, la integración debe realizarse mediante formatos de intercambio soportados por Rekordbox.
 
 ## Problema
 
-Determinar cómo se entrega un setlist a Rekordbox partiendo únicamente de las rutas locales almacenadas, sin formatos que Rekordbox no admita y sin acceder a su base de datos interna.
+Determinar el mecanismo de exportación de setlists para garantizar la integración con Rekordbox.
 
 ## Alternativas consideradas
 
