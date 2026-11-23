@@ -1,0 +1,45 @@
+@startuml secuencia-seleccionar-biblioteca
+title Secuencia: CU-02 Seleccionar biblioteca local
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam sequenceMessageAlign center
+
+actor DJ
+participant "Interfaz de Usuario" as UI
+participant "Analizador de Bibliotecas" as AB
+participant "Persistencia" as PE
+participant "Motor MIR\n<<librería externa>>" as MIR
+
+DJ -> UI : selecciona carpeta
+UI -> AB : calcularEstadisticas(carpeta)
+AB --> UI : tamaño, nº archivos,\nnº subcarpetas, tiempo estimado
+UI --> DJ : muestra estadísticas
+DJ -> UI : ordena procesar la biblioteca
+UI -> AB : procesar(carpeta, cuenta)
+AB -> PE : registrarBiblioteca(cuenta, carpeta)
+
+loop por cada pista de la carpeta
+  AB -> PE : buscarPista(cuenta, ruta, tamaño, fecha)
+  PE --> AB : pista registrada o ninguna
+
+  alt pista nueva
+    AB -> AB : leer metadatos
+    AB -> MIR : estimar(ruta)
+    MIR --> AB : BPM y tonalidad, o error
+
+    alt estimación correcta
+      AB -> PE : guardarPista(ruta, metadatos,\nBPM, tonalidad, Camelot)
+    else fallo del motor o fichero ilegible
+      AB -> PE : guardarPista(ruta, metadatos,\nestado fallida y causa)
+    end
+  else ya registrada
+    AB -> PE : vincularABiblioteca(pista)
+  end
+
+  AB --> UI : progreso
+end
+
+AB --> UI : informe final
+UI --> DJ : analizadas, omitidas,\ndescartadas y fallidas
+@enduml

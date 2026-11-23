@@ -1,0 +1,33 @@
+@startuml secuencia-generar-setlist
+title Secuencia: CU-04 Establecer parámetros para generar setlist
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam sequenceMessageAlign center
+
+actor DJ
+participant "Interfaz de Usuario" as UI
+participant "Generador de Setlists" as GS
+participant "Persistencia" as PE
+
+DJ -> UI : introduce duración, rango de BPM,\npreset Camelot y semilla (opcional)
+UI -> GS : generar(parámetros, semilla)
+GS -> GS : validar parámetros
+
+alt parámetros inválidos
+  GS --> UI : incidencias con acción sugerida
+  UI --> DJ : muestra errores
+else parámetros válidos
+  GS -> PE : obtenerCandidatas(cuenta, rango de BPM)
+  PE --> GS : pistas disponibles con BPM,\ntonalidad y duración
+  GS -> GS : ejecutar algoritmo de generación
+
+  alt existe solución
+    GS --> UI : setlist, duración total,\nsemilla y evaluación de transiciones
+    UI --> DJ : muestra el setlist propuesto
+  else inviable o límite agotado
+    GS --> UI : restricciones en conflicto\no aviso de límite agotado
+    UI --> DJ : muestra el motivo
+  end
+end
+@enduml
