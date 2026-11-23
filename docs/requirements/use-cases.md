@@ -1,7 +1,7 @@
 # Casos de Uso de SetlistGen
 
-**Versión:** 1.2 · **Estado:** pendiente de revisión por el tutor
-**Alineado con:** `requirements.md` v1.2.1
+**Versión:** 1.2.1 · **Estado:** pendiente de revisión por el tutor
+**Alineado con:** `requirements.md` v1.2.1 y `traceability-matrix.md` v1.0
 
 ## 1. Actor y catálogo
 
@@ -46,7 +46,7 @@ CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada 
 | Campo | Contenido |
 |---|---|
 | **Actor** | DJ |
-| **Requisitos** | RF-02, RF-03, RF-04, RF-05, RF-06, RF-08, RNF-01, RNF-08, RNF-09 |
+| **Requisitos** | RF-02, RF-03, RF-04, RF-05, RF-06, RF-08, RNF-02, RNF-03, RNF-04, RNF-08, RNF-09 |
 | **Precondiciones** | Hay una sesión activa. El motor MIR y la base de datos están disponibles |
 | **Flujo principal** | 1. El DJ selecciona una carpeta local.<br>2. El sistema recorre la carpeta y calcula el tamaño total, el número de archivos de audio, el número de subcarpetas y el tiempo estimado de análisis por muestreo de pistas.<br>3. El sistema muestra las estadísticas.<br>4. El DJ ordena procesar la biblioteca.<br>5. El sistema registra la carpeta como biblioteca de la cuenta y la recorre de forma recursiva, reconociendo los formatos MP3, WAV, FLAC y AIFF.<br>6. Para cada pista, el sistema comprueba si la cuenta ya la tiene registrada (ruta, tamaño y fecha de modificación). Si es así, la vincula a la biblioteca y no la analiza.<br>7. Para las pistas nuevas, el sistema extrae título, artista, duración y género.<br>8. El sistema estima BPM y tonalidad con el motor MIR y deriva el código Camelot.<br>9. El sistema guarda la ruta, los metadatos y los descriptores. El BPM se almacena como decimal con 2 decimales.<br>10. El sistema muestra el progreso y, al terminar, un informe con pistas analizadas, omitidas, descartadas y fallidas |
 | **Alternativos** | **A1.** La carpeta no existe o no es legible: el sistema informa de la causa y vuelve al paso 1.<br>**A2.** La carpeta no contiene audio válido: se informa y el caso termina.<br>**A3.** El DJ no ordena procesar tras ver las estadísticas: el caso termina sin cambios.<br>**A4.** La carpeta ya está registrada como biblioteca de la cuenta: el sistema lo indica y propone actualizarla (CU-03).<br>**A5.** Ficheros no soportados: se descartan y figuran en el informe con su motivo.<br>**A6.** Fichero corrupto o ilegible, o el motor no devuelve BPM o tonalidad: la pista se guarda con estado «fallida» y su causa, se excluye de la generación y de la edición, y el proceso continúa.<br>**A7.** Etiquetas ausentes: el campo se guarda como nulo o «desconocido».<br>**A8.** El DJ cancela el proceso: las pistas ya guardadas se conservan |
@@ -57,7 +57,7 @@ CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada 
 | Campo | Contenido |
 |---|---|
 | **Actor** | DJ |
-| **Requisitos** | RF-07, RF-08 |
+| **Requisitos** | RF-07, RF-08, RNF-04, RNF-08, RNF-09 |
 | **Precondiciones** | Hay una sesión activa y la cuenta tiene al menos una biblioteca registrada (CU-02) |
 | **Flujo principal** | 1. El DJ selecciona una biblioteca registrada y ordena actualizarla.<br>2. El sistema recorre de nuevo la carpeta y clasifica cada fichero como sin cambios, nuevo o modificado (tamaño o fecha distintos) y, para las pistas registradas, no encontrado.<br>3. El sistema muestra un resumen previo con el número de pistas nuevas, modificadas y no encontradas.<br>4. El DJ confirma.<br>5. El sistema analiza únicamente las pistas nuevas y las modificadas (metadatos, BPM, tonalidad y código Camelot) y actualiza el registro de las modificadas.<br>6. El sistema marca como «no disponibles» las pistas no encontradas, sin borrarlas.<br>7. El sistema muestra el progreso y un informe con pistas nuevas, modificadas, no disponibles, sin cambios y fallidas |
 | **Alternativos** | **A1.** Ninguna pista nueva, modificada o no encontrada: el sistema lo indica y no reanaliza nada.<br>**A2.** La carpeta de la biblioteca ya no existe: el sistema informa de la causa, no marca nada como no disponible y propone elegir otra carpeta.<br>**A3.** Una pista «no disponible» reaparece en su ruta con el mismo tamaño y fecha: el sistema la reactiva sin reanalizarla.<br>**A4.** Un fichero movido o renombrado aparece como pista nueva y su ruta antigua como no encontrada: se aplican ambos tratamientos.<br>**A5.** Fallo en una pista nueva o modificada: se aplica A6 de CU-02.<br>**A6.** El DJ cancela tras ver el resumen o durante el proceso: no se modifica nada o se conserva lo ya guardado, respectivamente |
@@ -144,3 +144,4 @@ Cada requisito funcional está cubierto por al menos un caso de uso: RF-01 en CU
 | 1.0 | Casos de uso iniciales |
 | 1.1 | CU-02 a CU-06 renombrados; diagramas actualizados |
 | 1.2 | Alineación con `requirements.md` v1.2.1: cuenta con usuario y contraseña (CU-01), pistas fallidas y no disponibles, presets Camelot, BPM decimal, edición completa y diagramas referenciados como imágenes `.svg` con su fuente `.puml` |
+| 1.2.1 | Filas de requisitos de CU-02 y CU-03 alineadas con `traceability-matrix.md`: añadidos RNF-02, RNF-03, RNF-04 (CU-02) y RNF-04, RNF-08, RNF-09 (CU-03) |

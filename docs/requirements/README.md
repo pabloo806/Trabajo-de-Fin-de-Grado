@@ -1,49 +1,38 @@
-# Requisitos
+# Requisitos de SetlistGen
 
-## Objetivo
+**Versión:** 1.2.1 · **Estado:** listo para revisión con el tutor
 
-Este directorio contiene la documentación de análisis del proyecto.
+Este directorio contiene la especificación funcional de SetlistGen: qué debe hacer el sistema, quién lo usa, cómo se comprueba y cómo se relaciona cada requisito con las acciones del usuario.
 
-Toda la documentación incluida constituye la línea base de requisitos utilizada para el diseño y la implementación.
+## Alcance en una vista
 
----
+| Elemento | Cantidad |
+|---|---:|
+| Actor | 1 (el **DJ**) |
+| Requisitos funcionales (RF) | 22 |
+| Requisitos no funcionales (RNF) | 12 |
+| Casos de uso (CU) | 8 (2 críticos) |
 
-# Documentos
+SetlistGen es una aplicación local que analiza las bibliotecas musicales del DJ, genera setlists según parámetros de duración, BPM y compatibilidad Camelot, permite editarlos y los guarda en SQLite. La exportación a Rekordbox es una ampliación opcional.
 
-| Documento | Descripción |
-|------------|------------|
-| requirements.md | Especificación de requisitos del sistema |
-| use-cases.md | Casos de uso |
+## Documentos
 
+| Documento | Contenido |
+|---|---|
+| [`requirements.md`](requirements.md) | Alcance, actor, 22 RF y 12 RNF con prioridad MoSCoW, criterios de aceptación y decisiones funcionales |
+| [`use-cases.md`](use-cases.md) | Diagrama de casos de uso, especificación de los 8 CU y diagramas de secuencia de los 2 casos críticos |
+| [`traceability-matrix.md`](traceability-matrix.md) | Relación entre casos de uso, requisitos, componentes y pruebas previstas, con la cobertura bidireccional |
 
+Los diagramas UML están en [`../diagrams/`](../diagrams/).
 
----
+## Cómo leerlos
 
-# Estado
+1. **`requirements.md`:** para saber qué hace el sistema y con qué umbrales.
+2. **`use-cases.md`:** para ver cómo lo usa el DJ, paso a paso.
+3. **`traceability-matrix.md`:** para comprobar de un vistazo que cada requisito está cubierto y cómo se verifica.
 
-✅ Consolidado.
+## Estado y siguientes pasos
 
-Versión de referencia:
-
-```text
-requirements v4.0
-use-cases v1.1
-traceability v3.0
-glosario v2.1
-```
-
----
-
-# Próximo paso
-
-Los requisitos se consideran cerrados.
-
-Las siguientes fases son:
-
-```text
-Dominio
-↓
-Modelo de datos
-↓
-Persistencia SQLite
-```
+- Los umbrales marcados **(P)** son provisionales y se ratifican con datos reales.
+- La validación de exactitud (RNF-02 y RNF-03) se realiza fuera de la aplicación, con un script sobre un CSV anotado a mano.
+- Tras la revisión del tutor, estos documentos son la base del modelado de datos y de la implementación.
