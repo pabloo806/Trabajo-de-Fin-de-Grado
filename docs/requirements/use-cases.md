@@ -22,9 +22,9 @@ Los casos críticos son CU-02 y CU-04: concentran el análisis musical y el algo
 
 ## 2. Diagrama de casos de uso (UML)
 
-![Diagrama de Casos de Uso - SetlistGen](diagrams/casos-de-uso.svg)
+![Diagrama de Casos de Uso - SetlistGen](../diagrams/casos-de-uso.svg)
 
-* **Código fuente editable (PlantUML):** [diagrams/casos-de-uso.puml](diagrams/casos-de-uso.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/casos-de-uso.puml`](../diagrams/casos-de-uso.puml)
 
 CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada antes de cerrarla. También puede editar un setlist abierto desde CU-07.
 
@@ -123,15 +123,15 @@ CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada 
 
 ### 4.1 CU-02: Seleccionar biblioteca local
 
-![Secuencia: Seleccionar biblioteca local](diagrams/secuencia-seleccionar-biblioteca.svg)
+![Secuencia: Seleccionar biblioteca local](../diagrams/secuencia-seleccionar-biblioteca.svg)
 
-* **Código fuente editable (PlantUML):** [diagrams/secuencia-seleccionar-biblioteca.puml](diagrams/secuencia-seleccionar-biblioteca.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/secuencia-seleccionar-biblioteca.puml`](../diagrams/secuencia-seleccionar-biblioteca.puml)
 
 ### 4.2 CU-04: Establecer parámetros para generar setlist
 
-![Secuencia: Establecer parámetros para generar setlist](diagrams/secuencia-generar-setlist.svg)
+![Secuencia: Establecer parámetros para generar setlist](../diagrams/secuencia-generar-setlist.svg)
 
-* **Código fuente editable (PlantUML):** [diagrams/secuencia-generar-setlist.puml](diagrams/secuencia-generar-setlist.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/secuencia-generar-setlist.puml`](../diagrams/secuencia-generar-setlist.puml)
 
 ## 5. Cobertura de requisitos
 

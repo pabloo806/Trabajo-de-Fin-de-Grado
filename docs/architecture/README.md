@@ -76,9 +76,9 @@ El **DJ** es el único actor externo que interactúa con el sistema a través de
 
 ## 3.3 Diagrama UML
 
-![Diagrama de Componentes - SetlistGen](diagrams/componentes.svg)
+![Diagrama de Componentes - SetlistGen](../diagrams/componentes.svg)
 
-* **Código fuente editable (PlantUML):** [`diagrams/componentes.puml`](diagrams/componentes.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/componentes.puml`](../diagrams/componentes.puml)
 
 ---
 
