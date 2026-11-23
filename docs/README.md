@@ -19,11 +19,12 @@ La documentación se mantiene sincronizada con:
 
 ```text
 docs/
-├── architecture/
-├── memory/
-├── project-management/
-├── requirements/
-└── testing/
+├── architecture/        README.md y ADR-001 a ADR-010 (adrs/)
+├── diagrams/            Diagramas UML (.svg exportados y .puml editables)
+├── memory/              Memoria del TFG (LaTeX)
+├── project-management/  Seguimiento y planificación
+├── requirements/        requirements.md, use-cases.md, traceability-matrix.md, glosario.md
+└── testing/             Estrategia de pruebas
 ```
 
 ---
