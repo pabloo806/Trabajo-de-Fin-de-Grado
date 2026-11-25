@@ -34,7 +34,7 @@ SetlistGen es una aplicación local en Python que analiza bibliotecas musicales 
 ## 1.2 Documentación relacionada
 
 * **Análisis de requisitos (Fase 2):** [`docs/requirements/README.md`](../requirements/README.md) (pendiente de reescritura simplificada).
-* **Modelo de datos (Fase 3):** Se documentará en un único fichero unificado (`docs/architecture/data-model.md`) tras cerrar los requisitos y casos de uso.
+* **Modelo de datos (Fase 3):** Se documentará en un único fichero unificado [`docs/architecture/data-model.md`](../architecture/data-model.md) tras cerrar los requisitos y casos de uso.
 * **Memoria LaTeX:** [`docs/memory/`](../memory/).
 
 ---

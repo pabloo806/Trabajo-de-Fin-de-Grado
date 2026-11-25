@@ -50,7 +50,7 @@ flowchart LR
 
     subgraph CUS["Casos de uso"]
         direction TB
-        CU01["CU-01 Iniciar sesión /<br/>Gestionar cuenta"]
+        CU01["CU-01 Iniciar sesión / Gestionar cuenta"]
         CU02["CU-02 Seleccionar<br/>biblioteca local ✔"]
         CU03["CU-03 Actualizar<br/>biblioteca"]
         CU04["CU-04 Establecer parámetros<br/>para generar setlist ✔"]
@@ -91,9 +91,6 @@ flowchart LR
     AB --> PE
     GS --> PE
     EX -.-> PE
-
-    classDef crit fill:#fde2e2,stroke:#c0392b,stroke-width:2px
-    class CU02,CU04 crit
 ```
 
 ## 4. Cobertura bidireccional
