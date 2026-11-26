@@ -24,7 +24,7 @@ Los casos críticos son CU-02 y CU-04: concentran el análisis musical y el algo
 
 ![Diagrama de Casos de Uso - SetlistGen](../diagrams/casos-de-uso.svg)
 
-* **Código fuente editable (PlantUML):** [`../diagrams/casos-de-uso.puml`](../diagrams/casos-de-uso.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/casos-de-uso.drawio`](../diagrams/casos-de-uso.drawio)
 
 CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada antes de cerrarla. También puede editar un setlist abierto desde CU-07.
 
@@ -104,7 +104,7 @@ CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada 
 | **Actor** | DJ |
 | **Requisitos** | RF-20 |
 | **Precondiciones** | Hay una sesión activa |
-| **Flujo principal** | 1. El DJ abre la lista de sus setlists guardados.<br>2. El sistema muestra nombre, fecha y duración de cada uno.<br>3. El DJ abre uno.<br>4. El sistema lo carga con sus pistas en orden y avisa de las pistas marcadas como «no disponibles» o cuyo fichero ya no exista |
+| **Flujo principal** | 1. El DJ abre la lista de sus setlists guardados.<br>2. El sistema muestra nombre, fecha y duración de cada uno.<br>3. El DJ abre uno.<br>4. El sistema lo carga con sus pistas en orden y avisa de las pistas marcadas como «no disponibles» o «fallidas», o cuyo fichero ya no exista |
 | **Alternativos** | **A1.** No hay setlists guardados: se informa.<br>**A2.** El DJ elimina un setlist: el sistema pide confirmación y lo borra sin afectar a la biblioteca ni a las pistas |
 | **Postcondiciones** | El setlist abierto queda disponible para editar (CU-05) o exportar (CU-08). Solo se muestran los setlists de la cuenta activa |
 
@@ -125,13 +125,13 @@ CU-05 extiende a CU-04 (`<<extend>>`): el DJ puede editar la propuesta generada 
 
 ![Secuencia: Seleccionar biblioteca local](../diagrams/secuencia-seleccionar-biblioteca.svg)
 
-* **Código fuente editable (PlantUML):** [`../diagrams/secuencia-seleccionar-biblioteca.puml`](../diagrams/secuencia-seleccionar-biblioteca.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/secuencia-seleccionar-biblioteca.drawio`](../diagrams/secuencia-seleccionar-biblioteca.drawio)
 
 ### 4.2 CU-04: Establecer parámetros para generar setlist
 
 ![Secuencia: Establecer parámetros para generar setlist](../diagrams/secuencia-generar-setlist.svg)
 
-* **Código fuente editable (PlantUML):** [`../diagrams/secuencia-generar-setlist.puml`](../diagrams/secuencia-generar-setlist.puml)
+* **Código fuente editable (PlantUML):** [`../diagrams/secuencia-generar-setlist.drawio`](../diagrams/secuencia-generar-setlist.drawio)
 
 ## 5. Cobertura de requisitos
 
@@ -145,3 +145,4 @@ Cada requisito funcional está cubierto por al menos un caso de uso: RF-01 en CU
 | 1.1 | CU-02 a CU-06 renombrados; diagramas actualizados |
 | 1.2 | Alineación con `requirements.md` v1.2.1: cuenta con usuario y contraseña (CU-01), pistas fallidas y no disponibles, presets Camelot, BPM decimal, edición completa y diagramas referenciados como imágenes `.svg` con su fuente `.puml` |
 | 1.2.1 | Filas de requisitos de CU-02 y CU-03 alineadas con `traceability-matrix.md`: añadidos RNF-02, RNF-03, RNF-04 (CU-02) y RNF-04, RNF-08, RNF-09 (CU-03) |
+| 1.2.2 | RF-20 / CU-07 avisa también de pistas fallidas |

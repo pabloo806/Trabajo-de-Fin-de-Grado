@@ -25,6 +25,8 @@ El esquema anterior de 20 tablas queda sustituido por 6: 4 de entidad y 2 asocia
 
 ![Modelo Entidad-Relación - SetlistGen](../diagrams/modelo-er.svg)
 
+* **Archivo editable (.draw.io):** [`../diagrams/modelo-er.drawio`](../diagrams/modelo-er.drawio)
+
 ### 2.1 Entidades y atributos
 
 | Entidad | Atributos | Identificador |
@@ -56,6 +58,8 @@ El esquema anterior de 20 tablas queda sustituido por 6: 4 de entidad y 2 asocia
 ## 3. Paso a Modelo Relacional (lógico)
 
 ![Modelo Relacional - SetlistGen](../diagrams/modelo-relacional.svg)
+
+* **Archivo editable (.draw.io):** [`../diagrams/modelo-relacional.drawio`](../diagrams/modelo-relacional.drawio)
 
 ### 3.1 Reglas de transformación aplicadas
 
@@ -409,14 +413,13 @@ UPDATE biblioteca SET fecha_ultima_actualizacion = :ahora WHERE id = :bib AND dj
 
 -- Q-10 · Bibliotecas del DJ con recuentos. Índice: autoíndice (dj_id, ruta_raiz) y PK de biblioteca_pista.
 SELECT b.id, b.nombre, b.ruta_raiz, b.fecha_ultima_actualizacion,
-       COUNT(p.id) AS n_pistas,
-       COALESCE(SUM(p.estado = 'no_disponible'), 0) AS n_no_disponibles,
-       COALESCE(SUM(p.estado = 'fallida'), 0)       AS n_fallidas
+       (SELECT COUNT(*) FROM biblioteca_pista bp WHERE bp.biblioteca_id = b.id) AS n_pistas,
+       (SELECT COUNT(*) FROM biblioteca_pista bp JOIN pista p ON p.id = bp.pista_id
+         WHERE bp.biblioteca_id = b.id AND p.estado = 'no_disponible') AS n_no_disponibles,
+       (SELECT COUNT(*) FROM biblioteca_pista bp JOIN pista p ON p.id = bp.pista_id
+         WHERE bp.biblioteca_id = b.id AND p.estado = 'fallida') AS n_fallidas
 FROM biblioteca b
-LEFT JOIN biblioteca_pista bp ON bp.biblioteca_id = b.id
-LEFT JOIN pista p ON p.id = bp.pista_id
-WHERE b.dj_id = :dj
-GROUP BY b.id;
+WHERE b.dj_id = :dj;
 ```
 
 ### 7.3 Generación y edición (CU-04, CU-05)
@@ -473,12 +476,11 @@ INSERT INTO setlist_pista (setlist_id, pista_id, orden) VALUES (:set, :pista, :o
 -- Q-17 · Lista de setlists con número de pistas y duración total (calculada, no almacenada).
 --        Índice: ix_setlist_dj_fecha da el orden; PK de setlist_pista; pista por clave.
 SELECT s.id, s.nombre, s.fecha_modificacion,
-       COUNT(sp.pista_id) AS n_pistas, SUM(p.duracion_seg) AS duracion_total_seg
+       (SELECT COUNT(*) FROM setlist_pista sp WHERE sp.setlist_id = s.id) AS n_pistas,
+       (SELECT SUM(p.duracion_seg) FROM setlist_pista sp JOIN pista p ON p.id = sp.pista_id
+         WHERE sp.setlist_id = s.id) AS duracion_total_seg
 FROM setlist s
-JOIN setlist_pista sp ON sp.setlist_id = s.id
-JOIN pista p ON p.id = sp.pista_id
 WHERE s.dj_id = :dj
-GROUP BY s.id
 ORDER BY s.fecha_modificacion DESC;
 
 -- Q-18 · Abrir un setlist con el estado de cada pista (avisos de RF-20).
@@ -517,9 +519,9 @@ Se descartó el índice `biblioteca_pista (pista_id)` de la v0.1: ninguna consul
 
 | ID | Tema | Estado |
 |---|---|---|
-| P-08 | No hay casos de uso de borrado de bibliotecas ni de cuentas. Si se añaden, borrar una biblioteca solo elimina sus vínculos y las pistas que queden sin biblioteca ni setlist | Fuera de alcance |
+| P-08 | No hay casos de uso de borrado de bibliotecas ni de cuentas. En SQLite ≥ 3.31 borrar un DJ elimina en cascada todo su árbol sin violar RESTRICT (cubierto por test) | Fuera de alcance |
 | P-10 | SQLite ≥ 3.31 (columnas generadas) sin `STRICT`. La aplicación comprueba la versión al arrancar. La resolución del `mtime` depende del sistema de ficheros | Comprobar en Windows y macOS |
-| P-11 | Una pista guardada en un setlist puede pasar a `fallida` si su fichero cambia y el reanálisis falla. RF-20 solo avisa de las no disponibles | Propuesta: añadir «fallidas» a RF-20 y a CU-07 |
+| P-11 | Una pista guardada en un setlist puede pasar a `fallida` si su fichero cambia y el reanálisis falla. RF-20 solo avisa de las no disponibles | Cerrado: Añadido «fallidas» a RF-20 y CU-07 en v1.2.2 |
 | P-12 | Rango de plausibilidad del BPM (por ejemplo, 40 a 250) para descartar errores de octava extremos | Decisión de la aplicación, no del esquema |
 
 ## 9. Control de cambios
@@ -528,3 +530,4 @@ Se descartó el índice `biblioteca_pista (pista_id)` de la v0.1: ninguna consul
 |---|---|
 | 0.1 | Borrador: 4 entidades, 4 relaciones, 6 tablas, DDL y 10 puntos abiertos |
 | 1.0 | Cerrados P-01 (relación `Posee`), P-02 (3FN con *triggers* de aislamiento), P-03 (estado único) y P-09 (`motor_mir`, `fecha_analisis`). Añadidos tabla de estados, consultas críticas con su índice y mecanismos de integridad. `semilla >= 0`, `CHECK` de trazabilidad y tres *triggers* de inmutabilidad. Eliminado el índice de `biblioteca_pista (pista_id)` |
+| 1.0.1 | Reescritas Q-10 y Q-17 con subconsultas correlacionadas tras comprobar planes de ejecución (`EXPLAIN QUERY PLAN`). Cerrado P-11 y verificado borrado en cascada en P-08 |
